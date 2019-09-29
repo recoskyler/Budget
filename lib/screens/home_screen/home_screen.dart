@@ -1,0 +1,265 @@
+import 'package:budget/main.dart';
+import 'package:budget/modules/functions.dart';
+import 'package:budget/modules/global.dart' as prefix0;
+import 'package:budget/screens/edit_transaction_screen/edit_transaction.dart';
+import 'package:budget/screens/setup_screen/setup_screen.dart';
+import 'package:budget/screens/subs_screen/subs_screen.dart';
+import 'package:flutter/material.dart';
+import '../../modules/settings.dart';
+import '../../modules/global.dart';
+import 'package:budget/screens/deposit_screen/deposit_screen.dart';
+import 'package:budget/screens/edit_saving_screen/edit_saving_screen.dart';
+import 'package:budget/screens/rent_screen/rent_screen.dart';
+import 'package:budget/screens/budget_screen/budget_screen.dart';
+import 'package:budget/screens/edit_rent_screen/edit_rent_screen.dart';
+import 'package:budget/modules/enums.dart';
+import 'package:budget/modules/classes.dart';
+import 'package:budget/screens/edit_subs_screen/edit_subs_screen.dart';
+
+class App extends StatelessWidget {
+    @override
+    Widget build(BuildContext context) {
+        return MaterialApp(
+            title: "Budget",
+            home: MySApp(),
+            theme: ThemeData(accentColor: Colors.purpleAccent),
+        );
+    }
+}
+
+class MySApp extends StatefulWidget {
+    MySApp({Key key}) : super(key: key);
+
+    @override
+    _MyApp createState() => _MyApp();
+}
+
+class _MyApp extends State<MySApp> {
+    List<Widget> bodiesInWater = new List<Widget>();
+    List<PreferredSizeWidget> headsInWater = new List<PreferredSizeWidget>();
+    List<Widget> buttonsInWater = new List<Widget>();
+    PageController controller = PageController(keepPage: true, initialPage: settings["rentPage"]);
+
+    void openEditPage(int _i) {
+        switch (_i) {
+            case 0:
+                Navigator.push(context,MaterialPageRoute(builder: (context) => EditSaving())).then((_tmp) {
+                    refreshStats();
+                });
+                setState(() {
+                    buttonStateIndex = 0;
+                });
+                break;
+            
+            case 1:
+                Navigator.push(context,MaterialPageRoute(builder: (context) => EditTransaction())).then((_tmp) {
+                    refreshStats();
+                });
+                setState(() {
+                    buttonStateIndex = 0;
+                });
+                break;
+
+            case 2:
+                Navigator.push(context,MaterialPageRoute(builder: (context) => EditDeposit())).then((_tmp) {
+                    refreshStats();
+                });
+                setState(() {
+                    buttonStateIndex = 0;
+                });
+                break;
+        }
+    }
+
+    void onActionPressed() {
+        setState(() {
+            buttonStateIndex++;
+            buttonStateIndex = buttonStateIndex % 2;
+        });
+    }
+
+    void onNavClick(int index) {
+        setState(() {
+            refreshStats();
+            selectedNavMenu = index;
+        });
+    }
+
+    void onTransactionItemClick(int id) {
+        if (selectedID == id) {
+            setState(() {
+                selectedID = -1;
+            });
+        } else {
+            setState(() {
+                selectedID = id;
+            });
+        }
+    }
+
+    void onSubsItemClick(int id) {
+        if (selectedSubID == id) {
+            setState(() {
+                selectedSubID = -1;
+            });
+        } else {
+            setState(() {
+                selectedSubID = id;
+            });
+        }
+    }
+
+    void renewTransactions(List<dynamic> _pt) {
+        setState(() {
+            refreshStats();
+            settings["transactions"] = _pt;
+        });
+
+        saveSettings();
+    }
+
+    void onRentActionPressed() {
+        if (settings["rentAmount"] == 0.0) {
+            Navigator.push(context,MaterialPageRoute(builder: (context) => EditRent())).then((_tmp) {
+                refreshStats();
+            });
+        } else {
+            setState(() {
+                List<dynamic> _t = List<dynamic>.from(settings["transactions"]);
+                List<Payment> _r = List<Payment>();
+
+                _t.forEach((_p) {
+                    if (rentalPaymentTypes.contains(_p.getPaymentType())) {
+                        _r.add(_p);
+                    }
+                });
+
+                _r.forEach((Payment _p) {
+                    _t.remove(_p);
+                });
+
+                settings["transactions"] = _t;
+                settings["rentDay"] = 1;
+                settings["rentAmount"] = 0.0;
+                settings["utilitiesDay"] = 1;
+                settings["rentStartDate"] = DateTime.now().toString();
+                settings["rentPage"] = 0;
+
+                saveSettings(); 
+            });
+        }     
+    }
+
+    void onSubsActionPressed() {
+        Navigator.push(context,MaterialPageRoute(builder: (context) => EditSubs())).then((_tmp) {
+            refreshStats();
+        });
+    }
+
+    void setPage(int _page) {
+        setState(() {
+            controller.jumpToPage(_page);
+        });
+    }
+
+    void onSetupActionPressed(double _amount, int _date) {
+        setState(() {
+            settings["monthlyAllowence"] = _amount;
+            settings["firstTime"] = false;
+            settings["budgetRenewalDay"] = _date;
+
+            saveSettings();
+        });
+    }
+
+    void themeButtonPressed(int _theme) {
+        setState(() {
+            theme = _theme;
+        });
+    }
+
+	@override
+	Widget build(BuildContext context) {
+        refreshStats();
+
+        SizeConfig().init(context);
+
+        // * ADD BODIES TO THE WATER
+
+        if (bodiesInWater.length == 0) {
+            bodiesInWater.add(BudgetScreen(onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
+            bodiesInWater.add(RentScreen(controller: controller));
+            bodiesInWater.add(SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewTransactions));
+            bodiesInWater.add(Container());
+        } else {
+            bodiesInWater[0] = (BudgetScreen(onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
+            bodiesInWater[1] = (RentScreen(controller: controller));
+            bodiesInWater[2] = (SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewTransactions));
+        }
+        
+        // * ADD HEADS TO THE WATER
+
+        if (headsInWater.length == 0) {
+            headsInWater.add(budgetHead());
+            headsInWater.add(rentHead());
+            headsInWater.add(subsHead());
+            headsInWater.add(AppBar());
+        } else {
+            headsInWater[0] = (budgetHead());
+            headsInWater[1] = (rentHead());
+            headsInWater[2] = (subsHead());
+        }
+
+        // * ADD BUTTONS TO THE WATER
+
+        if (buttonsInWater.length == 0) {
+            buttonsInWater.add(BudgetButton(onActionPressed: onActionPressed));
+            buttonsInWater.add(RentButton(onActionPressed: onRentActionPressed));
+            buttonsInWater.add(SubsButton(onActionPressed: onSubsActionPressed));
+            buttonsInWater.add(Container());
+        } else {
+            buttonsInWater[0] = (BudgetButton(onActionPressed: onActionPressed));
+            buttonsInWater[1] = (RentButton(onActionPressed: onRentActionPressed));
+            buttonsInWater[2] = (SubsButton(onActionPressed: onSubsActionPressed));
+        }
+
+        controller = PageController(keepPage: true, initialPage: settings["rentPage"]);
+
+        bool _first = settings["firstTime"];
+        
+        return Scaffold(
+            backgroundColor: themeColors[theme],
+            appBar: _first ? setupHead() : headsInWater[selectedNavMenu],
+            body: _first ? SetupScreen(themeButtonFunction: themeButtonPressed,) : bodiesInWater[selectedNavMenu],
+            bottomNavigationBar: _first ? Container(height: SizeConfig.blockSizeVertical * 5,) : BottomNavigationBar(
+                items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.account_balance_wallet),
+                        title: Text("", style: TextStyle(fontSize: 0))
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.home),
+                        title: Text("", style: TextStyle(fontSize: 0))
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.calendar_today),
+                        title: Text("", style: TextStyle(fontSize: 0))
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.settings),
+                        title: Text("", style: TextStyle(fontSize: 0))
+                    ),
+                ],
+                currentIndex: selectedNavMenu,
+                selectedItemColor: Colors.purpleAccent[700],
+                unselectedItemColor: Colors.grey[700],
+                selectedFontSize: 0,
+                onTap: onNavClick,
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: navBarColors[theme],
+            ),
+            floatingActionButton: _first ? SetupButton(onActionPressed: onSetupActionPressed) : buttonsInWater[selectedNavMenu],
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        );
+	}
+}
