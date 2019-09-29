@@ -25,7 +25,7 @@ List<Color> themeColors = [
 
 List<Color> navBarColors = [
     Colors.grey[100],
-    Colors.black,
+    Colors.grey[900],
 ];
 
 List<Color> selectedItemColors = [
