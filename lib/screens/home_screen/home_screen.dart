@@ -1,7 +1,7 @@
 import 'package:budget/main.dart';
 import 'package:budget/modules/functions.dart';
-import 'package:budget/modules/global.dart' as prefix0;
 import 'package:budget/screens/edit_transaction_screen/edit_transaction.dart';
+import 'package:budget/screens/settings_screen/settings_screen.dart';
 import 'package:budget/screens/setup_screen/setup_screen.dart';
 import 'package:budget/screens/subs_screen/subs_screen.dart';
 import 'package:flutter/material.dart';
@@ -178,8 +178,18 @@ class _MyApp extends State<MySApp> {
         });
     }
 
+    void resetSettingsAction() {
+        setState(() {
+            resetSettings();
+            refreshStats();
+            theme = 0;
+            selectedNavMenu = 0;
+        });
+    }
+
 	@override
 	Widget build(BuildContext context) {
+        SizeConfig().init(context);
         refreshStats();
 
         SizeConfig().init(context);
@@ -190,11 +200,12 @@ class _MyApp extends State<MySApp> {
             bodiesInWater.add(BudgetScreen(onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
             bodiesInWater.add(RentScreen(controller: controller));
             bodiesInWater.add(SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewTransactions));
-            bodiesInWater.add(Container());
+            bodiesInWater.add(SettingsScreen(themeButtonFunction: themeButtonPressed));
         } else {
             bodiesInWater[0] = (BudgetScreen(onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
             bodiesInWater[1] = (RentScreen(controller: controller));
             bodiesInWater[2] = (SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewTransactions));
+            bodiesInWater[3] = (SettingsScreen(themeButtonFunction: themeButtonPressed, resetSettingsAction: resetSettingsAction));
         }
         
         // * ADD HEADS TO THE WATER
@@ -203,11 +214,12 @@ class _MyApp extends State<MySApp> {
             headsInWater.add(budgetHead());
             headsInWater.add(rentHead());
             headsInWater.add(subsHead());
-            headsInWater.add(AppBar());
+            headsInWater.add(settingsHead());
         } else {
             headsInWater[0] = (budgetHead());
             headsInWater[1] = (rentHead());
             headsInWater[2] = (subsHead());
+            headsInWater[3] = (settingsHead());
         }
 
         // * ADD BUTTONS TO THE WATER
@@ -216,11 +228,12 @@ class _MyApp extends State<MySApp> {
             buttonsInWater.add(BudgetButton(onActionPressed: onActionPressed));
             buttonsInWater.add(RentButton(onActionPressed: onRentActionPressed));
             buttonsInWater.add(SubsButton(onActionPressed: onSubsActionPressed));
-            buttonsInWater.add(Container());
+            buttonsInWater.add(SettingsButton(onActionPressed: onSetupActionPressed));
         } else {
             buttonsInWater[0] = (BudgetButton(onActionPressed: onActionPressed));
             buttonsInWater[1] = (RentButton(onActionPressed: onRentActionPressed));
             buttonsInWater[2] = (SubsButton(onActionPressed: onSubsActionPressed));
+            buttonsInWater[3] = (SettingsButton(onActionPressed: onSetupActionPressed));
         }
 
         controller = PageController(keepPage: true, initialPage: settings["rentPage"]);

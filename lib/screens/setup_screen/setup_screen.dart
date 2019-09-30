@@ -25,7 +25,7 @@ PreferredSizeWidget setupHead() {
 }
 
 class SetupScreen extends StatefulWidget {
-    Function themeButtonFunction;
+    final Function themeButtonFunction;
 
     SetupScreen({Key key, this.themeButtonFunction}) : super(key: key);
 

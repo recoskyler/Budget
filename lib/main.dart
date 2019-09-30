@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 // TODO Monthly Stats
 // TODO Savings Stats
 // TODO Rental Stats
-// TODO Settings Page
 // TODO Description Editing
 
 class SizeConfig {
@@ -39,7 +38,7 @@ class SizeConfig {
 }
 
 void main() {
-    resetSettings();
+    //resetSettings();
     settings = Map.from(defaultPrefs);
 
     loadSettings().then((bool _b){

@@ -41,10 +41,17 @@ void checkSettings() {
     print("Checked and saved settings");
 }
 
-Future<bool> resetSettings() async {
+Future<bool> resetSettings([bool _keepFirstState = true]) async {
     print("Resetting ...");
-    //settings.clear();
+
+    bool _fs = true;
+
+    if (settings.containsKey("firstTime"))
+        _fs = settings["firstTime"];
+
     settings = Map.from(defaultPrefs);
+    settings["firstTime"] = _keepFirstState ? _fs : false;
+
     await saveSettings();
 
     return true;
@@ -70,7 +77,7 @@ Future<bool> loadSettings() async {
         await global.readFromFile(global.settingsFile).then((String _s) {
             if (_s == null || _s == "" || _s == "{}") {
                 global.writeToFile(global.settingsFile, "").then((File _f) {
-                    resetSettings().then((_v) {return true;});
+                    resetSettings(false).then((_v) {return true;});
                 });
             }
 
