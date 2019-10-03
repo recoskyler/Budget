@@ -1,4 +1,4 @@
-package com.example.budget
+package com.recoskyler.budget
 
 import android.os.Bundle
 

@@ -9,6 +9,9 @@ import 'package:flutter/widgets.dart';
 // TODO Rental Stats
 // TODO Description Editing
 
+// * TEXT and WIDGET Scaling
+// Sizeconfig safeBlockHorizontal
+
 class SizeConfig {
     static MediaQueryData _mediaQueryData;
     static double screenWidth;

@@ -175,12 +175,14 @@ class _MyApp extends State<MySApp> {
     void themeButtonPressed(int _theme) {
         setState(() {
             theme = _theme;
+            settings["theme"] = _theme;
+            saveSettings();
         });
     }
 
     void resetSettingsAction() {
         setState(() {
-            resetSettings();
+            resetSettings(false);
             refreshStats();
             theme = 0;
             selectedNavMenu = 0;
@@ -228,12 +230,12 @@ class _MyApp extends State<MySApp> {
             buttonsInWater.add(BudgetButton(onActionPressed: onActionPressed));
             buttonsInWater.add(RentButton(onActionPressed: onRentActionPressed));
             buttonsInWater.add(SubsButton(onActionPressed: onSubsActionPressed));
-            buttonsInWater.add(SettingsButton(onActionPressed: onSetupActionPressed));
+            buttonsInWater.add(Container());
         } else {
             buttonsInWater[0] = (BudgetButton(onActionPressed: onActionPressed));
             buttonsInWater[1] = (RentButton(onActionPressed: onRentActionPressed));
             buttonsInWater[2] = (SubsButton(onActionPressed: onSubsActionPressed));
-            buttonsInWater[3] = (SettingsButton(onActionPressed: onSetupActionPressed));
+            buttonsInWater[3] = (Container());
         }
 
         controller = PageController(keepPage: true, initialPage: settings["rentPage"]);

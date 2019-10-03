@@ -1,13 +1,11 @@
 import 'package:budget/main.dart';
 import 'package:budget/modules/components.dart';
+import 'package:budget/modules/functions.dart';
 import 'package:budget/modules/theme_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import '../../modules/settings.dart';
 import '../../modules/global.dart';
-
-double _amount = settings["monthlyAllowence"];
-int _date = settings["budgetRenewalDay"];
 
 PreferredSizeWidget settingsHead() {
     return appBarWithGradientTitle(
@@ -34,7 +32,9 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"], initialValue: _amount);
+    double _amount = settings["monthlyAllowence"];
+    int _date = settings["budgetRenewalDay"];
+    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"], initialValue: settings["monthlyAllowence"]);
     
     List<Widget> getMonthButtons(Function _op, int _indexVar, int s, int edition) {
         List<Widget> _buttons = new List<Widget>();
@@ -90,6 +90,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     void onSubDayClick(int index) {
         setState(() {
             _date = index;
+            settings["budgetRenewalDay"] = _date;
+            saveSettings();
         });
     }
 
@@ -130,11 +132,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         onSubmitted: (_t) {
                             setState(() {
                                 _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
+                                settings["monthlyAllowence"] = _amount;
+                                saveSettings();
                             });
                         },
                         onChanged: (_t) {
                             setState(() {
                                 _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
+                                settings["monthlyAllowence"] = _amount;
+                                saveSettings();
                             });
                         },
                     )
@@ -192,34 +198,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     elevation: 0.0,
                     highlightElevation: 1.0,
                     padding: EdgeInsets.all(10),
-                )
+                ),
             ],
-        );
-    }
-}
-
-class SettingsButton extends StatefulWidget {
-    final Function onActionPressed;
-
-    SettingsButton({Key key, this.onActionPressed}) : super(key: key);
-
-    @override
-    SettingsButtonState createState() => SettingsButtonState();
-}
-
-class SettingsButtonState extends State<SettingsButton> {
-    @override
-	Widget build(BuildContext context) {        
-        return GestureDetector(
-            child: FloatingActionButton(
-                heroTag: "setupScreenButton",
-                child: Icon(Icons.done),
-                backgroundColor: buttonStates[1][buttonStateIndex % 2],
-                elevation: 0.0,
-                onPressed: () {widget.onActionPressed(_amount, _date);},
-                highlightElevation: 1.0,
-                tooltip: "Done",
-            )
         );
     }
 }

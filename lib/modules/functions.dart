@@ -105,10 +105,11 @@ void addRandomTransaction() {
 
 ///////////////////////////////////////////////////////////////
 
-double calculateExpenses([bool _onlySubs = false]) {
+double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
     double _res = 0.0;
     List<dynamic> _transactions = List.from(settings["transactions"]);
     int _renewalDay = settings["budgetRenewalDay"];
+    _date = _date == null ? DateTime.now() : _date;
 
     if (_transactions.length == 0) {
         return _res;
@@ -117,11 +118,15 @@ double calculateExpenses([bool _onlySubs = false]) {
     for (int i = 0; i < _transactions.length; i++) {
         Payment _p = _transactions[i];
 
-        if (!_onlySubs && thisMonths(_p.getDate(), _renewalDay, DateTime.now()) && expensePaymentTypes.contains(_p.getPaymentType()) && !rentalPaymentTypes.contains(_p.getPaymentType())) {
+        if (!thisMonths(_p.getDate(), _renewalDay, _date)) {
+            break;
+        }
+
+        if (_p.getPaymentType() != PaymentType.Subscription && !_onlySubs && thisMonths(_p.getDate(), _renewalDay, _date) && expensePaymentTypes.contains(_p.getPaymentType()) && !rentalPaymentTypes.contains(_p.getPaymentType())) {
             _res += _p.getAmount();
         }
 
-        if (_p.getPaymentType() == PaymentType.Subscription) {
+        if (_p.getPaymentType() == PaymentType.Subscription && _p.getDate().compareTo(_date) <= 0) {
             _res += _p.getAmount();
         }
     }
@@ -129,10 +134,11 @@ double calculateExpenses([bool _onlySubs = false]) {
     return _res;
 }
 
-double calculateSavings() {
+double calculateSavings([DateTime _date]) {
     double _res = 0.0;
     List _transactions = List.from(settings["transactions"]);
     int _renewalDay = settings["budgetRenewalDay"];
+    _date = _date == null ? DateTime.now() : _date;
 
     if (_transactions.length == 0) {
         return _res;
@@ -141,11 +147,15 @@ double calculateSavings() {
     for (int i = 0; i < _transactions.length; i++) {
         Payment _p = _transactions[i];
 
-        if (thisMonths(_p.getDate(), _renewalDay, DateTime.now()) && savingPaymentTypes.contains(_p.getPaymentType())) {
+        if (!thisMonths(_p.getDate(), _renewalDay, _date)) {
+            break;
+        }
+
+        if (thisMonths(_p.getDate(), _renewalDay, _date) && savingPaymentTypes.contains(_p.getPaymentType())) {
             _res += _p.getAmount();
         }
 
-        if (thisMonths(_p.getDate(), _renewalDay, DateTime.now()) && (_p.getPaymentType() == PaymentType.SavingExpense || _p.getPaymentType() == PaymentType.SavingToBudget)) {
+        if (thisMonths(_p.getDate(), _renewalDay, _date) && (_p.getPaymentType() == PaymentType.SavingExpense || _p.getPaymentType() == PaymentType.SavingToBudget)) {
             _res -= _p.getAmount();
         }
 
@@ -163,12 +173,14 @@ void refreshStats() {
     savings = calculateTotalSavings();
     subexpense = calculateExpenses(true);
     currency = settings["currency"];
+    theme = settings["theme"];
 }
 
-double calculateAllowence() {
+double calculateAllowence([DateTime _date]) {
     double _res = settings["monthlyAllowence"];
     List _transactions = List.from(settings["transactions"]);
     int _renewalDay = settings["budgetRenewalDay"];
+    _date = _date == null ? DateTime.now() : _date;
 
     if (_transactions.length == 0) {
         return _res;
@@ -176,6 +188,10 @@ double calculateAllowence() {
 
     for (int i = 0; i < _transactions.length; i++) {
         Payment _p = _transactions[i];
+
+        if (!thisMonths(_p.getDate(), _renewalDay, _date)) {
+            break;
+        }
 
         if (thisMonths(_p.getDate(), _renewalDay, DateTime.now()) && (_p.getPaymentType() == PaymentType.Deposit || _p.getPaymentType() == PaymentType.SavingToBudget)) {
             _res += _p.getAmount();

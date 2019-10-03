@@ -1,3 +1,4 @@
+import 'functions.dart';
 import 'global.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -61,6 +62,11 @@ Future<bool> saveSettings() async {
     try {
         settings["lastSaved"] = DateTime.now().toString();
 
+        List<Payment> _t = List<Payment>.from(settings["transactions"]);
+        _t = orderByDateDescending(_t);
+
+        settings["transactions"] = _t;
+
         global.writeToFile(global.settingsFile, jsonEncode(settings)).then((File _f) {
             print("Saved ...");
         });
@@ -92,6 +98,8 @@ Future<bool> loadSettings() async {
                 _sp.add(Payment.fromJSON(_p));
                 print(_p.toString());
             });
+
+            _sp = orderByDateDescending(_sp);
 
             settings["transactions"] = _sp;
 

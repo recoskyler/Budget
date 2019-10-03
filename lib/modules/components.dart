@@ -1,5 +1,6 @@
 import 'package:budget/modules/enums.dart';
 import 'package:budget/modules/functions.dart';
+import '../main.dart';
 import 'classes.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_text/gradient_text.dart';
@@ -73,7 +74,7 @@ Column expenseBlock(double expense, String _currency) {
                 style: TextStyle(
                     color: textColors[theme],
                     fontFamily: "Montserrat",
-                    fontSize: 22.0,
+                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w300
                 )
             ),
@@ -82,7 +83,7 @@ Column expenseBlock(double expense, String _currency) {
                 style: TextStyle(
                     color: Colors.red,
                     fontFamily: "Montserrat",
-                    fontSize: 38.0,
+                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1
                 )
@@ -106,7 +107,7 @@ Column subsExpenseBlock(double expense, String _currency) {
                 style: TextStyle(
                     color: textColors[theme],
                     fontFamily: "Montserrat",
-                    fontSize: 22.0,
+                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w300
                 )
             ),
@@ -115,7 +116,7 @@ Column subsExpenseBlock(double expense, String _currency) {
                 style: TextStyle(
                     color: Colors.red,
                     fontFamily: "Montserrat",
-                    fontSize: 38.0,
+                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1
                 )
@@ -139,7 +140,7 @@ Column incomeBlock(double income, String _currency) {
                 style: TextStyle(
                     color: textColors[theme],
                     fontFamily: "Montserrat",
-                    fontSize: 22.0,
+                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w300
                 )
             ),
@@ -148,7 +149,7 @@ Column incomeBlock(double income, String _currency) {
                 style: TextStyle(
                     color: Colors.greenAccent[700],
                     fontFamily: "Montserrat",
-                    fontSize: 38.0,
+                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1
                 )
@@ -157,7 +158,7 @@ Column incomeBlock(double income, String _currency) {
     );
 }
 
-Column totalSavingsBlock(double savings, String _currency) {
+Column totalSavingsBlock(double savings, String _currency, ) {
     if (_currency == null) _currency = "";
 
     String _savingsStr = _currency + savings.toStringAsFixed(2);
@@ -168,11 +169,11 @@ Column totalSavingsBlock(double savings, String _currency) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
             Text(
-                " SAVINGS",
+                " TOTAL SAVINGS",
                 style: TextStyle(
                     color: textColors[theme],
                     fontFamily: "Montserrat",
-                    fontSize: 22.0,
+                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w300
                 )
             ),
@@ -181,7 +182,7 @@ Column totalSavingsBlock(double savings, String _currency) {
                 style: TextStyle(
                     color: Colors.amber[800],
                     fontFamily: "Montserrat",
-                    fontSize: 38.0,
+                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1
                 )
@@ -249,7 +250,7 @@ Column remainingBlock(double remaining, String _currency) {
                 style: TextStyle(
                     color: remT,
                     fontFamily: "Montserrat",
-                    fontSize: 22.0,
+                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w300
                 )
             ),
@@ -258,7 +259,7 @@ Column remainingBlock(double remaining, String _currency) {
                 style: TextStyle(
                     color: remC,
                     fontFamily: "Montserrat",
-                    fontSize: 38.0,
+                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1
                 )
@@ -304,7 +305,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime dat
                                 txt,
                                 style: TextStyle(
                                     color: textColors[theme],
-                                    fontSize: 22,
+                                    fontSize: 22 * SizeConfig.safeBlockHorizontal,
                                     fontWeight: FontWeight.w500,
                                     letterSpacing: 1.1
                                 )
@@ -315,7 +316,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime dat
                                 _monS,
                                 style: TextStyle(
                                     color: _monC,
-                                    fontSize: 25,
+                                    fontSize: 25 * SizeConfig.safeBlockHorizontal,
                                     fontFamily: "Montserrat",
                                     letterSpacing: 1.5,
                                 ),
@@ -337,7 +338,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime dat
                                 child: Text(
                                     _remTxt,
                                     style: TextStyle(
-                                        fontSize: 28,
+                                        fontSize: 2 * SizeConfig.safeBlockHorizontal,
                                         fontFamily: "Montserrat",
                                         letterSpacing: 3,
                                         color: Colors.redAccent[400]
@@ -408,7 +409,7 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                                         _datS,
                                         style: TextStyle(
                                             color: dimTextColors[theme],
-                                            fontSize: 16,
+                                            fontSize: 3.5 * SizeConfig.safeBlockHorizontal,
                                             fontWeight: FontWeight.w500,
                                             letterSpacing: 1.1
                                         )
@@ -418,7 +419,7 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                                         txt,
                                         style: TextStyle(
                                             color: textColors[theme],
-                                            fontSize: 22,
+                                            fontSize: 5 * SizeConfig.safeBlockHorizontal,
                                             fontWeight: FontWeight.w500,
                                             letterSpacing: 1.1
                                         )
@@ -431,7 +432,7 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                                 _monS,
                                 style: TextStyle(
                                     color: _monC,
-                                    fontSize: 25,
+                                    fontSize: 7 * SizeConfig.safeBlockHorizontal,
                                     fontFamily: "Montserrat",
                                     letterSpacing: 1.5,
                                 ),
@@ -453,13 +454,12 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                                 child: Text(
                                     _remTxt,
                                     style: TextStyle(
-                                        fontSize: 28,
+                                        fontSize: 8 * SizeConfig.safeBlockHorizontal,
                                         fontFamily: "Montserrat",
                                         letterSpacing: 3,
                                         color: Colors.redAccent[400]
                                     )
-                                ),
-                                
+                                ),      
                                 elevation: 0.0,
                                 highlightElevation: 1.0,
                                 padding: EdgeInsets.all(10),
@@ -481,6 +481,8 @@ List<Widget> getMonthTransactions(Function op, Function dp) {
 
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
+
+        if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(DateTime.now()) > 0) continue;
 
         if (thisMonths(_p.getDate(), _renewalDay, DateTime.now()) && !rentalPaymentTypes.contains(_p.getPaymentType())) {
             _pt.add(_p);
@@ -597,7 +599,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                 child: Text(
                     "Tap the button below to set up rent and utilities.",
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 4 * SizeConfig.safeBlockHorizontal,
                         fontFamily: "Montserrat",
                         color: Colors.grey[400]
                     ),
@@ -638,7 +640,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                 style: TextStyle(
                                     color: Colors.grey[700],
                                     fontFamily: "Montserrat",
-                                    fontSize: 20
+                                    fontSize: 20 * SizeConfig.safeBlockHorizontal
                                 ),
                             ),
                             SizedBox(height: 100),
@@ -656,7 +658,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
                                                     fontFamily: "Montserrat",
-                                                    fontSize: 22
+                                                    fontSize: 22 * SizeConfig.safeBlockHorizontal
                                                 ),
                                             ),
                                             SizedBox(height: 16),
@@ -666,7 +668,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 style: TextStyle(
                                                     color: _p.getPaymentType() == PaymentType.Rent ? Colors.red : Colors.greenAccent[700],
                                                     fontFamily: "Montserrat",
-                                                    fontSize: 34
+                                                    fontSize: 34 * SizeConfig.safeBlockHorizontal
                                                 ),
                                             ),
                                         ],
@@ -681,7 +683,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
                                                     fontFamily: "Montserrat",
-                                                    fontSize: 22
+                                                    fontSize: 22 * SizeConfig.safeBlockHorizontal
                                                 ),
                                             ),
                                             Container(
@@ -700,7 +702,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                     ),
                                                     cursorColor: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700],
                                                     style: TextStyle(
-                                                        fontSize: 34,
+                                                        fontSize: 34 * SizeConfig.safeBlockHorizontal,
                                                         fontFamily: "Montserrat",
                                                         color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700]
                                                     ),
@@ -721,7 +723,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                     Container(
                                         width: 150,
                                         child: customButton(
-                                            20,
+                                            20 * SizeConfig.safeBlockHorizontal,
                                             _p.isPaid() ? Colors.indigoAccent[700] : Colors.blue[100],
                                             _p.isPaid() ? Colors.white : Colors.indigo[700],
                                             _p.isPaid() ? Icons.done : Icons.close,
@@ -735,7 +737,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                     Container(
                                         width: 150,
                                         child: customButton(
-                                            20,
+                                            20 * SizeConfig.safeBlockHorizontal,
                                             _u.isPaid() ? Colors.deepOrangeAccent[400] : Colors.deepOrange[100],
                                             _u.isPaid() ? Colors.white : Colors.deepOrangeAccent[400],
                                             _u.isPaid() ? Icons.done : Icons.close,
