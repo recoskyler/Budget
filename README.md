@@ -14,11 +14,11 @@ This is a simple app I decided to make because I needed an app to manage my budg
 
 * You can use any piece of code in this project freely, but please don't make an app with just different colors or something along those lines.
 * Don't commit/push any changes to the master branch.
-* (If a miracle happens and someone decides to advertise/mention it) Please notify me before advertising/promoting/mentioning this project, but you are free to advertise/promote/mention the app on Google Play/App Store (will publish soon).
+* (If a miracle happens and someone decides to advertise/mention it) Please notify me before advertising/promoting/mentioning this project, but you are free to advertise/promote/mention the app on Google Play/App Store (will release in a couple of months as Beta).
 
 ## Licenses
 
-* Icon was made in Adobe Photoshop CC (Licensed), using *"Magneto"* font.
+* Icon was made in Adobe Photoshop CC (Licensed), using *"Magneto"* font. (Will change the icon before release)
 * Fonts used in app are:
 ..* Montserrat
 ..* Fira Code
