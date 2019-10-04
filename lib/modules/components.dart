@@ -479,7 +479,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
             _tr.add(
                 Container(
                     alignment: Alignment.center,
-                    height: 200,
+                    height: SizeConfig.blockSizeVertical * 80,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey[300], width: 2),
                         borderRadius: BorderRadius.all(Radius.circular(30))
@@ -497,7 +497,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                 style: TextStyle(
                                     color: Colors.grey[700],
                                     fontFamily: "Montserrat",
-                                    fontSize: 20 * SizeConfig.safeBlockHorizontal
+                                    fontSize: 5 * SizeConfig.safeBlockHorizontal
                                 ),
                             ),
                             SizedBox(height: 100),
@@ -515,17 +515,17 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
                                                     fontFamily: "Montserrat",
-                                                    fontSize: 22 * SizeConfig.safeBlockHorizontal
+                                                    fontSize: 20
                                                 ),
                                             ),
                                             SizedBox(height: 16),
                                             Text(
-                                                settings["currency"] + _p.getAmount().toStringAsFixed(2),
+                                                settings["currency"] + _p.getAmount().toStringAsFixed(0),
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                     color: _p.getPaymentType() == PaymentType.Rent ? Colors.red : Colors.greenAccent[700],
                                                     fontFamily: "Montserrat",
-                                                    fontSize: 34 * SizeConfig.safeBlockHorizontal
+                                                    fontSize: 34
                                                 ),
                                             ),
                                         ],
@@ -540,13 +540,13 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
                                                     fontFamily: "Montserrat",
-                                                    fontSize: 22 * SizeConfig.safeBlockHorizontal
+                                                    fontSize: 24
                                                 ),
                                             ),
                                             Container(
                                                 alignment: Alignment.centerRight,
                                                 height: 70,
-                                                width: 150,
+                                                width: SizeConfig.blockSizeHorizontal * 36,
                                                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                                 child: TextField(
                                                     textAlign: TextAlign.end,
@@ -559,7 +559,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                     ),
                                                     cursorColor: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700],
                                                     style: TextStyle(
-                                                        fontSize: 34 * SizeConfig.safeBlockHorizontal,
+                                                        fontSize: 34,
                                                         fontFamily: "Montserrat",
                                                         color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700]
                                                     ),
@@ -580,7 +580,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                     Container(
                                         width: 150,
                                         child: customButton(
-                                            20 * SizeConfig.safeBlockHorizontal,
+                                            20,
                                             _p.isPaid() ? Colors.indigoAccent[700] : Colors.blue[100],
                                             _p.isPaid() ? Colors.white : Colors.indigo[700],
                                             _p.isPaid() ? Icons.done : Icons.close,
@@ -594,7 +594,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                     Container(
                                         width: 150,
                                         child: customButton(
-                                            20 * SizeConfig.safeBlockHorizontal,
+                                            20,
                                             _u.isPaid() ? Colors.deepOrangeAccent[400] : Colors.deepOrange[100],
                                             _u.isPaid() ? Colors.white : Colors.deepOrangeAccent[400],
                                             _u.isPaid() ? Icons.done : Icons.close,

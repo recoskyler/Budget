@@ -198,7 +198,7 @@ class _EditRentState extends State<EditRent> {
                             ),
                             SizedBox(height:30),
                             Text(
-                                " utilitIES DAY",
+                                " UTILITIES DAY",
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",

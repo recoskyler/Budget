@@ -195,6 +195,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 SizedBox(height:10),
                 DropdownButton(
+                    icon: Container(),
                     value: _currencyVal,
                     elevation: 0,
                     underline: Container(
@@ -216,7 +217,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 value,
                                 style: TextStyle(
                                     color: textColors[theme],
-                                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                                    fontSize: 25,
                                     fontFamily: "Montserrat",
                                 ),
                                 textAlign: TextAlign.center,
