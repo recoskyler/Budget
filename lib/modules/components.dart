@@ -13,22 +13,19 @@ AppBar appBarWithGradientTitle(String txt, double size, Color c1, Color c2, Colo
     return 
     AppBar(
         iconTheme: IconThemeData(color: Colors.grey[700]),
-        title: Container(
-            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: GradientText(
-                txt,
-                gradient: LinearGradient(colors: [c1, c2]),
-                style: TextStyle(
-                    fontSize: size,
-                    fontFamily: family,
-                    fontWeight: weight,
-                    letterSpacing: spacing
-                ),
-            )
+        title: GradientText(
+            txt,
+            gradient: LinearGradient(colors: [c1, c2]),
+            style: TextStyle(
+                fontSize: size,
+                fontFamily: family,
+                fontWeight: weight,
+                letterSpacing: spacing
+            ),
         ),
         backgroundColor: background,
         elevation: elev,
-        centerTitle: center
+        centerTitle: center,
     );
 }
 
@@ -59,18 +56,18 @@ Container boxContGradient(double margin, double padding, double h, double radius
     );
 }
 
-Column expenseBlock(double expense, String _currency) {
+Column infoBlock(double _amount, String _currency, String _name, Color _color, CrossAxisAlignment _align) {
     if (_currency == null) _currency = "";
 
-    String _expenseStr = _currency + expense.toStringAsFixed(2);
+    String _amountStr = _currency + _amount.toStringAsFixed(2);
 
     return
     Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: _align,
         children: [
             Text(
-                "EXPENSE ",
+                " $_name ",
                 style: TextStyle(
                     color: textColors[theme],
                     fontFamily: "Montserrat",
@@ -79,108 +76,9 @@ Column expenseBlock(double expense, String _currency) {
                 )
             ),
             Text(
-                "$_expenseStr",
+                "$_amountStr",
                 style: TextStyle(
-                    color: Colors.red,
-                    fontFamily: "Montserrat",
-                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1
-                )
-            )
-        ]
-    );
-}
-
-Column subsExpenseBlock(double expense, String _currency) {
-    if (_currency == null) _currency = "";
-
-    String _expenseStr = _currency + subexpense.toStringAsFixed(2);
-
-    return
-    Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-            Text(
-                "FIXED PAYMENTS ",
-                style: TextStyle(
-                    color: textColors[theme],
-                    fontFamily: "Montserrat",
-                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
-                    fontWeight: FontWeight.w300
-                )
-            ),
-            Text(
-                "$_expenseStr",
-                style: TextStyle(
-                    color: Colors.red,
-                    fontFamily: "Montserrat",
-                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1
-                )
-            )
-        ]
-    );
-}
-
-Column incomeBlock(double income, String _currency) {
-    if (_currency == null) _currency = "";
-
-    String _incomeStr = _currency + income.toStringAsFixed(2);
-
-    return
-    Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-            Text(
-                " BUDGET",
-                style: TextStyle(
-                    color: textColors[theme],
-                    fontFamily: "Montserrat",
-                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
-                    fontWeight: FontWeight.w300
-                )
-            ),
-            Text(
-                "$_incomeStr",
-                style: TextStyle(
-                    color: Colors.greenAccent[700],
-                    fontFamily: "Montserrat",
-                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1
-                )
-            )
-        ]
-    );
-}
-
-Column totalSavingsBlock(double savings, String _currency, ) {
-    if (_currency == null) _currency = "";
-
-    String _savingsStr = _currency + savings.toStringAsFixed(2);
-
-    return
-    Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-            Text(
-                " TOTAL SAVINGS",
-                style: TextStyle(
-                    color: textColors[theme],
-                    fontFamily: "Montserrat",
-                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
-                    fontWeight: FontWeight.w300
-                )
-            ),
-            Text(
-                "$_savingsStr",
-                style: TextStyle(
-                    color: Colors.amber[800],
+                    color: _color,
                     fontFamily: "Montserrat",
                     fontSize: 10 * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w800,
@@ -228,46 +126,6 @@ Container customButton(double s, Color backColor, Color c, IconData i, String tx
     );
 }
 
-Column remainingBlock(double remaining, String _currency) {
-    if (_currency == null) _currency = "";
-
-    String _remainingStr = _currency + remaining.toStringAsFixed(2);
-    Color remC = Colors.blueAccent[700];
-    Color remT = textColors[theme];
-
-    if (remaining < 0) {
-        remC = Colors.redAccent[700];
-        remT = Colors.red;
-    }
-
-    return
-    Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-            Text(
-                "REMAINING ",
-                style: TextStyle(
-                    color: remT,
-                    fontFamily: "Montserrat",
-                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
-                    fontWeight: FontWeight.w300
-                )
-            ),
-            Text(
-                "$_remainingStr",
-                style: TextStyle(
-                    color: remC,
-                    fontFamily: "Montserrat",
-                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1
-                )
-            )
-        ]
-    );
-}
-
 GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime date, PaymentType t, double amount, int id, Function op, Function bp, Function dp) {
     if (_currency == null) _currency = "";
 
@@ -305,7 +163,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime dat
                                 txt,
                                 style: TextStyle(
                                     color: textColors[theme],
-                                    fontSize: 22 * SizeConfig.safeBlockHorizontal,
+                                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
                                     fontWeight: FontWeight.w500,
                                     letterSpacing: 1.1
                                 )
@@ -316,7 +174,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime dat
                                 _monS,
                                 style: TextStyle(
                                     color: _monC,
-                                    fontSize: 25 * SizeConfig.safeBlockHorizontal,
+                                    fontSize: 7 * SizeConfig.safeBlockHorizontal,
                                     fontFamily: "Montserrat",
                                     letterSpacing: 1.5,
                                 ),
@@ -338,7 +196,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime dat
                                 child: Text(
                                     _remTxt,
                                     style: TextStyle(
-                                        fontSize: 2 * SizeConfig.safeBlockHorizontal,
+                                        fontSize: 8 * SizeConfig.safeBlockHorizontal,
                                         fontFamily: "Montserrat",
                                         letterSpacing: 3,
                                         color: Colors.redAccent[400]
@@ -473,18 +331,19 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
     );
 }
 
-List<Widget> getMonthTransactions(Function op, Function dp) {
+List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
     List<Widget> _tr = new List<Widget>();
     List<Payment> _pt = new List<Payment>();
     List _t = List.from(settings["transactions"]);
     int _renewalDay = settings["budgetRenewalDay"];
+    _date = _date == null ? DateTime.now() : _date;
 
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
 
-        if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(DateTime.now()) > 0) continue;
+        if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) > 0) continue;
 
-        if (thisMonths(_p.getDate(), _renewalDay, DateTime.now()) && !rentalPaymentTypes.contains(_p.getPaymentType())) {
+        if (thisMonths(_p.getDate(), _renewalDay, _date) && !rentalPaymentTypes.contains(_p.getPaymentType())) {
             _pt.add(_p);
         }
     }
@@ -535,7 +394,7 @@ ListView subscriptionsBlock(String _currency, Function op, Function dp) {
 }
 
 Divider transactionItemDivider() {
-    return Divider(indent: 10, endIndent: 10, color: Colors.grey[400]);
+    return Divider(indent: 10, endIndent: 10, color: Colors.grey[400], thickness: 1);
 }
 
 ListView namesBlock(Function _op, int _indexVar) {
@@ -586,8 +445,6 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
 
     rentPage = -1;
     int _page = -1;
-
-    print(settings["rentAmount"]);
 
     if (settings["rentAmount"] == 0.0) {
         settings["rentPage"] = 0;

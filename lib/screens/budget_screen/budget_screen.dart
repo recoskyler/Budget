@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../modules/components.dart';
 import '../../modules/global.dart';
 
-PreferredSizeWidget budgetHead() {
+PreferredSizeWidget budgetHead([BuildContext context]) {
     return appBarWithGradientTitle(
         "BUDGET", 
         25, 
@@ -37,20 +37,26 @@ class BudgetScreenState extends State<BudgetScreen> {
             children: [
                 Divider(),
                 SizedBox(height: 20),
-                Row(
-                    children: [
-                        Expanded(child: incomeBlock(budget, currency)),
-                        Expanded(child: expenseBlock(expense, currency)),
+                Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                        Row(
+                            children: [
+                                Expanded(child: infoBlock(budget, currency, "BUDGET", Colors.greenAccent[700], CrossAxisAlignment.start)),
+                                Expanded(child: infoBlock(expense, currency, "EXPENSE", Colors.red, CrossAxisAlignment.end)),
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                            children: [
+                                Expanded(child: infoBlock(savings, currency, "TOTAL SAVINGS", Colors.amber[800], CrossAxisAlignment.start)),
+                                Expanded(child: infoBlock(budget - expense, currency, "REMAINING", budget - expense >= 0 ? Colors.blueAccent[700] : Colors.redAccent[700], CrossAxisAlignment.end)),
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                        ),
                     ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                ),
-                SizedBox(height: 30),
-                Row(
-                    children: [
-                        Expanded(child: totalSavingsBlock(savings, currency)),
-                        Expanded(child: remainingBlock(budget - expense, currency)),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
                 ),
                 SizedBox(height: 20),
                 Divider(color: Colors.grey),
@@ -65,7 +71,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                     )
                 ),
                 SizedBox(height: 10),
-                transactionItemDivider(),
+                Divider(color: Colors.grey),
                 Expanded(child: transactionsBlock(currency, widget.onTransactionItemClick, widget.renewTransactions)),
                 AnimatedContainer(
                     curve: Curves.easeInOut,

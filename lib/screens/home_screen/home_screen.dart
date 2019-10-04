@@ -213,13 +213,13 @@ class _MyApp extends State<MySApp> {
         // * ADD HEADS TO THE WATER
 
         if (headsInWater.length == 0) {
-            headsInWater.add(budgetHead());
-            headsInWater.add(rentHead());
+            headsInWater.add(budgetHead(context));
+            headsInWater.add(rentHead(context));
             headsInWater.add(subsHead());
             headsInWater.add(settingsHead());
         } else {
-            headsInWater[0] = (budgetHead());
-            headsInWater[1] = (rentHead());
+            headsInWater[0] = (budgetHead(context));
+            headsInWater[1] = (rentHead(context));
             headsInWater[2] = (subsHead());
             headsInWater[3] = (settingsHead());
         }

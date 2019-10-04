@@ -1,6 +1,5 @@
 import 'package:budget/main.dart';
 import 'package:budget/modules/components.dart';
-import 'package:budget/modules/functions.dart';
 import 'package:budget/modules/theme_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
@@ -34,6 +33,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
     double _amount = settings["monthlyAllowence"];
     int _date = settings["budgetRenewalDay"];
+    String _currencyVal = "€";
     final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"], initialValue: settings["monthlyAllowence"]);
     
     List<Widget> getMonthButtons(Function _op, int _indexVar, int s, int edition) {
@@ -182,7 +182,50 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: getButtons(theme, widget.themeButtonFunction),
                 ),
-                SizedBox(height:20 * SizeConfig.blockSizeVertical),
+                SizedBox(height:30),
+                Text(
+                    " CURRENCY",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w300,
+                        color: textColors[theme],
+                        letterSpacing: 2
+                    )
+                ),
+                SizedBox(height:10),
+                DropdownButton(
+                    value: _currencyVal,
+                    elevation: 0,
+                    underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent[400],
+                    ),
+                    onChanged: (String _newVal) {
+                        setState(() {
+                            currency = _newVal;
+                            _currencyVal = _newVal;
+                            settings["currency"] = currency;
+                            saveSettings();
+                        });
+                    },
+                    items: <String>['€', '\$', '£', '¥', '₩', '₺', ''].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                                value,
+                                style: TextStyle(
+                                    color: textColors[theme],
+                                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                                    fontFamily: "Montserrat",
+                                ),
+                                textAlign: TextAlign.center,
+                            ),
+                        );
+                    })
+                    .toList()
+                ),
+                SizedBox(height:60),
                 RawMaterialButton(
                     shape: new CircleBorder(),
                     onPressed: widget.resetSettingsAction,

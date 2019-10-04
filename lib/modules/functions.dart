@@ -223,11 +223,14 @@ double calculateTotalSavings() {
         if (_p.getPaymentType() == PaymentType.FixedSavingDeposit) {
             double _fs = 0.0;
             DateTime _td = _p.getStartingDate();
+            _td = getNextRenewalDate(_td, settings["budgetRenewalDay"]);
 
-            do {
+            print(_td.toString());
+
+            while (getRenewalDate(_td, settings["budgetRenewalDay"]).compareTo(getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) == 0) {
                 _fs += _p.getAmount();
                 _td = getNextRenewalDate(_td, settings["budgetRenewalDay"]);
-            } while (getRenewalDate(_td, settings["budgetRenewalDay"]).compareTo(getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) == 0);
+            }
 
             _res += _fs;
         }

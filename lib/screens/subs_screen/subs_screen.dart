@@ -39,16 +39,16 @@ class SubsScreenState extends State<SubsScreen> {
                 SizedBox(height: 20),
                 Row(
                     children: [
-                        Expanded(child: incomeBlock(budget, currency)),
-                        Expanded(child: subsExpenseBlock(subexpense, currency)),
+                        Expanded(child: infoBlock(budget, currency, "BUDGET", Colors.greenAccent[700], CrossAxisAlignment.start)),
+                        Expanded(child: infoBlock(subexpense, currency, "FIXED EXPENSES", Colors.red, CrossAxisAlignment.end)),
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                 ),
                 SizedBox(height: 30),
                 Row(
                     children: [
-                        Expanded(child: totalSavingsBlock(savings, currency)),
-                        Expanded(child: remainingBlock(budget - subexpense, currency)),
+                        Expanded(child: infoBlock(savings, currency, "TOTAL SAVINGS", Colors.amber[800], CrossAxisAlignment.start)),
+                        Expanded(child: infoBlock(budget - subexpense, currency, "REMAINING", budget - subexpense >= 0 ? Colors.blueAccent[700] : Colors.redAccent[700], CrossAxisAlignment.end)),
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                 ),

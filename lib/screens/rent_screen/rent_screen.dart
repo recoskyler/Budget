@@ -6,7 +6,7 @@ import '../../modules/components.dart';
 import '../../modules/settings.dart';
 import 'package:budget/modules/classes.dart';
 
-PreferredSizeWidget rentHead() {
+PreferredSizeWidget rentHead([BuildContext context]) {
     return appBarWithGradientTitle(
         "RENT", 
         25,

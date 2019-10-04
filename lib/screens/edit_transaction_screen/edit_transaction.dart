@@ -23,6 +23,7 @@ class _EditTransactionState extends State<EditTransaction> {
     int _selectedNameIndex = 0;
     double _amount = 0.0;
     DateTime _date = DateTime.now();
+    String _desc = "";
     final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"]);
 
     Future _selectDate() async {
@@ -62,14 +63,29 @@ class _EditTransactionState extends State<EditTransaction> {
     }
 
     void onActionPressed() {
-        if ((_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && calculateTotalSavings() - _amount >= 0 && _amount > 0)) {
+        if ((_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && _amount > 0)) {
             setState(() {
                 List<dynamic> _ls = List.from(settings["transactions"]);
                 List _nm = settings["transactionDescriptions"];
 
-                Payment _p = new Payment(_selectedButtonIndex == 0 ? _nm[_selectedNameIndex] : asString[PaymentType.SavingExpense.index], _amount, _date, _selectedButtonIndex == 0 ? PaymentType.Withdraw.index : PaymentType.SavingExpense.index, settings["keyIndex"]);
-                
-                _ls.add(_p);
+                if (_desc.replaceAll(" ", "").length == 0) {
+                    _desc = _nm[_selectedNameIndex];
+                }
+
+                print(_amount > calculateTotalSavings());
+
+                if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
+                    Payment _sp = new Payment(asString[PaymentType.SavingExpense.index], calculateTotalSavings(), _date, PaymentType.SavingExpense.index, settings["keyIndex"]);
+                    Payment _rp = new Payment(asString[PaymentType.SavingExpense.index], _amount - calculateTotalSavings(), _date, PaymentType.Withdraw.index, settings["keyIndex"]);
+
+                    _ls.add(_sp);
+                    _ls.add(_rp);
+                } else {
+                    Payment _p = new Payment(_selectedButtonIndex == 0 ? _desc : asString[PaymentType.SavingExpense.index], _amount, _date, _selectedButtonIndex == 0 ? PaymentType.Withdraw.index : PaymentType.SavingExpense.index, settings["keyIndex"]);
+
+                    _ls.add(_p);
+                }
+
                 settings["transactions"] = _ls;
                 saveSettings();
 
@@ -77,6 +93,7 @@ class _EditTransactionState extends State<EditTransaction> {
                 _date = DateTime.now();
                 _selectedButtonIndex = 0;
                 _selectedNameIndex = 0;
+                _desc = "";
 
                 Navigator.pop(context);
             });
@@ -167,7 +184,56 @@ class _EditTransactionState extends State<EditTransaction> {
                                     ],
                                 ),
                             ),
-                            SizedBox(height:30),
+                            SizedBox(height:10),
+                            Visibility(
+                                visible: _selectedNameIndex == List.from(settings["transactionDescriptions"]).length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                child: Text(
+                                    " CUSTOM DESCRIPTION",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontFamily: "Montserrat",
+                                        fontWeight: FontWeight.w300,
+                                        color: textColors[theme],
+                                        letterSpacing: 2
+                                    )
+                                ),
+                            ),
+                            SizedBox(height:10),
+                            Visibility(
+                                visible: _selectedNameIndex == List.from(settings["transactionDescriptions"]).length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                child: Container(
+                                    alignment: Alignment.center,
+                                    height: 80,
+                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    child: TextField(
+                                        enabled: _selectedNameIndex == List.from(settings["transactionDescriptions"]).length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                        maxLines: 1,
+                                        maxLength: 24,
+                                        maxLengthEnforced: true,
+                                        keyboardType: TextInputType.text,
+                                        decoration: new InputDecoration(
+                                            focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800])),
+                                            enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[100] : Colors.amber[200]))
+                                        ),
+                                        cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800],
+                                        style: TextStyle(
+                                            fontSize: 40,
+                                            fontFamily: "Montserrat",
+                                            color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
+                                        ),
+                                        onSubmitted: (_t) {
+                                            setState(() {
+                                                _desc = _t;
+                                            });
+                                        },
+                                        onChanged: (_t) {
+                                            setState(() {
+                                                _desc = _t;
+                                            });
+                                        },
+                                    )
+                                )
+                            ),
                             Text(
                                 " AMOUNT",
                                 style: TextStyle(
@@ -195,7 +261,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                         fontFamily: "Montserrat",
                                         color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
                                     ),
-                                    onSubmitted: (_t) {
+                                     onSubmitted: (_t) {
                                         setState(() {
                                             _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
                                         });
@@ -235,7 +301,8 @@ class _EditTransactionState extends State<EditTransaction> {
                                         )
                                     ),
                                 )
-                            )
+                            ),
+                            SizedBox(height:150)
                         ]                    
                     )
                 ]
@@ -246,7 +313,7 @@ class _EditTransactionState extends State<EditTransaction> {
                     child: FloatingActionButton(
                         heroTag: 1,
                         child: Icon(Icons.done),
-                        backgroundColor: (_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && calculateTotalSavings() - _amount >= 0 && _amount > 0) ? Colors.greenAccent[400] : Colors.blueGrey[600],
+                        backgroundColor: (_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && _amount > 0) ? Colors.greenAccent[400] : Colors.blueGrey[600],
                         elevation: 0.0,
                         onPressed: onActionPressed,
                         highlightElevation: 1.0,

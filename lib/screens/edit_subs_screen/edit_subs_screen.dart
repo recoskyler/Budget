@@ -86,7 +86,7 @@ class _EditSubsState extends State<EditSubs> {
             setState(() {
                 List<dynamic> _ls = List.from(settings["transactions"]);
 
-                Payment _p = new Payment(_desc, _amount, new DateTime(DateTime.now().year, DateTime.now().month, _date), _selectedButtonIndex == 0 ? PaymentType.Subscription.index : PaymentType.FixedSavingDeposit.index, settings["keyIndex"]);
+                Payment _p = new Payment(_desc, _amount, new DateTime.now(), _selectedButtonIndex == 0 ? PaymentType.Subscription.index : PaymentType.FixedSavingDeposit.index, settings["keyIndex"]);
                 
                 _ls.add(_p);
                 settings["transactions"] = _ls;
@@ -163,6 +163,7 @@ class _EditSubsState extends State<EditSubs> {
                                             height: 80,
                                             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                             child: TextField(
+                                                maxLines: 1,
                                                 maxLength: 18,
                                                 maxLengthEnforced: true,
                                                 keyboardType: TextInputType.text,

@@ -88,7 +88,6 @@ class _EditRentState extends State<EditRent> {
     }
 
     void onActionPressed() {
-        print(_amount);
         if (_amount > 0.0) {
             setState(() {
                 settings["rentDay"] = _selectedRentDay;
