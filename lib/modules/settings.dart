@@ -6,9 +6,7 @@ import 'classes.dart';
 
 final GlobalFileHandler global = new GlobalFileHandler();
 
-var settings = {};
-
-const defaultPrefs = const {
+const Map<String, dynamic> defaultPrefs = const {
     "lastSaved" : "2019",
     "username" : "",
     "email" : "",
@@ -29,7 +27,9 @@ const defaultPrefs = const {
     "theme" : 0
 };
 
-void checkSettings() {
+Map<String, dynamic> settings = Map<String, dynamic>.from(defaultPrefs);
+
+bool checkSettings() {
     Map _defTemp = Map.from(defaultPrefs);
 
     defaultPrefs.forEach((_key, _val) {
@@ -41,6 +41,8 @@ void checkSettings() {
     saveSettings();
 
     print("Checked and saved settings");
+
+    return true;
 }
 
 Future<bool> resetSettings([bool _keepFirstState = true]) async {
