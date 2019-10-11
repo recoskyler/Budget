@@ -107,11 +107,22 @@ void addRandomTransaction() {
 
 double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
     double _res = 0.0;
-    List<dynamic> _transactions = List.from(settings["transactions"]);
+    List<Payment> _transactions = List<Payment>.from(settings["transactions"]);
     int _renewalDay = settings["budgetRenewalDay"];
     _date = _date == null ? DateTime.now() : _date;
+    _transactions = orderByDateDescending(_transactions);
 
     if (_transactions.length == 0) {
+        return _res;
+    }
+
+    if (_onlySubs) {
+        _transactions = List.from(settings["fixedPayments"]);
+
+        _transactions.forEach((Payment _p){
+            _res += _p.getAmount();
+        });
+
         return _res;
     }
 
@@ -122,11 +133,9 @@ double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
             break;
         }
 
-        if (_p.getPaymentType() != PaymentType.Subscription && !_onlySubs && thisMonths(_p.getDate(), _renewalDay, _date) && expensePaymentTypes.contains(_p.getPaymentType()) && !rentalPaymentTypes.contains(_p.getPaymentType())) {
+        if (thisMonths(_p.getDate(), _renewalDay, _date) && expensePaymentTypes.contains(_p.getPaymentType())) {
             _res += _p.getAmount();
-        }
-
-        if (_p.getPaymentType() == PaymentType.Subscription && _p.getDate().compareTo(_date) <= 0) {
+        } else if (_p.getDate().compareTo(_date) <= 0) {
             _res += _p.getAmount();
         }
     }

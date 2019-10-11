@@ -23,16 +23,17 @@ class _EditRentState extends State<EditRent> {
     int _selectedRentDay = settings["rentDay"];
     int _selectedDuration = 1;
     double _amount = settings["rentAmount"];
-    DateTime _date = DateTime.parse(settings["rentStartDate"]);
+    DateTime _date = DateTime.now();
     final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', initialValue: settings["rentAmount"] ,leftSymbol: settings["currency"]);
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
             context: context,
             initialDate: _date,
-            firstDate: DateTime(DateTime.now().year - 1),
-            lastDate: DateTime.now()
+            firstDate: DateTime(DateTime.now().year - 5),
+            lastDate: DateTime(DateTime.now().year + 1)
         );
+
         if(picked != null) setState(() => _date = picked);
     }
 
@@ -110,7 +111,7 @@ class _EditRentState extends State<EditRent> {
                     _ls.add(_up);
                 }
 
-                settings["transactions"] = _ls;
+                settings["rents"] = _ls;
 
                 saveSettings();
 

@@ -341,6 +341,10 @@ List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
 
+        if (!thisMonths(_p.getDate(), _renewalDay, _date)) {
+            break;
+        }
+
         if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) > 0) continue;
 
         if (thisMonths(_p.getDate(), _renewalDay, _date) && !rentalPaymentTypes.contains(_p.getPaymentType())) {
@@ -361,7 +365,7 @@ List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
 List<Widget> getMonthSubscriptions(Function op, Function dp) {
     List<Widget> _tr = new List<Widget>();
     List<Payment> _pt = new List<Payment>();
-    List _t = List.from(settings["transactions"]);
+    List _t = List.from(settings["fixedPayments"]);
 
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
@@ -441,7 +445,7 @@ ListView namesBlock(Function _op, int _indexVar) {
 
 List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
     List<Widget> _tr = new List<Widget>();
-    List _t = List.from(settings["transactions"]);
+    List<Payment> _t = List<Payment>.from(settings["rents"]);
 
     rentPage = -1;
     int _page = -1;

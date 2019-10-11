@@ -9,7 +9,7 @@ final GlobalFileHandler global = new GlobalFileHandler();
 var settings = {};
 
 const defaultPrefs = const {
-    "lastSaved" : "2002-02-02",
+    "lastSaved" : "2019",
     "username" : "",
     "email" : "",
     "keyIndex" : 0,
@@ -18,11 +18,12 @@ const defaultPrefs = const {
     "rentAmount" : 0.0,
     "utilitiesDay" : 1,
     "rentDay" : 1,
-    "rentStartDate" : "2019-02-02",
+    "rentStartDate" : "",
     "transactionDescriptions" : ["Food", "Drink", "Groceries", "Tech", "Top-Up", "Clothes", "Makeup", "Cinema", "Travel", "Hotel", "Game", "App", "Other"],
-    "notifications" : [],
     "currency" : "€",
     "transactions" : [],
+    "rents" : [],
+    "fixedPayments" : [],
     "rentPage" : 0,
     "firstTime" : true,
     "theme" : 0
@@ -91,6 +92,8 @@ Future<bool> loadSettings() async {
 
             if (settings.toString() == "{}") resetSettings();
 
+            // Transactions
+
             List<dynamic> _sm = List.from(settings["transactions"]);
             List<Payment> _sp = new List<Payment>();
 
@@ -102,6 +105,30 @@ Future<bool> loadSettings() async {
             _sp = orderByDateDescending(_sp);
 
             settings["transactions"] = _sp;
+
+            // Rental
+
+            _sm = List.from(settings["rents"]);
+            _sp = new List<Payment>();
+
+            _sm.forEach((_p) {
+                _sp.add(Payment.fromJSON(_p));
+                print(_p.toString());
+            });
+
+            settings["rents"] = _sp;
+
+            // Fixed Payments
+
+            _sm = List.from(settings["fixedPayments"]);
+            _sp = new List<Payment>();
+
+            _sm.forEach((_p) {
+                _sp.add(Payment.fromJSON(_p));
+                print(_p.toString());
+            });
+
+            settings["fixedPayments"] = _sp;
 
             print(settings.toString());
             print("Loaded Settings");

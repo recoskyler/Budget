@@ -125,25 +125,12 @@ class _MyApp extends State<MySApp> {
             });
         } else {
             setState(() {
-                List<dynamic> _t = List<dynamic>.from(settings["transactions"]);
-                List<Payment> _r = List<Payment>();
-
-                _t.forEach((_p) {
-                    if (rentalPaymentTypes.contains(_p.getPaymentType())) {
-                        _r.add(_p);
-                    }
-                });
-
-                _r.forEach((Payment _p) {
-                    _t.remove(_p);
-                });
-
-                settings["transactions"] = _t;
                 settings["rentDay"] = 1;
                 settings["rentAmount"] = 0.0;
                 settings["utilitiesDay"] = 1;
                 settings["rentStartDate"] = DateTime.now().toString();
                 settings["rentPage"] = 0;
+                settings["rents"] = new List<Payment>();
 
                 saveSettings(); 
             });
