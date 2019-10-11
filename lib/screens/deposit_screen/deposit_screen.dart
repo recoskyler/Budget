@@ -63,7 +63,7 @@ class _EditDepositState extends State<EditDeposit> {
     void onActionPressed() {
         if ((_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && calculateTotalSavings() - _amount >= 0 && _amount > 0)) {
             setState(() {
-                List<dynamic> _ls = List.from(settings["transactions"]);
+                List _ls = List.from(settings["transactions"]);
                 PaymentType _pt = _selectedButtonIndex == 0 ? PaymentType.Deposit : PaymentType.SavingToBudget;
 
                 Payment _p = new Payment(asString[_pt.index], _amount, _date, _pt.index, settings["keyIndex"]);

@@ -12,7 +12,6 @@ import 'package:budget/screens/edit_saving_screen/edit_saving_screen.dart';
 import 'package:budget/screens/rent_screen/rent_screen.dart';
 import 'package:budget/screens/budget_screen/budget_screen.dart';
 import 'package:budget/screens/edit_rent_screen/edit_rent_screen.dart';
-import 'package:budget/modules/enums.dart';
 import 'package:budget/modules/classes.dart';
 import 'package:budget/screens/edit_subs_screen/edit_subs_screen.dart';
 
@@ -154,6 +153,7 @@ class _MyApp extends State<MySApp> {
             settings["monthlyAllowence"] = _amount;
             settings["firstTime"] = false;
             settings["budgetRenewalDay"] = _date;
+            settings["theme"] = theme;
 
             saveSettings();
         });
@@ -162,8 +162,6 @@ class _MyApp extends State<MySApp> {
     void themeButtonPressed(int _theme) {
         setState(() {
             theme = _theme;
-            settings["theme"] = _theme;
-            saveSettings();
         });
     }
 
@@ -227,7 +225,8 @@ class _MyApp extends State<MySApp> {
 
         controller = PageController(keepPage: true, initialPage: settings["rentPage"]);
 
-        bool _first = settings["firstTime"];
+        // bool _first = settings["firstTime"];
+        bool _first = false;
         
         return Scaffold(
             backgroundColor: themeColors[theme],

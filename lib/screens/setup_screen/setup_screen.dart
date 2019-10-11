@@ -132,14 +132,10 @@ class _SetupScreenState extends State<SetupScreen> {
                                     color: Colors.greenAccent[700]
                                 ),
                                 onSubmitted: (_t) {
-                                    setState(() {
-                                        _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
-                                    });
+                                    _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
                                 },
                                 onChanged: (_t) {
-                                    setState(() {
-                                        _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
-                                    });
+                                    _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
                                 },
                             )
                         ),

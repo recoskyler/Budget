@@ -63,7 +63,7 @@ class _EditSavingState extends State<EditSaving> {
     void onActionPressed() {
         if ((_selectedButtonIndex == 1 && _amount > 0) || (calculateExpenses() + _amount <= calculateAllowence() && _amount > 0 && _selectedButtonIndex == 0)) {
             setState(() {
-                List<dynamic> _ls = List.from(settings["transactions"]);
+                List _ls = List.from(settings["transactions"]);
                 PaymentType _pt = _selectedButtonIndex == 0 ? PaymentType.Saving : PaymentType.ExistingSaving;
 
                 Payment _p = new Payment(asString[_pt.index], _amount, _date, _pt.index, settings["keyIndex"]);

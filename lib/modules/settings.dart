@@ -81,9 +81,9 @@ Future<bool> saveSettings() async {
     return true;
 }
 
-Future<bool> loadSettings() async {
+bool loadSettings() {
     try {
-        await global.readFromFile(global.settingsFile).then((String _s) {
+        global.readFromFile(global.settingsFile).then((String _s) {
             if (_s == null || _s == "" || _s == "{}") {
                 global.writeToFile(global.settingsFile, "").then((File _f) {
                     resetSettings(false).then((_v) {return true;});

@@ -97,7 +97,7 @@ class _EditRentState extends State<EditRent> {
                 settings["rentStartDate"] = _date.toString();
                 settings["rentPage"] = 0;
 
-                List<dynamic> _ls = List.from(settings["transactions"]);
+                List _ls = List.from(settings["transactions"]);
                 PaymentType _rpt = PaymentType.Rent;
                 PaymentType _upt = PaymentType.Utility;
                 DateTime _tempDate = new DateTime(_date.year, _date.month, 1);

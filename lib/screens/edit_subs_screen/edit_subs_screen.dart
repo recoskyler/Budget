@@ -84,7 +84,7 @@ class _EditSubsState extends State<EditSubs> {
     void onActionPressed() {
         if (_amount > 0.0 && _desc.replaceAll(" ", "") != "") {
             setState(() {
-                List<dynamic> _ls = List.from(settings["fixedPayments"]);
+                List _ls = List.from(settings["fixedPayments"]);
 
                 Payment _p = new Payment(_desc, _amount, new DateTime.now(), _selectedButtonIndex == 0 ? PaymentType.Subscription.index : PaymentType.FixedSavingDeposit.index, settings["keyIndex"]);
                 

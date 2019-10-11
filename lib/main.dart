@@ -4,14 +4,6 @@ import 'screens/home_screen/home_screen.dart';
 import 'modules/settings.dart';
 import 'package:flutter/widgets.dart';
 
-// TODO Monthly Stats
-// TODO Savings Stats
-// TODO Rental Stats
-// TODO Description Editing
-
-// * TEXT and WIDGET Scaling
-// Sizeconfig safeBlockHorizontal
-
 class SizeConfig {
     static MediaQueryData _mediaQueryData;
     static double screenWidth;
@@ -42,9 +34,7 @@ class SizeConfig {
 
 void main() {
     //resetSettings();
-    settings = Map.from(defaultPrefs);
+    loadSettings();
 
-    loadSettings().then((bool _b){
-        return runApp(new App());
-    });
+    return runApp(new App());
 }
