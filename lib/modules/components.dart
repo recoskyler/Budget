@@ -9,7 +9,7 @@ import 'settings.dart';
 import 'global.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 
-AppBar appBarWithGradientTitle(String txt, double size, Color c1, Color c2, Color background, [double elev = 1.0, bool center = true, String family = '', FontWeight weight = FontWeight.normal, double spacing = 1.0]) {
+AppBar appBarWithGradientTitle(String txt, double size, Color c1, Color c2, Color background, [double elev = 1.0, bool center = true, String family = '', FontWeight weight = FontWeight.normal, double spacing = 1.0, bool statsButton = false, Function statsAction]) {
     return 
     AppBar(
         iconTheme: IconThemeData(color: Colors.grey[700]),
@@ -26,6 +26,14 @@ AppBar appBarWithGradientTitle(String txt, double size, Color c1, Color c2, Colo
         backgroundColor: background,
         elevation: elev,
         centerTitle: center,
+        actions: !statsButton ? [] : [
+            RawMaterialButton(
+                child: Icon(Icons.show_chart),
+                elevation: 0.0,
+                shape: CircleBorder(),
+                onPressed: statsAction,
+            )
+        ],
     );
 }
 

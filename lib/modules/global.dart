@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:budget/screens/stats_screen/stats_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'functions.dart';
@@ -17,6 +18,10 @@ double savings = calculateTotalSavings();
 String currency = "";
 int rentPage = -1;
 int theme = 0;
+
+void openStats(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => StatsScreen()));
+}
 
 List<Color> themeColors = [
     Colors.grey[50],

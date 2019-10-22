@@ -9,6 +9,8 @@ import 'global.dart';
 
 final _random = new Random();
 
+// * IO FUNCTIONS
+
 bool fileExists(String path) {
     if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound) {
         return false;
@@ -21,7 +23,7 @@ void createFile(String path, [String content = ""]) {
     new File(path).writeAsString(content);
 }
 
-int next(int min, int max) => min + _random.nextInt(max - min);
+// * PAYMENT FUNCTIONS
 
 void deletePaymentByID(int id, Function dp) {
     int _index = -1;
@@ -39,6 +41,10 @@ void deletePaymentByID(int id, Function dp) {
     dp(_t);
 }
 
+
+
+// * WIDGETS
+
 GestureDetector transactionItemFromPayment(Payment _p, Function op, Function dp) {
     return transactionItemBlock(_p.getDescription(), settings["currency"], _p.getDate(), _p.getPaymentType(), _p.getAmount(), _p.getID(), op, deletePaymentByID, dp);
 }
@@ -46,6 +52,8 @@ GestureDetector transactionItemFromPayment(Payment _p, Function op, Function dp)
 GestureDetector subscriptionItemFromPayment(Payment _p, Function op, Function dp) {
     return subscriptionItemBlock(_p.getDescription(), settings["currency"], _p.getDate(), _p.getPaymentType(), _p.getAmount(), _p.getID(), op, deletePaymentByID, dp);
 }
+
+// * DATE FUNCTIONS
 
 DateTime getRenewalDate(DateTime _date, int _renewalDay) {
     DateTime _pastDate = _date;
@@ -85,6 +93,46 @@ bool thisMonths(DateTime _date, int _renewalDay, DateTime _compDate) {
     return false;
 }
 
+List<DateTime> getAllDates([List<Payment> _ls, int _day]) {
+	_ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
+	_day = _day == null ? settings["budgetRenewalDay"] : _day;
+
+	List<DateTime> _res = new List<DateTime>();
+
+	_ls.forEach((Payment _p) {
+		DateTime _date = getRenewalDate(_p.getDate(), _day);
+
+		if (!_res.contains(_date)) _res.add(_date);
+	});
+
+	return _res;
+}
+
+// Yeah, really...
+int getAllDateCount([List<Payment> _ls, int _day]) {
+	return getAllDates(_ls, _day).length;
+}
+
+int getMonthCount([List<Payment> _ls, int _day]) {
+    _ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
+	_day = _day == null ? settings["budgetRenewalDay"] : _day;
+
+    List<DateTime> _dates = getAllDates();
+
+    _dates.sort((a, b) => a.compareTo(b));
+
+    int _count = 0;
+    DateTime _date = _dates[0];
+    DateTime _next = getNextRenewalDate(_date, _day);
+
+    do {
+        _next = getNextRenewalDate(_next, _day);
+        _count++;
+    } while (_next.compareTo(getRenewalDate(DateTime.now(), _day)) < 0);
+
+    return _count;
+}
+
 // * TESTING FUNCTION
 
 void addRandomTransaction() {
@@ -103,7 +151,7 @@ void addRandomTransaction() {
     saveSettings();
 }
 
-///////////////////////////////////////////////////////////////
+// * CALCULATORS
 
 double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
     double _res = 0.0;
@@ -176,15 +224,6 @@ double calculateSavings([DateTime _date]) {
     return _res;
 }
 
-void refreshStats() {
-    expense = calculateExpenses();
-    budget = calculateAllowence();
-    savings = calculateTotalSavings();
-    subexpense = calculateExpenses(true);
-    currency = settings["currency"];
-    theme = settings["theme"];
-}
-
 double calculateAllowence([DateTime _date]) {
     double _res = settings["monthlyAllowence"];
     List _transactions = List.from(settings["transactions"]);
@@ -254,6 +293,34 @@ double calculateTotalSavings() {
     return _res;
 }
 
+double calculateTotalFromPayment(PaymentType _type, [List<Payment> _ls, int _day]) {
+	_ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
+	_day = _day == null ? settings["budgetRenewalDay"] : _day;
+	
+	double _res = 0.0;
+
+	_ls.forEach((Payment _p) {
+		if (_p.getPaymentType() == _type) _res += _p.getAmount();
+	});
+
+	return _res;
+}
+
+double calculateTotalFromPayments(List<PaymentType> _type, [List<Payment> _ls, int _day]) {
+	_ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
+	_day = _day == null ? settings["budgetRenewalDay"] : _day;
+	
+	double _res = 0.0;
+
+	_ls.forEach((Payment _p) {
+		if (_type.contains(_p.getPaymentType())) _res += _p.getAmount();
+	});
+
+	return _res;
+}
+
+// * MISC
+
 List<Payment> orderByDateDescending(List<Payment> _ul) {
     List<Payment> _ol = _ul;
 
@@ -261,3 +328,14 @@ List<Payment> orderByDateDescending(List<Payment> _ul) {
 
     return _ol;
 }
+
+void refreshStats() {
+    expense = calculateExpenses();
+    budget = calculateAllowence();
+    savings = calculateTotalSavings();
+    subexpense = calculateExpenses(true);
+    currency = settings["currency"];
+    theme = settings["theme"];
+}
+
+int next(int min, int max) => min + _random.nextInt(max - min);
