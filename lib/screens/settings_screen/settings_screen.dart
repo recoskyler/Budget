@@ -33,7 +33,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
     double _amount = settings["monthlyAllowence"];
     int _date = settings["budgetRenewalDay"];
-    String _currencyVal = "€";
+    String _currencyVal = settings["currency"];
     final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"], initialValue: settings["monthlyAllowence"]);
     
     List<Widget> getMonthButtons(Function _op, int _indexVar, int s, int edition) {
@@ -194,38 +194,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     )
                 ),
                 SizedBox(height:10),
-                DropdownButton(
-                    icon: Container(),
-                    value: _currencyVal,
-                    elevation: 0,
-                    underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent[400],
-                    ),
-                    onChanged: (String _newVal) {
-                        setState(() {
-                            currency = _newVal;
-                            _currencyVal = _newVal;
-                            settings["currency"] = currency;
-                            saveSettings();
-                        });
-                    },
-                    items: <String>['€', '\$', '£', '¥', '₩', '₺', ''].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                                value,
-                                style: TextStyle(
-                                    color: textColors[theme],
-                                    fontSize: 25,
-                                    fontFamily: "Montserrat",
+                Container(
+                    margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                    child: DropdownButton(
+                        icon: Container(),
+                        value: _currencyVal,
+                        elevation: 0,
+                        underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent[400],
+                        ),
+                        onChanged: (String _newVal) {
+                            setState(() {
+                                currency = _newVal;
+                                _currencyVal = _newVal;
+                                settings["currency"] = currency;
+                                saveSettings();
+                            });
+                        },
+                        items: currencies.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                    value,
+                                    style: TextStyle(
+                                        color: textColors[theme],
+                                        fontSize: 25,
+                                        fontFamily: "Montserrat",
+                                    ),
+                                    textAlign: TextAlign.center,
                                 ),
-                                textAlign: TextAlign.center,
-                            ),
-                        );
-                    })
-                    .toList()
-                ),
+                            );
+                        })
+                        .toList()
+                    ),
+                ),                
                 SizedBox(height:60),
                 RawMaterialButton(
                     shape: new CircleBorder(),

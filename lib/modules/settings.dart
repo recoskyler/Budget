@@ -1,8 +1,7 @@
 import 'functions.dart';
-import 'global.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'classes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const Map<String, dynamic> defaultPrefs = const {
     "lastSaved" : "2019",
@@ -25,6 +24,7 @@ const Map<String, dynamic> defaultPrefs = const {
     "theme" : 0
 };
 
+SharedPreferences settingsStorage;
 Map<String, dynamic> settings = Map<String, dynamic>.from(defaultPrefs);
 
 bool checkSettings() {
@@ -68,76 +68,78 @@ Future<bool> saveSettings() async {
 
         settings["transactions"] = _t;
 
+        /*
         writeToFile(settingsFile, jsonEncode(settings)).then((File _f) {
             print("Saved ...");
         });
+        */
+
+        bool _res = await settingsStorage.setString("settings", jsonEncode(settings));
+
+        return _res;
     } catch (e) {
         print("SETTINGS.DART SAVE SETTINGS ERROR :\n" + e.toString());
         return false;
     }
-
-    return true;
 }
 
 void loadSettings([Function _f]) {
     try {
-        readFromFile(settingsFile).then((String _s) {
-            if (_s == null || _s == "" || _s == "{}") {
-                writeToFile(settingsFile, "").then((File _f) {
-                    resetSettings(false).then((_v) {return true;});
-                });
-            }
+        String _s = settingsStorage.getString("settings");
 
-            settings = jsonDecode(_s);
+        if (_s == null || _s == "" || _s == "{}") {
+            resetSettings(false).then((_v) {return true;});
+        }
 
-            if (settings.toString() == "{}") resetSettings();
+        settings = jsonDecode(_s);
 
-            // Transactions
+        if (settings.toString() == "{}") resetSettings();
 
-            List<dynamic> _sm = List.from(settings["transactions"]);
-            List<Payment> _sp = new List<Payment>();
+        // Transactions
 
-            _sm.forEach((_p) {
-                _sp.add(Payment.fromJSON(_p));
-                //print(_p.toString());
-            });
+        List<dynamic> _sm = List.from(settings["transactions"]);
+        List<Payment> _sp = new List<Payment>();
 
-            _sp = orderByDateDescending(_sp);
-
-            settings["transactions"] = _sp;
-
-            // Rental
-
-            _sm = List.from(settings["rents"]);
-            _sp = new List<Payment>();
-
-            _sm.forEach((_p) {
-                _sp.add(Payment.fromJSON(_p));
-                //print(_p.toString());
-            });
-
-            settings["rents"] = _sp;
-
-            // Fixed Payments
-
-            _sm = List.from(settings["fixedPayments"]);
-            _sp = new List<Payment>();
-
-            _sm.forEach((_p) {
-                _sp.add(Payment.fromJSON(_p));
-                //print(_p.toString());
-            });
-
-            settings["fixedPayments"] = _sp;
-
-            //print(settings.toString());
-            print("Loaded Settings");
-            print("Checking Settings ...");
-            checkSettings();
-
-            refreshStats();
-            if (_f != null) _f(settings);
+        _sm.forEach((_p) {
+            _sp.add(Payment.fromJSON(_p));
+            //print(_p.toString());
         });
+
+        _sp = orderByDateDescending(_sp);
+
+        settings["transactions"] = _sp;
+
+        // Rental
+
+        _sm = List.from(settings["rents"]);
+        _sp = new List<Payment>();
+
+        _sm.forEach((_p) {
+            _sp.add(Payment.fromJSON(_p));
+            //print(_p.toString());
+        });
+
+        settings["rents"] = _sp;
+
+        // Fixed Payments
+
+        _sm = List.from(settings["fixedPayments"]);
+        _sp = new List<Payment>();
+
+        _sm.forEach((_p) {
+            _sp.add(Payment.fromJSON(_p));
+            //print(_p.toString());
+        });
+
+        settings["fixedPayments"] = _sp;
+
+        //print(settings.toString());
+        print("Loaded Settings");
+        print("Checking Settings ...");
+        checkSettings();
+
+        refreshStats();
+        if (_f != null) _f(settings);
     } catch (e) {
         print("SETTINGS.DART LOAD SETTINGS ERROR :\n" + e.toString());
     }

@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:budget/screens/stats_screen/stats_screen.dart';
+
 import 'settings.dart';
 import 'package:flutter/material.dart';
 import 'components.dart';
@@ -137,7 +139,7 @@ int getMonthCount([List<Payment> _ls, int _day]) {
 
     _dates.sort((a, b) => a.compareTo(b));
 
-    int _count = 0;
+    int _count = 1;
     DateTime _next = getRenewalDate(_dates[0], _day);
 
     while (_next.compareTo(getRenewalDate(DateTime.now(), _day)) < 0) {
@@ -317,8 +319,8 @@ double calculateTotalSavings() {
     return _res;
 }
 
-double calculateTotalFromPayment(PaymentType _type, [List<Payment> _ls, int _day]) {
-	_ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
+double calculateTotalFromPayment(PaymentType _type, [List _l, int _day]) {
+	List<Payment> _ls = _l == null ? List<Payment>.from(settings["transactions"]) : List<Payment>.from(_l);
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
 	
 	double _res = 0.0;
@@ -330,8 +332,8 @@ double calculateTotalFromPayment(PaymentType _type, [List<Payment> _ls, int _day
 	return _res;
 }
 
-double calculateTotalFromPayments(List<PaymentType> _type, [List<Payment> _ls, int _day]) {
-	_ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
+double calculateTotalFromPayments(List<PaymentType> _type, [List _l, int _day]) {
+	List<Payment> _ls = _l == null ? List<Payment>.from(settings["transactions"]) : List<Payment>.from(_l);
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
 	
 	double _res = 0.0;
@@ -363,3 +365,7 @@ void refreshStats() {
 }
 
 int next(int min, int max) => min + _random.nextInt(max - min);
+
+void openStats(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => StatsScreen())).then((_tmp) {selectedID = -1;});
+}

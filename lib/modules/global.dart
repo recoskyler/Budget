@@ -1,8 +1,10 @@
-import 'dart:io';
-import 'package:budget/screens/stats_screen/stats_screen.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'functions.dart';
+
+// For the old code down below
+//
+// import 'dart:io';
+// import 'package:path_provider/path_provider.dart';
 
 var expenseList = new List(0);
 var incomeList = new List(0);
@@ -20,9 +22,11 @@ String currency = "";
 int rentPage = -1;
 int theme = 0;
 
-void openStats(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => StatsScreen())).then((_tmp) {selectedID = -1;});
-}
+// * PREFS
+
+List<String> currencies = ['€', '\$', '£', '¥', '₩', '₺', ''];
+
+// * STYLES
 
 List<Color> themeColors = [
     Colors.grey[50],
@@ -49,6 +53,9 @@ List<Color> textColors = [
     Colors.grey[600]
 ];
 
+// Old code, currently using 'shared_preferences' package instead
+
+/*
 final String settingsFileName = "settings.json";
 final String expensesFileName = "expenses.json";
 final String incomesFileName = "incomes.json";
@@ -85,3 +92,4 @@ Future<String> readFromFile(Future<File> futureFile) async {
         return "";
     }
 }
+*/

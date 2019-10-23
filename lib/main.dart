@@ -1,7 +1,7 @@
 import 'package:budget/modules/functions.dart';
-import 'package:budget/modules/global.dart';
 import 'package:budget/modules/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/home_screen/home_screen.dart';
 import 'modules/settings.dart';
 import 'package:flutter/widgets.dart';
@@ -34,7 +34,9 @@ class SizeConfig {
     }
 }
 
-void main() {
+void main() async {
+    settingsStorage = await SharedPreferences.getInstance();
+    
     loadSettings();
     refreshStats();
 
