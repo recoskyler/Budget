@@ -9,9 +9,10 @@ class Payment {
 	double _amount;
 	final DateTime _date;
     final int _id;
+    final int _renewalDay;
     int _paymentType;
 
-	Payment(this._description, this._amount, this._date, this._paymentType, this._id) {
+	Payment(this._description, this._amount, this._date, this._paymentType, this._id, [this._renewalDay]) {
         settings["keyIndex"] += 1;
     }
 
@@ -25,6 +26,10 @@ class Payment {
 
     int getID() {
         return _id;
+    }
+
+    int getRenewalDay() {
+        return _renewalDay;
     }
 
 	double getAmount() {
@@ -42,10 +47,6 @@ class Payment {
     }
 
     DateTime getDate() {
-        if (fixedPaymentTypes.contains(this.getPaymentType())){
-            return new DateTime(DateTime.now().year, DateTime.now().month, _date.day);
-        }
-
         return _date;
     }
 
@@ -82,13 +83,15 @@ class Payment {
 		_date = DateTime.parse(json['date']),
         _id = json['id'],
 		_description = json['description'],
-        _paymentType = json['paymentType'];
+        _paymentType = json['paymentType'],
+        _renewalDay = json['renewalDay'];
 
 	Map<String, dynamic> toJson() => {
 		'amount' : _amount,
 		'date' : _date.toString(),
 		'description' : _description,
         'id' : _id,
-        'paymentType' : _paymentType
+        'paymentType' : _paymentType,
+        'renewalDay' : _renewalDay
 	};
 }

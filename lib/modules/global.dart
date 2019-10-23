@@ -6,23 +6,19 @@ import 'functions.dart';
 // import 'dart:io';
 // import 'package:path_provider/path_provider.dart';
 
-var expenseList = new List(0);
-var incomeList = new List(0);
 int selectedNavMenu = 0;
-int buttonStateIndex = 0;
-int selectedID = -1;
-int selectedIDStats = -1;
-int selectedSubID = -1;
-var buttonStates = [[Icon(Icons.add), Icon(Icons.close)], [Colors.greenAccent[400], Colors.redAccent[400]]];
+int buttonStateIndex = 0; // For the BUDGET screen floating action button.
+int selectedID = -1;      // Budget screen selected transaction item ID
+int selectedIDStats = -1; // Stats screen selected transaction item ID
+int selectedSubID = -1;   // Subs screen selected transaction item ID
+var buttonStates = [[Icon(Icons.add), Icon(Icons.close)], [Colors.greenAccent[400], Colors.redAccent[400]]]; // For the BUDGET screen floating action button.
 double expense = calculateExpenses();
 double subexpense = calculateExpenses(true);
 double budget = calculateAllowence();
 double savings = calculateTotalSavings();
 String currency = "";
-int rentPage = -1;
+int rentPage = -1;        // Rent screen selected card index
 int theme = 0;
-
-// * PREFS
 
 List<String> currencies = ['€', '\$', '£', '¥', '₩', '₺', ''];
 
@@ -53,8 +49,9 @@ List<Color> textColors = [
     Colors.grey[600]
 ];
 
-// Old code, currently using 'shared_preferences' package instead
-
+//
+// Old code, implemented 'shared_preferences' package instead
+//
 /*
 final String settingsFileName = "settings.json";
 final String expensesFileName = "expenses.json";

@@ -86,7 +86,7 @@ class _EditSubsState extends State<EditSubs> {
             setState(() {
                 List _ls = List.from(settings["fixedPayments"]);
 
-                Payment _p = new Payment(_desc, _amount, new DateTime(0, 0, _date), _selectedButtonIndex == 0 ? PaymentType.Subscription.index : PaymentType.FixedSavingDeposit.index, settings["keyIndex"]);
+                Payment _p = new Payment(_desc, _amount, DateTime.now(), _selectedButtonIndex == 0 ? PaymentType.Subscription.index : PaymentType.FixedSavingDeposit.index, settings["keyIndex"], _date);
                 
                 _ls.add(_p);
                 settings["fixedPayments"] = _ls;
