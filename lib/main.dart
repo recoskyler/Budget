@@ -1,4 +1,3 @@
-import 'package:budget/modules/functions.dart';
 import 'package:budget/modules/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,6 +6,11 @@ import 'modules/settings.dart';
 import 'package:flutter/widgets.dart';
 
 class SizeConfig {
+    
+    // For different size displays
+    // If not used, UI may vary from device to device.
+    // Can't say I understand this concept clearly, nor I'm able to use it properly :/
+
     static MediaQueryData _mediaQueryData;
     static double screenWidth;
     static double screenHeight;
@@ -38,7 +42,6 @@ void main() async {
     settingsStorage = await SharedPreferences.getInstance();
     
     loadSettings();
-    refreshStats();
 
     return runApp(new App());
 }

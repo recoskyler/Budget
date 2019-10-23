@@ -71,6 +71,9 @@ GestureDetector subscriptionItemFromPayment(Payment _p, Function op, Function dp
 
 // * DATE FUNCTIONS
 
+/// Returns the renewal date of a date. Takes January and December into consideration as well.
+/// If _date is 15/03/2019, and _renewalDay is 10, the renewal date will be 10/03/2019.
+/// If _date is 7/03/2019, and _renewalDay is 10, the renewal date will be 10/02/2019.
 DateTime getRenewalDate(DateTime _date, int _renewalDay) {
     DateTime _pastDate = _date;
 
@@ -85,6 +88,9 @@ DateTime getRenewalDate(DateTime _date, int _renewalDay) {
     return _pastDate;
 }
 
+/// Returns the next renewal date of a date. Takes January and December into consideration as well.
+/// If _date is 15/03/2019, and _renewalDay is 10, the renewal date will be 10/04/2019.
+/// If _date is 7/03/2019, and _renewalDay is 10, the renewal date will be 10/03/2019.
 DateTime getNextRenewalDate(DateTime _date, int _renewalDay) {
     DateTime _pastDate = _date;
 
@@ -101,6 +107,7 @@ DateTime getNextRenewalDate(DateTime _date, int _renewalDay) {
     return _pastDate;
 }
 
+/// Checks if a Date is between this and next renewal date.
 bool thisMonths(DateTime _date, int _renewalDay, DateTime _compDate) {
     if (getRenewalDate(_date, _renewalDay).compareTo(getRenewalDate(_compDate, _renewalDay)) == 0 || (_date.isBefore(getNextRenewalDate(_compDate, _renewalDay)) && _date.isAfter(getRenewalDate(_compDate, _renewalDay)))) {
         return true;
@@ -109,6 +116,7 @@ bool thisMonths(DateTime _date, int _renewalDay, DateTime _compDate) {
     return false;
 }
 
+/// Returns a List<DateTime> of all the Renewal Dates where there was a payment, no matter what kind.
 List<DateTime> getAllDates([List<Payment> _ls, int _day]) {
 	_ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
@@ -124,7 +132,8 @@ List<DateTime> getAllDates([List<Payment> _ls, int _day]) {
 	return _res;
 }
 
-// Yeah, really...
+// Yeah, really... 'Because I can!' is the answer to your question.
+
 int getAllDateCount([List<Payment> _ls, int _day]) {
 	return getAllDates(_ls, _day).length;
 }
@@ -152,6 +161,7 @@ int getMonthCount([List<Payment> _ls, int _day]) {
 
 // * TESTING FUNCTION
 
+/// Adds a random Payment to settings["transactions"]. It will be visible only on Budget related screens/lists.
 void addRandomTransaction() {
     List _tr = List.from(settings["transactions"]);
     List _desc = List.from(settings["transactionDescriptions"]);
@@ -203,7 +213,7 @@ double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
 
         if (thisMonths(_p.getDate(), _renewalDay, _date) && expensePaymentTypes.contains(_p.getPaymentType())) {
             _res += _p.getAmount();
-        } else if (_p.getDate().compareTo(_date) <= 0) {
+        } else if (_p.getDate().compareTo(_date) <= 0 && _p.getPaymentType() == PaymentType.Subscription && ) {
             _res += _p.getAmount();
         }
     }
