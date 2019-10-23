@@ -213,7 +213,7 @@ double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
 
         if (thisMonths(_p.getDate(), _renewalDay, _date) && expensePaymentTypes.contains(_p.getPaymentType())) {
             _res += _p.getAmount();
-        } else if (_p.getDate().compareTo(_date) <= 0 && _p.getPaymentType() == PaymentType.Subscription && ) {
+        } else if (_p.getDate().compareTo(_date) <= 0 && _p.getPaymentType() == PaymentType.Subscription) {
             _res += _p.getAmount();
         }
     }
