@@ -32,7 +32,7 @@ class RentScreen extends StatefulWidget {
 
 class RentScreenState extends State<RentScreen> {
     void setPaid({Key key, int rentID, int utilityID, bool rentPaid, bool utilityPaid}) {
-        List _t = List.from(settings["transactions"]);
+        List _t = List.from(settings["rents"]);
         int _ri = 0;
         int _ui = 0;
         Payment _rp;
@@ -56,13 +56,13 @@ class RentScreenState extends State<RentScreen> {
         _t[_ui] = _up;
 
         setState(() {
-            settings["transactions"] = _t;
+            settings["rents"] = _t;
             saveSettings();
         });
     }
 
-    void setUtilityAmount(int _id, double _amount) {
-        List _t = List.from(settings["transactions"]);
+    void setUtilityAmount(int _id, double _amount, [bool _perm = true]) {
+        List _t = List.from(settings["rents"]);
         int _ui = 0;
         Payment _up;
 
@@ -78,10 +78,15 @@ class RentScreenState extends State<RentScreen> {
 
         _t[_ui] = _up;
 
-        setState(() {
-            settings["transactions"] = _t;
+        if (_perm) {
+            setState(() {
+                settings["rents"] = _t;
+                saveSettings();
+            });
+        } else {
+            settings["rents"] = _t;
             saveSettings();
-        });
+        }
     }
 
     @override

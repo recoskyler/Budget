@@ -117,18 +117,19 @@ int getMonthCount([List<Payment> _ls, int _day]) {
     _ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
 
-    List<DateTime> _dates = getAllDates();
+    List<DateTime> _dates = getAllDates(_ls, _day);
+
+    if (_dates.length == 0) return 1;
 
     _dates.sort((a, b) => a.compareTo(b));
 
     int _count = 0;
-    DateTime _date = _dates[0];
-    DateTime _next = getNextRenewalDate(_date, _day);
+    DateTime _next = getRenewalDate(_dates[0], _day);
 
-    do {
+    while (_next.compareTo(getRenewalDate(DateTime.now(), _day)) < 0) {
         _next = getNextRenewalDate(_next, _day);
         _count++;
-    } while (_next.compareTo(getRenewalDate(DateTime.now(), _day)) < 0);
+    }
 
     return _count;
 }
@@ -339,3 +340,7 @@ void refreshStats() {
 }
 
 int next(int min, int max) => min + _random.nextInt(max - min);
+
+String formatAmount(double _amount, [int decimals = 2, bool showCurrency = true, String _currency]) {
+    
+}

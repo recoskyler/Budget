@@ -81,7 +81,7 @@ Future<bool> saveSettings() async {
     return true;
 }
 
-bool loadSettings() {
+Future<bool> loadSettings() async {
     try {
         global.readFromFile(global.settingsFile).then((String _s) {
             if (_s == null || _s == "" || _s == "{}") {
@@ -101,7 +101,7 @@ bool loadSettings() {
 
             _sm.forEach((_p) {
                 _sp.add(Payment.fromJSON(_p));
-                print(_p.toString());
+                //print(_p.toString());
             });
 
             _sp = orderByDateDescending(_sp);
@@ -115,7 +115,7 @@ bool loadSettings() {
 
             _sm.forEach((_p) {
                 _sp.add(Payment.fromJSON(_p));
-                print(_p.toString());
+                //print(_p.toString());
             });
 
             settings["rents"] = _sp;
@@ -127,15 +127,17 @@ bool loadSettings() {
 
             _sm.forEach((_p) {
                 _sp.add(Payment.fromJSON(_p));
-                print(_p.toString());
+                //print(_p.toString());
             });
 
             settings["fixedPayments"] = _sp;
 
-            print(settings.toString());
+            //print(settings.toString());
             print("Loaded Settings");
             print("Checking Settings ...");
             checkSettings();
+
+            theme = settings["theme"];
 
             return true;
         });

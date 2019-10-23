@@ -64,7 +64,7 @@ Container boxContGradient(double margin, double padding, double h, double radius
     );
 }
 
-Column infoBlock(double _amount, String _currency, String _name, Color _color, CrossAxisAlignment _align) {
+Column infoBlock(double _amount, String _currency, String _name, Color _color, CrossAxisAlignment _align, [double _titleSize = 5, double _amountSize = 10]) {
     if (_currency == null) _currency = "";
 
     String _amountStr = _currency + _amount.toStringAsFixed(2);
@@ -79,7 +79,7 @@ Column infoBlock(double _amount, String _currency, String _name, Color _color, C
                 style: TextStyle(
                     color: textColors[theme],
                     fontFamily: "Montserrat",
-                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                    fontSize: _titleSize * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w300
                 )
             ),
@@ -88,7 +88,7 @@ Column infoBlock(double _amount, String _currency, String _name, Color _color, C
                 style: TextStyle(
                     color: _color,
                     fontFamily: "Montserrat",
-                    fontSize: 10 * SizeConfig.safeBlockHorizontal,
+                    fontSize: _amountSize * SizeConfig.safeBlockHorizontal,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1
                 )
@@ -391,10 +391,11 @@ List<Widget> getMonthSubscriptions(Function op, Function dp) {
     return _tr;
 }
 
-ListView transactionsBlock(String _currency, Function op, Function dp) {
+ListView transactionsBlock(String _currency, Function op, Function dp, [DateTime _date]) {
+    _date = _date == null ? DateTime.now() : _date;
     return 
     ListView(
-        children: getMonthTransactions(op, dp)
+        children: getMonthTransactions(op, dp, _date)
     );
 }
 
@@ -406,7 +407,7 @@ ListView subscriptionsBlock(String _currency, Function op, Function dp) {
 }
 
 Divider transactionItemDivider() {
-    return Divider(indent: 10, endIndent: 10, color: Colors.grey[400], thickness: 1);
+    return Divider(indent: 10, endIndent: 10, color: dimTextColors[theme], thickness: 1);
 }
 
 ListView namesBlock(Function _op, int _indexVar) {
@@ -493,7 +494,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                     alignment: Alignment.center,
                     height: SizeConfig.blockSizeVertical * 80,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey[300], width: 2),
+                        border: Border.all(color: dimTextColors[theme], width: 2),
                         borderRadius: BorderRadius.all(Radius.circular(30))
                     ),
                     margin: EdgeInsets.fromLTRB(25, 5, 25, 50),
@@ -558,7 +559,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                             Container(
                                                 alignment: Alignment.centerRight,
                                                 height: 70,
-                                                width: SizeConfig.blockSizeHorizontal * 36,
+                                                width: SizeConfig.blockSizeHorizontal * 40,
                                                 padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                                 child: TextField(
                                                     textAlign: TextAlign.end,
@@ -577,7 +578,10 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                     ),
                                                     onSubmitted: (_t) {
                                                         setUtilityAmount(_u.getID(), double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], "")));
-                                                    }
+                                                    },
+                                                    onChanged: (_t) {
+                                                        setUtilityAmount(_u.getID(), double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], "")), false);
+                                                    },
                                                 )
                                             ),
                                         ],
@@ -631,6 +635,93 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
             }
         }
     }
+
+    return _tr;
+}
+
+// TODO BUG Old transactions not showing in list
+
+List<Widget> getTransactionCards() {
+    List<Widget> _tr = new List<Widget>();
+    List<DateTime> _dates = getAllDates();
+    _dates..sort((a, b) => a.compareTo(b));
+
+    _dates.forEach((DateTime _date) {
+        print(_date.toString());
+
+        _tr.add(
+            Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey[800], width: 1.5),
+                    borderRadius: BorderRadius.circular(10),
+                ),constraints: BoxConstraints.expand(),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                        Container(
+                            height: 20,
+                            child: Text(
+                                DateFormat("MM/yyyy").format(_date).toString(),
+                                style: TextStyle(
+                                    color: dimTextColors[theme],
+                                    fontSize: 15,
+                                    fontFamily: "Montserrat",
+                                    letterSpacing: 1.5
+                                ),
+                                textAlign: TextAlign.center,
+                            )
+                        ),
+                        Divider(color: dimTextColors[theme]),
+                        Row(
+                            children: [
+                            Expanded(
+                                child: infoBlock(budget, currency, "BUDGET",
+                                    Colors.greenAccent[700], CrossAxisAlignment.start, 3.5, 7)),
+                            Expanded(
+                                child: infoBlock(expense, currency, "EXPENSE", Colors.red,
+                                    CrossAxisAlignment.end, 3.5, 7)),
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                            children: [
+                            Expanded(
+                                child: infoBlock(savings, currency, "TOTAL SAVINGS",
+                                    Colors.amber[800], CrossAxisAlignment.start, 3.5, 7)),
+                            Expanded(
+                                child: infoBlock(
+                                    budget - expense,
+                                    currency,
+                                    "REMAINING",
+                                    budget - expense >= 0
+                                        ? Colors.blueAccent[700]
+                                        : Colors.redAccent[700],
+                                    CrossAxisAlignment.end, 3.5, 7)),
+                            ],
+                            mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        SizedBox(height: 20),
+                        Divider(color: Colors.grey),
+                        SizedBox(height: 20),
+                        Text(" TRANSACTIONS",
+                            style: TextStyle(
+                                color: textColors[theme],
+                                fontFamily: "Montserrat",
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.w300
+                                )
+                            ),
+                        SizedBox(height: 10),
+                        Divider(color: Colors.grey),
+                        Expanded(child: transactionsBlock(currency, (){}, (){}, _date)),
+                    ],
+                ),
+            ),
+        );
+    });
 
     return _tr;
 }

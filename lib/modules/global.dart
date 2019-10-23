@@ -68,26 +68,6 @@ class GlobalFileHandler {
         return File('$path/$settingsFileName');
     }
 
-    Future<File> get expensesFile async {
-        final path = await _localPath;
-        return File('$path/$expensesFileName');
-    }
-
-    Future<File> get incomesFile async {
-        final path = await _localPath;
-        return File('$path/$incomesFileName');
-    }
-
-    Future<File> get fixedExpensesFile async {
-        final path = await _localPath;
-        return File('$path/$fixedExpensesFileName');
-    }
-
-    Future<File> get fixedIncomesFile async {
-        final path = await _localPath;
-        return File('$path/$fixedIncomesFileName');
-    }
-
     Future<File> writeToFile(Future<File> futureFile, String context) async {
         final file = await futureFile;
         return file.writeAsString(context);

@@ -1,3 +1,5 @@
+import 'package:budget/modules/functions.dart';
+import 'package:budget/modules/global.dart';
 import 'package:budget/modules/settings.dart';
 import 'package:flutter/material.dart';
 import 'screens/home_screen/home_screen.dart';
@@ -33,8 +35,5 @@ class SizeConfig {
 }
 
 void main() {
-    //resetSettings();
-    loadSettings();
-
     return runApp(new App());
 }

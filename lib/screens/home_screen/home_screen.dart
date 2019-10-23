@@ -17,7 +17,7 @@ import 'package:budget/screens/edit_subs_screen/edit_subs_screen.dart';
 
 class App extends StatelessWidget {
     @override
-    Widget build(BuildContext context) {
+    Widget build(BuildContext context) { 
         return MaterialApp(
             title: "Budget",
             home: MySApp(),
@@ -38,6 +38,18 @@ class _MyApp extends State<MySApp> {
     List<PreferredSizeWidget> headsInWater = new List<PreferredSizeWidget>();
     List<Widget> buttonsInWater = new List<Widget>();
     PageController controller = PageController(keepPage: true, initialPage: settings["rentPage"]);
+
+    @override
+    void initState() {
+        loadSettings().then((bool _b) {
+            setState(() {
+                theme = settings["theme"];
+            });
+
+            refreshStats();
+        });
+        super.initState();
+    }
 
     void openEditPage(int _i) {
         switch (_i) {
@@ -162,7 +174,10 @@ class _MyApp extends State<MySApp> {
     void themeButtonPressed(int _theme) {
         setState(() {
             theme = _theme;
+            settings["theme"] = _theme;
         });
+
+        saveSettings();
     }
 
     void resetSettingsAction() {
@@ -178,8 +193,6 @@ class _MyApp extends State<MySApp> {
 	Widget build(BuildContext context) {
         SizeConfig().init(context);
         refreshStats();
-
-        SizeConfig().init(context);
 
         // * ADD BODIES TO THE WATER
 
