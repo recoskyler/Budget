@@ -1,4 +1,3 @@
-import 'package:budget/main.dart';
 import 'package:budget/modules/components.dart';
 import 'package:budget/modules/enums.dart';
 import 'package:budget/modules/functions.dart';
@@ -14,10 +13,30 @@ class StatsScreen extends StatefulWidget {
 }
 
 class _StatsScreenState extends State<StatsScreen> {
+    void onTransactionItemClick(int id) {
+        if (selectedID == id) {
+            setState(() {
+                selectedID = -1;
+            });
+        } else {
+            setState(() {
+                selectedID = id;
+            });
+        }
+    }
+
+    void renewTransactions(List<dynamic> _pt) {
+        setState(() {
+            refreshStats();
+            settings["transactions"] = _pt;
+        });
+
+        saveSettings();
+    }
+
     @override
     Widget build(BuildContext context) {
-        int _monthCount = getMonthCount();
-        List<Widget> _transactionCards = getTransactionCards();
+        List<Widget> _transactionCards = getTransactionCards(onTransactionItemClick, renewTransactions);
 
         return Scaffold(
             appBar: appBarWithGradientTitle("STATS", 25, Colors.cyanAccent[400], Colors.cyan[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
@@ -33,8 +52,8 @@ class _StatsScreenState extends State<StatsScreen> {
                                 padding: EdgeInsets.all(5),
                                 child: Row(
                                     children: [
-                                        infoBlock(calculateTotalFromPayment(PaymentType.Withdraw) / _monthCount, currency, "AVG EXPENSES", Colors.red, CrossAxisAlignment.start),
-                                        infoBlock(calculateTotalFromPayment(PaymentType.PaidUtility) / getMonthCount(settings["rents"], settings["utilitiesDay"]), currency, "AVG UTILITIES", Colors.indigoAccent[700], CrossAxisAlignment.end),
+                                        infoBlock(calculateTotalFromPayment(PaymentType.Withdraw) / getMonthCount(), currency, "AVG EXPENSES", Colors.red, CrossAxisAlignment.start),
+                                        infoBlock(calculateTotalFromPayment(PaymentType.PaidUtility, settings["rents"]) / getMonthCount(settings["rents"], settings["utilitiesDay"]), currency, "AVG UTILITIES", Colors.indigoAccent[700], CrossAxisAlignment.end),
                                     ],
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 ),

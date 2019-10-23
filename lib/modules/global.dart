@@ -9,6 +9,7 @@ var incomeList = new List(0);
 int selectedNavMenu = 0;
 int buttonStateIndex = 0;
 int selectedID = -1;
+int selectedIDStats = -1;
 int selectedSubID = -1;
 var buttonStates = [[Icon(Icons.add), Icon(Icons.close)], [Colors.greenAccent[400], Colors.redAccent[400]]];
 double expense = calculateExpenses();
@@ -20,7 +21,7 @@ int rentPage = -1;
 int theme = 0;
 
 void openStats(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => StatsScreen()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => StatsScreen())).then((_tmp) {selectedID = -1;});
 }
 
 List<Color> themeColors = [
@@ -48,41 +49,39 @@ List<Color> textColors = [
     Colors.grey[600]
 ];
 
-class GlobalFileHandler {
-    final String settingsFileName = "settings.json";
-    final String expensesFileName = "expenses.json";
-    final String incomesFileName = "incomes.json";
-    final String fixedExpensesFileName = "fixedExpenses.json";
-    final String fixedIncomesFileName = "fixedIncomes.json";
-    String directory;
-    Directory dir;
+final String settingsFileName = "settings.json";
+final String expensesFileName = "expenses.json";
+final String incomesFileName = "incomes.json";
+final String fixedExpensesFileName = "fixedExpenses.json";
+final String fixedIncomesFileName = "fixedIncomes.json";
+String directory;
+Directory dir;
 
-    Future<String> get _localPath async {
-        dir = await getApplicationDocumentsDirectory();
-        directory = dir.path;
-        return directory;
-    }
+Future<String> get _localPath async {
+    dir = await getApplicationDocumentsDirectory();
+    directory = dir.path;
+    return directory;
+}
 
-    Future<File> get settingsFile async {
-        final path = await _localPath;
-        return File('$path/$settingsFileName');
-    }
+Future<File> get settingsFile async {
+    final path = await _localPath;
+    return File('$path/$settingsFileName');
+}
 
-    Future<File> writeToFile(Future<File> futureFile, String context) async {
+Future<File> writeToFile(Future<File> futureFile, String context) async {
+    final file = await futureFile;
+    return file.writeAsString(context);
+}
+
+Future<String> readFromFile(Future<File> futureFile) async {
+    try {
         final file = await futureFile;
-        return file.writeAsString(context);
-    }
 
-    Future<String> readFromFile(Future<File> futureFile) async {
-        try {
-            final file = await futureFile;
+        // Read the file.
+        String contents = await file.readAsString();
 
-            // Read the file.
-            String contents = await file.readAsString();
-
-            return contents;
-        } catch (e) {
-            return "";
-        }
+        return contents;
+    } catch (e) {
+        return "";
     }
 }

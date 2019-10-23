@@ -19,25 +19,21 @@ PreferredSizeWidget budgetHead([BuildContext context]) {
         1.5,
         true, 
         () {
+            selectedID = -1;
             openStats(context);
         }
     );
 }
 
 class BudgetScreen extends StatefulWidget {
-  final Function onTransactionItemClick;
-  final Function renewTransactions;
-  final Function openEditPage;
+    final Function onTransactionItemClick;
+    final Function renewTransactions;
+    final Function openEditPage;
 
-  BudgetScreen(
-      {Key key,
-      this.onTransactionItemClick,
-      this.renewTransactions,
-      this.openEditPage})
-      : super(key: key);
+    BudgetScreen({Key key, this.onTransactionItemClick, this.renewTransactions, this.openEditPage}): super(key: key);
 
-  @override
-  BudgetScreenState createState() => BudgetScreenState();
+    @override
+    BudgetScreenState createState() => BudgetScreenState();
 }
 
 class BudgetScreenState extends State<BudgetScreen> {
@@ -57,30 +53,26 @@ class BudgetScreenState extends State<BudgetScreen> {
                     children: <Widget>[
                         Row(
                             children: [
-                            Expanded(
-                                child: infoBlock(budget, currency, "BUDGET",
-                                    Colors.greenAccent[700], CrossAxisAlignment.start)),
-                            Expanded(
-                                child: infoBlock(expense, currency, "EXPENSE", Colors.red,
-                                    CrossAxisAlignment.end)),
+                                Expanded(child: infoBlock(budget, currency, "BUDGET", Colors.greenAccent[700], CrossAxisAlignment.start)),
+                                Expanded(child: infoBlock(expense, currency, "EXPENSE", Colors.red, CrossAxisAlignment.end)),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
                         ),
                         SizedBox(height: 30),
                         Row(
                             children: [
-                            Expanded(
-                                child: infoBlock(savings, currency, "TOTAL SAVINGS",
-                                    Colors.amber[800], CrossAxisAlignment.start)),
-                            Expanded(
-                                child: infoBlock(
-                                    budget - expense,
-                                    currency,
-                                    "REMAINING",
-                                    budget - expense >= 0
-                                        ? Colors.blueAccent[700]
-                                        : Colors.redAccent[700],
-                                    CrossAxisAlignment.end)),
+                                Expanded( child: infoBlock(savings, currency, "TOTAL SAVINGS", Colors.amber[800], CrossAxisAlignment.start)),
+                                Expanded(
+                                    child: infoBlock(
+                                        budget - expense,
+                                        currency,
+                                        "REMAINING",
+                                        budget - expense >= 0
+                                            ? Colors.blueAccent[700]
+                                            : Colors.redAccent[700],
+                                        CrossAxisAlignment.end
+                                    ),
+                                ),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
                         ),
@@ -95,13 +87,11 @@ class BudgetScreenState extends State<BudgetScreen> {
                         fontFamily: "Montserrat",
                         fontSize: 22.0,
                         fontWeight: FontWeight.w300
-                        )
-                    ),
+                    )
+                ),
                 SizedBox(height: 10),
                 Divider(color: Colors.grey),
-                Expanded(
-                    child: transactionsBlock(currency, widget.onTransactionItemClick,
-                        widget.renewTransactions)),
+                Expanded( child: transactionsBlock(currency, widget.onTransactionItemClick, widget.renewTransactions)),
                 AnimatedContainer(
                     curve: Curves.easeInOut,
                     duration: Duration(milliseconds: 200),

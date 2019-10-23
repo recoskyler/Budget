@@ -35,5 +35,8 @@ class SizeConfig {
 }
 
 void main() {
+    loadSettings();
+    refreshStats();
+
     return runApp(new App());
 }

@@ -39,18 +39,6 @@ class _MyApp extends State<MySApp> {
     List<Widget> buttonsInWater = new List<Widget>();
     PageController controller = PageController(keepPage: true, initialPage: settings["rentPage"]);
 
-    @override
-    void initState() {
-        loadSettings().then((bool _b) {
-            setState(() {
-                theme = settings["theme"];
-            });
-
-            refreshStats();
-        });
-        super.initState();
-    }
-
     void openEditPage(int _i) {
         switch (_i) {
             case 0:
@@ -124,6 +112,17 @@ class _MyApp extends State<MySApp> {
         setState(() {
             refreshStats();
             settings["transactions"] = _pt;
+            selectedID = -1;
+        });
+
+        saveSettings();
+    }
+
+    void renewFixedPayments(List<dynamic> _pt) {
+        setState(() {
+            refreshStats();
+            settings["fixedPayments"] = _pt;
+            selectedID = -1;
         });
 
         saveSettings();
@@ -189,9 +188,16 @@ class _MyApp extends State<MySApp> {
         });
     }
 
+    @override
+    void initState() {
+        
+        super.initState();
+    }
+
 	@override
 	Widget build(BuildContext context) {
         SizeConfig().init(context);
+        
         refreshStats();
 
         // * ADD BODIES TO THE WATER
@@ -204,7 +210,7 @@ class _MyApp extends State<MySApp> {
         } else {
             bodiesInWater[0] = (BudgetScreen(onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
             bodiesInWater[1] = (RentScreen(controller: controller));
-            bodiesInWater[2] = (SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewTransactions));
+            bodiesInWater[2] = (SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewFixedPayments));
             bodiesInWater[3] = (SettingsScreen(themeButtonFunction: themeButtonPressed, resetSettingsAction: resetSettingsAction));
         }
         

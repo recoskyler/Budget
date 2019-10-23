@@ -250,7 +250,9 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
         _monC = Colors.indigo[900];
     
     return GestureDetector(
-        onTap: () {op(id);},
+        onTap: () {
+            if (op != null) op(id);
+        },
         child: Container(
             decoration: BoxDecoration(
                 color: selectedID == id ? selectedItemColors[theme] : themeColors[theme],
@@ -316,7 +318,10 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                         children: <Widget>[
                             RawMaterialButton(
                                 shape: new CircleBorder(),
-                                onPressed: () {bp(id, dp);},
+                                onPressed: () {
+                                    if (dp != null) bp(id, dp);
+                                    selectedID = -1;
+                                },
                                 child: Text(
                                     _remTxt,
                                     style: TextStyle(
@@ -342,14 +347,18 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
 List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
     List<Widget> _tr = new List<Widget>();
     List<Payment> _pt = new List<Payment>();
-    List _t = List.from(settings["transactions"]);
+    List _t = orderByDateDescending(List<Payment>.from(settings["transactions"]));
     int _renewalDay = settings["budgetRenewalDay"];
+
+    bool _pushBreak = false;
+    if (_date == null) _pushBreak = true;
+
     _date = _date == null ? DateTime.now() : _date;
 
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
 
-        if (!thisMonths(_p.getDate(), _renewalDay, _date)) {
+        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak) {
             break;
         }
 
@@ -639,21 +648,20 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
     return _tr;
 }
 
-// TODO BUG Old transactions not showing in list
-
-List<Widget> getTransactionCards() {
+List<Widget> getTransactionCards(Function op, Function dp) {
     List<Widget> _tr = new List<Widget>();
     List<DateTime> _dates = getAllDates();
     _dates..sort((a, b) => a.compareTo(b));
 
     _dates.forEach((DateTime _date) {
-        print(_date.toString());
+        Color _color = getRenewalDate(_date, settings["budgetRenewalDay"]) == getRenewalDate(DateTime.now(), settings["budgetRenewalDay"]) ? Colors.cyanAccent[700] : dimTextColors[theme];
 
         _tr.add(
             Container(
+                margin: EdgeInsets.all(5),
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[800], width: 1.5),
+                    border: Border.all(color: _color, width: 1.5),
                     borderRadius: BorderRadius.circular(10),
                 ),constraints: BoxConstraints.expand(),
                 child: Column(
@@ -665,7 +673,7 @@ List<Widget> getTransactionCards() {
                             child: Text(
                                 DateFormat("MM/yyyy").format(_date).toString(),
                                 style: TextStyle(
-                                    color: dimTextColors[theme],
+                                    color: _color,
                                     fontSize: 15,
                                     fontFamily: "Montserrat",
                                     letterSpacing: 1.5
@@ -673,14 +681,14 @@ List<Widget> getTransactionCards() {
                                 textAlign: TextAlign.center,
                             )
                         ),
-                        Divider(color: dimTextColors[theme]),
+                        Divider(color: _color),
                         Row(
                             children: [
                             Expanded(
                                 child: infoBlock(budget, currency, "BUDGET",
                                     Colors.greenAccent[700], CrossAxisAlignment.start, 3.5, 7)),
                             Expanded(
-                                child: infoBlock(expense, currency, "EXPENSE", Colors.red,
+                                child: infoBlock(calculateExpenses(false, _date), currency, "EXPENSE", Colors.red,
                                     CrossAxisAlignment.end, 3.5, 7)),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -689,14 +697,14 @@ List<Widget> getTransactionCards() {
                         Row(
                             children: [
                             Expanded(
-                                child: infoBlock(savings, currency, "TOTAL SAVINGS",
+                                child: infoBlock(calculateSavings(_date), currency, "SAVINGS",
                                     Colors.amber[800], CrossAxisAlignment.start, 3.5, 7)),
                             Expanded(
                                 child: infoBlock(
-                                    budget - expense,
+                                    budget - calculateExpenses(false, _date),
                                     currency,
                                     "REMAINING",
-                                    budget - expense >= 0
+                                    budget - calculateExpenses(false, _date) >= 0
                                         ? Colors.blueAccent[700]
                                         : Colors.redAccent[700],
                                     CrossAxisAlignment.end, 3.5, 7)),
@@ -704,7 +712,7 @@ List<Widget> getTransactionCards() {
                             mainAxisAlignment: MainAxisAlignment.center,
                         ),
                         SizedBox(height: 20),
-                        Divider(color: Colors.grey),
+                        Divider(color: _color),
                         SizedBox(height: 20),
                         Text(" TRANSACTIONS",
                             style: TextStyle(
@@ -715,8 +723,8 @@ List<Widget> getTransactionCards() {
                                 )
                             ),
                         SizedBox(height: 10),
-                        Divider(color: Colors.grey),
-                        Expanded(child: transactionsBlock(currency, (){}, (){}, _date)),
+                        Divider(color: _color),
+                        Expanded(child: transactionsBlock(currency, op, dp, _date)),
                     ],
                 ),
             ),

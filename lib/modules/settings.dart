@@ -4,8 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'classes.dart';
 
-final GlobalFileHandler global = new GlobalFileHandler();
-
 const Map<String, dynamic> defaultPrefs = const {
     "lastSaved" : "2019",
     "username" : "",
@@ -70,7 +68,7 @@ Future<bool> saveSettings() async {
 
         settings["transactions"] = _t;
 
-        global.writeToFile(global.settingsFile, jsonEncode(settings)).then((File _f) {
+        writeToFile(settingsFile, jsonEncode(settings)).then((File _f) {
             print("Saved ...");
         });
     } catch (e) {
@@ -81,11 +79,11 @@ Future<bool> saveSettings() async {
     return true;
 }
 
-Future<bool> loadSettings() async {
+void loadSettings([Function _f]) {
     try {
-        global.readFromFile(global.settingsFile).then((String _s) {
+        readFromFile(settingsFile).then((String _s) {
             if (_s == null || _s == "" || _s == "{}") {
-                global.writeToFile(global.settingsFile, "").then((File _f) {
+                writeToFile(settingsFile, "").then((File _f) {
                     resetSettings(false).then((_v) {return true;});
                 });
             }
@@ -137,14 +135,10 @@ Future<bool> loadSettings() async {
             print("Checking Settings ...");
             checkSettings();
 
-            theme = settings["theme"];
-
-            return true;
+            refreshStats();
+            if (_f != null) _f(settings);
         });
     } catch (e) {
         print("SETTINGS.DART LOAD SETTINGS ERROR :\n" + e.toString());
-        return false;
     }
-
-    return false;
 }

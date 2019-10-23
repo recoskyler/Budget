@@ -27,9 +27,9 @@ void createFile(String path, [String content = ""]) {
 
 void deletePaymentByID(int id, Function dp) {
     int _index = -1;
-    List<dynamic> _t = List.from(settings["transactions"]);
+    List<Payment> _t = List<Payment>.from(settings["transactions"]);
 
-    _t.forEach((_p) {
+    _t.forEach((Payment _p) {
         if (_p.getID() == id) {
             _index = _t.indexOf(_p);
         }
@@ -41,7 +41,21 @@ void deletePaymentByID(int id, Function dp) {
     dp(_t);
 }
 
+void deleteFixedPaymentByID(int id, Function dp) {
+    int _index = -1;
+    List<Payment> _t = List<Payment>.from(settings["fixedPayments"]);
 
+    _t.forEach((Payment _p) {
+        if (_p.getID() == id) {
+            _index = _t.indexOf(_p);
+        }
+    });
+    
+    if (_index != -1)
+        _t.removeAt(_index);
+    
+    dp(_t);
+}
 
 // * WIDGETS
 
@@ -50,7 +64,7 @@ GestureDetector transactionItemFromPayment(Payment _p, Function op, Function dp)
 }
 
 GestureDetector subscriptionItemFromPayment(Payment _p, Function op, Function dp) {
-    return subscriptionItemBlock(_p.getDescription(), settings["currency"], _p.getDate(), _p.getPaymentType(), _p.getAmount(), _p.getID(), op, deletePaymentByID, dp);
+    return subscriptionItemBlock(_p.getDescription(), settings["currency"], _p.getDate(), _p.getPaymentType(), _p.getAmount(), _p.getID(), op, deleteFixedPaymentByID, dp);
 }
 
 // * DATE FUNCTIONS
@@ -158,8 +172,11 @@ double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
     double _res = 0.0;
     List<Payment> _transactions = List<Payment>.from(settings["transactions"]);
     int _renewalDay = settings["budgetRenewalDay"];
+
+    bool _pushBreak = false;
+    if (_date == null) _pushBreak = true;
+
     _date = _date == null ? DateTime.now() : _date;
-    _transactions = orderByDateDescending(_transactions);
 
     if (_transactions.length == 0) {
         return _res;
@@ -178,7 +195,7 @@ double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
     for (int i = 0; i < _transactions.length; i++) {
         Payment _p = _transactions[i];
 
-        if (!thisMonths(_p.getDate(), _renewalDay, _date)) {
+        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak) {
             break;
         }
 
@@ -196,6 +213,10 @@ double calculateSavings([DateTime _date]) {
     double _res = 0.0;
     List _transactions = List.from(settings["transactions"]);
     int _renewalDay = settings["budgetRenewalDay"];
+
+    bool _pushBreak = false;
+    if (_date == null) _pushBreak = true;
+
     _date = _date == null ? DateTime.now() : _date;
 
     if (_transactions.length == 0) {
@@ -205,7 +226,7 @@ double calculateSavings([DateTime _date]) {
     for (int i = 0; i < _transactions.length; i++) {
         Payment _p = _transactions[i];
 
-        if (!thisMonths(_p.getDate(), _renewalDay, _date)) {
+        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak) {
             break;
         }
 
@@ -227,8 +248,12 @@ double calculateSavings([DateTime _date]) {
 
 double calculateAllowence([DateTime _date]) {
     double _res = settings["monthlyAllowence"];
-    List _transactions = List.from(settings["transactions"]);
+    List<Payment> _transactions = orderByDateDescending(List<Payment>.from(settings["transactions"]));
     int _renewalDay = settings["budgetRenewalDay"];
+
+    bool _pushBreak = false;
+    if (_date == null) _pushBreak = true;
+
     _date = _date == null ? DateTime.now() : _date;
 
     if (_transactions.length == 0) {
@@ -238,7 +263,7 @@ double calculateAllowence([DateTime _date]) {
     for (int i = 0; i < _transactions.length; i++) {
         Payment _p = _transactions[i];
 
-        if (!thisMonths(_p.getDate(), _renewalDay, _date)) {
+        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak) {
             break;
         }
 
@@ -273,8 +298,6 @@ double calculateTotalSavings() {
             double _fs = 0.0;
             DateTime _td = _p.getStartingDate();
             _td = getNextRenewalDate(_td, settings["budgetRenewalDay"]);
-
-            print(_td.toString());
 
             while (getRenewalDate(_td, settings["budgetRenewalDay"]).compareTo(getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) == 0) {
                 _fs += _p.getAmount();
@@ -340,7 +363,3 @@ void refreshStats() {
 }
 
 int next(int min, int max) => min + _random.nextInt(max - min);
-
-String formatAmount(double _amount, [int decimals = 2, bool showCurrency = true, String _currency]) {
-    
-}

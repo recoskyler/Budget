@@ -72,8 +72,6 @@ class _EditTransactionState extends State<EditTransaction> {
                     _desc = _nm[_selectedNameIndex];
                 }
 
-                print(_amount > calculateTotalSavings());
-
                 if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
                     Payment _sp = new Payment(asString[PaymentType.SavingExpense.index], calculateTotalSavings(), _date, PaymentType.SavingExpense.index, settings["keyIndex"]);
                     Payment _rp = new Payment(asString[PaymentType.SavingExpense.index], _amount - calculateTotalSavings(), _date, PaymentType.Withdraw.index, settings["keyIndex"]);
