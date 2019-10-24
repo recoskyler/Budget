@@ -137,6 +137,9 @@ class _EditRentState extends State<EditRent> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                            //
+                            // Disabled until notifications are added (not guaranteed)
+                            /*
                             Text(
                                 " RENT DAY",
                                 style: TextStyle(
@@ -157,6 +160,8 @@ class _EditRentState extends State<EditRent> {
                                 )
                             ),
                             SizedBox(height:30),
+                            */
+                            //
                             Text(
                                 " RENT AMOUNT",
                                 style: TextStyle(
@@ -197,6 +202,9 @@ class _EditRentState extends State<EditRent> {
                                     },
                                 )
                             ),
+                            //
+                            // Disabled until notifications are added (not guaranteed)
+                            /*
                             SizedBox(height:30),
                             Text(
                                 " UTILITIES DAY",
@@ -217,6 +225,8 @@ class _EditRentState extends State<EditRent> {
                                     physics: AlwaysScrollableScrollPhysics(),
                                 )
                             ),
+                            */
+                            //
                             SizedBox(height:30),
                             Text(
                                 " STARTING DATE",
