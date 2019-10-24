@@ -234,9 +234,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     shape: new CircleBorder(),
                     onPressed: widget.resetSettingsAction,
                     child: Text(
-                        "RESET SETTINGS",
+                        "RESET EVERYTHING",
                         style: TextStyle(
-                            fontSize: 28,
+                            fontSize: 24,
                             fontFamily: "Montserrat",
                             letterSpacing: 3,
                             color: Colors.redAccent[400]

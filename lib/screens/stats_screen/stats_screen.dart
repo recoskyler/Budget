@@ -52,7 +52,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                 padding: EdgeInsets.all(5),
                                 child: Row(
                                     children: [
-                                        infoBlock(calculateTotalFromPayment(PaymentType.Withdraw) / getMonthCount(), currency, "AVG EXPENSES", Colors.red, CrossAxisAlignment.start),
+                                        infoBlock(calculateTotalFromPayments([PaymentType.Withdraw, PaymentType.Subscription]) / getMonthCount(), currency, "AVG EXPENSES", Colors.red, CrossAxisAlignment.start),
                                         infoBlock(calculateTotalFromPayment(PaymentType.PaidUtility, settings["rents"]) / getMonthCount(settings["rents"], settings["utilitiesDay"]), currency, "AVG UTILITIES", Colors.indigoAccent[700], CrossAxisAlignment.end),
                                     ],
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,7 +62,7 @@ class _StatsScreenState extends State<StatsScreen> {
                             Divider(color: Colors.grey),
                             SizedBox(height: 20),
                             Text(
-                                " PREVIOUS TRANSACTIONS",
+                                " TRANSACTION HISTORY",
                                 style: TextStyle(
                                     color: textColors[theme],
                                     fontFamily: "Montserrat",

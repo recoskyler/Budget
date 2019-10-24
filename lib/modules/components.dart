@@ -366,10 +366,11 @@ List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
     List<Widget> _tr = new List<Widget>();
     List<Payment> _pt = new List<Payment>();
     List _t = orderByDateDescending(List<Payment>.from(settings["transactions"]));
-    _t.addAll(List<Payment>.from(settings["fixedPayments"]));
     int _renewalDay = settings["budgetRenewalDay"];
-
     bool _pushBreak = false;
+
+    _t.addAll(List<Payment>.from(settings["fixedPayments"]));
+
     if (_date == null) _pushBreak = true;
 
     _date = _date == null ? DateTime.now() : _date;
@@ -427,7 +428,6 @@ List<Widget> getMonthSubscriptions(Function op, Function dp) {
 }
 
 ListView transactionsBlock(String _currency, Function op, Function dp, [DateTime _date]) {
-    _date = _date == null ? DateTime.now() : _date;
     return 
     ListView(
         children: getMonthTransactions(op, dp, _date)
@@ -677,10 +677,15 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
 List<Widget> getTransactionCards(Function op, Function dp) {
     List<Widget> _tr = new List<Widget>();
     List<DateTime> _dates = getAllDates();
-    _dates..sort((a, b) => a.compareTo(b));
+    _dates.sort((a, b) => a.compareTo(b));
 
     _dates.forEach((DateTime _date) {
         Color _color = getRenewalDate(_date, settings["budgetRenewalDay"]) == getRenewalDate(DateTime.now(), settings["budgetRenewalDay"]) ? Colors.cyanAccent[700] : dimTextColors[theme];
+        DateTime _paramDate = _date;
+
+        if (getRenewalDate(_date, settings["budgetRenewalDay"]).compareTo(getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) == 0) {
+            _paramDate = null;
+        }
 
         _tr.add(
             Container(
@@ -714,7 +719,7 @@ List<Widget> getTransactionCards(Function op, Function dp) {
                                 child: infoBlock(budget, currency, "BUDGET",
                                     Colors.greenAccent[700], CrossAxisAlignment.start, 3.5, 7)),
                             Expanded(
-                                child: infoBlock(calculateExpenses(false, _date), currency, "EXPENSE", Colors.red,
+                                child: infoBlock(calculateExpenses(false, _paramDate), currency, "EXPENSE", Colors.red,
                                     CrossAxisAlignment.end, 3.5, 7)),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -723,14 +728,14 @@ List<Widget> getTransactionCards(Function op, Function dp) {
                         Row(
                             children: [
                             Expanded(
-                                child: infoBlock(calculateSavings(_date), currency, "SAVINGS",
+                                child: infoBlock(calculateSavings(_paramDate), currency, "SAVINGS",
                                     Colors.amber[800], CrossAxisAlignment.start, 3.5, 7)),
                             Expanded(
                                 child: infoBlock(
-                                    budget - calculateExpenses(false, _date),
+                                    budget - calculateExpenses(false, _paramDate),
                                     currency,
                                     "REMAINING",
-                                    budget - calculateExpenses(false, _date) >= 0
+                                    budget - calculateExpenses(false, _paramDate) >= 0
                                         ? Colors.blueAccent[700]
                                         : Colors.redAccent[700],
                                     CrossAxisAlignment.end, 3.5, 7)),
@@ -750,7 +755,7 @@ List<Widget> getTransactionCards(Function op, Function dp) {
                             ),
                         SizedBox(height: 10),
                         Divider(color: _color),
-                        Expanded(child: transactionsBlock(currency, op, dp, _date)),
+                        Expanded(child: transactionsBlock(currency, op, dp, _paramDate)),
                     ],
                 ),
             ),

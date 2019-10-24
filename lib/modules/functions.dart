@@ -120,10 +120,19 @@ bool thisMonths(DateTime _date, int _renewalDay, DateTime _compDate) {
 
 /// Returns a List<DateTime> of all the Renewal Dates where there was a payment, no matter what kind.
 List<DateTime> getAllDates([List<Payment> _ls, int _day]) {
-	_ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
 
-	List<DateTime> _res = new List<DateTime>();
+    List<DateTime> _res = new List<DateTime>();
+
+    if (_ls == null) {
+        _ls = List<Payment>.from(settings["transactions"]);
+
+        if (_ls.length == 0) {
+            _res.add(getRenewalDate(DateTime.now(), _day));
+
+            return _res;
+        }
+    }
 
 	_ls.forEach((Payment _p) {
 		DateTime _date = getRenewalDate(_p.getDate(), _day);
@@ -338,8 +347,15 @@ double calculateTotalSavings() {
 }
 
 double calculateTotalFromPayment(PaymentType _type, [List _l, int _day]) {
-	List<Payment> _ls = _l == null ? List<Payment>.from(settings["transactions"]) : List<Payment>.from(_l);
+	List<Payment> _ls;
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
+
+    if (_l == null) {
+        _ls = List<Payment>.from(settings["transactions"]);
+        _ls.addAll(List<Payment>.from(settings["fixedPayments"]));
+    } else {
+        _ls = List<Payment>.from(_l);
+    }
 	
 	double _res = 0.0;
 
@@ -351,8 +367,16 @@ double calculateTotalFromPayment(PaymentType _type, [List _l, int _day]) {
 }
 
 double calculateTotalFromPayments(List<PaymentType> _type, [List _l, int _day]) {
-	List<Payment> _ls = _l == null ? List<Payment>.from(settings["transactions"]) : List<Payment>.from(_l);
+	List<Payment> _ls;
+
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
+
+    if (_l == null) {
+        _ls = List<Payment>.from(settings["transactions"]);
+        _ls.addAll(List<Payment>.from(settings["fixedPayments"]));
+    } else {
+        _ls = List<Payment>.from(_l);
+    }
 	
 	double _res = 0.0;
 
