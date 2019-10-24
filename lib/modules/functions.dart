@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:budget/screens/stats_screen/stats_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'settings.dart';
 import 'package:flutter/material.dart';
@@ -61,10 +62,17 @@ void deleteFixedPaymentByID(int id, Function dp) {
 
 // * WIDGETS
 
-GestureDetector transactionItemFromPayment(Payment _p, Function op, Function dp, [DateTime _date]) {
+GestureDetector transactionItemFromPayment(Payment _p, Function op, Function dp, Function fp, [DateTime _date]) {
     _date = _date == null ? _p.getDate() : _date;
+    Function _delF = deletePaymentByID;
+    Function _renF = dp;
 
-    return transactionItemBlock(_p.getDescription(), settings["currency"], _date, _p.getPaymentType(), _p.getAmount(), _p.getID(), op, deletePaymentByID, dp);
+    if (fixedPaymentTypes.contains(_p.getPaymentType())) {
+        _delF = deleteFixedPaymentByID;
+        _renF = fp;
+    }
+
+    return transactionItemBlock(_p.getDescription(), settings["currency"], _date, _p.getPaymentType(), _p.getAmount(), _p.getID(), op, _delF, _renF);
 }
 
 GestureDetector subscriptionItemFromPayment(Payment _p, Function op, Function dp) {
@@ -424,5 +432,13 @@ String getNumberText(int _num) {
             return "rd";
         default:
             return "th";
+    }
+}
+
+void launchURL(String url) async {
+    if (await canLaunch(url)) {
+        await launch(url);
+    } else {
+        throw 'Could not launch $url';
     }
 }

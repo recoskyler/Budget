@@ -34,9 +34,19 @@ class _StatsScreenState extends State<StatsScreen> {
         saveSettings();
     }
 
+    void renewFixedPayments(List<dynamic> _pt) {
+        setState(() {
+            refreshStats();
+            settings["fixedPayments"] = _pt;
+            selectedID = -1;
+        });
+
+        saveSettings();
+    }
+
     @override
     Widget build(BuildContext context) {
-        List<Widget> _transactionCards = getTransactionCards(onTransactionItemClick, renewTransactions);
+        List<Widget> _transactionCards = getTransactionCards(onTransactionItemClick, renewTransactions, renewFixedPayments);
 
         return Scaffold(
             appBar: appBarWithGradientTitle("STATS", 25, Colors.cyanAccent[400], Colors.cyan[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),

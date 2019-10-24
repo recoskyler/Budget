@@ -282,87 +282,86 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                        Expanded(
-                            child: 
-                            Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                    Text(
-                                        _datS,
-                                        style: TextStyle(
-                                            color: dimTextColors[theme],
-                                            fontSize: 3.5 * SizeConfig.safeBlockHorizontal,
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 1.1
-                                        )
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                        txt,
-                                        style: TextStyle(
-                                            color: textColors[theme],
-                                            fontSize: 5 * SizeConfig.safeBlockHorizontal,
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 1.1
-                                        )
-                                    )
-                                ]
-                            )
-                        ),
-                        Expanded(
-                            child: Text(
-                                _monS,
-                                style: TextStyle(
-                                    color: _monC,
-                                    fontSize: 7 * SizeConfig.safeBlockHorizontal,
-                                    fontFamily: "Montserrat",
-                                    letterSpacing: 1.5,
-                                ),
-                                textAlign: TextAlign.right,
-                            )
-                        )
-                    ],
-                ),
-                AnimatedContainer(
-                    height: selectedID == id ? 80 : 0,
-                    duration: Duration(milliseconds: 120),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                            RawMaterialButton(
-                                shape: new CircleBorder(),
-                                onPressed: () {
-                                    if (dp != null) bp(id, dp);
-                                    selectedID = -1;
-                                },
+                            Expanded(
+                                child: 
+                                Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Text(
+                                            _datS,
+                                            style: TextStyle(
+                                                color: dimTextColors[theme],
+                                                fontSize: 3.5 * SizeConfig.safeBlockHorizontal,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 1.1
+                                            )
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                            txt,
+                                            style: TextStyle(
+                                                color: textColors[theme],
+                                                fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 1.1
+                                            )
+                                        )
+                                    ]
+                                )
+                            ),
+                            Expanded(
                                 child: Text(
-                                    _remTxt,
+                                    _monS,
                                     style: TextStyle(
-                                        fontSize: 8 * SizeConfig.safeBlockHorizontal,
+                                        color: _monC,
+                                        fontSize: 7 * SizeConfig.safeBlockHorizontal,
                                         fontFamily: "Montserrat",
-                                        letterSpacing: 3,
-                                        color: Colors.redAccent[400]
-                                    )
-                                ),      
-                                elevation: 0.0,
-                                highlightElevation: 1.0,
-                                padding: EdgeInsets.all(10),
+                                        letterSpacing: 1.5,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                )
                             )
                         ],
                     ),
-                )
-              ],
+                    AnimatedContainer(
+                        height: selectedID == id ? 80 : 0,
+                        duration: Duration(milliseconds: 120),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                RawMaterialButton(
+                                    onPressed: () {
+                                        if (dp != null) bp(id, dp);
+                                        selectedID = -1;
+                                    },
+                                    child: Text(
+                                        _remTxt,
+                                        style: TextStyle(
+                                            fontSize: 8 * SizeConfig.safeBlockHorizontal,
+                                            fontFamily: "Montserrat",
+                                            letterSpacing: 3,
+                                            color: Colors.redAccent[400]
+                                        )
+                                    ),      
+                                    elevation: 0.0,
+                                    highlightElevation: 1.0,
+                                    padding: EdgeInsets.all(10),
+                                )
+                            ],
+                        ),
+                    )
+                ],
             )
         )
     );
 }
 
-List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
+List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTime _date]) {
     List<Widget> _tr = new List<Widget>();
     List<Payment> _pt = new List<Payment>();
     List _t = orderByDateDescending(List<Payment>.from(settings["transactions"]));
@@ -395,9 +394,9 @@ List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
 
     _pt.forEach((_p) {
         if (fixedPaymentTypes.contains(_p.getPaymentType())) {
-            _tr.add(transactionItemFromPayment(_p, op, dp, new DateTime(_date.year, _date.month, _p.getRenewalDay())));
+            _tr.add(transactionItemFromPayment(_p, op, dp, fp, new DateTime(_date.year, _date.month, _p.getRenewalDay())));
         } else {
-            _tr.add(transactionItemFromPayment(_p, op, dp));
+            _tr.add(transactionItemFromPayment(_p, op, dp, fp));
         }
         
         _tr.add(transactionItemDivider());
@@ -427,10 +426,10 @@ List<Widget> getMonthSubscriptions(Function op, Function dp) {
     return _tr;
 }
 
-ListView transactionsBlock(String _currency, Function op, Function dp, [DateTime _date]) {
+ListView transactionsBlock(String _currency, Function op, Function dp, Function fp, [DateTime _date]) {
     return 
     ListView(
-        children: getMonthTransactions(op, dp, _date)
+        children: getMonthTransactions(op, dp, fp, _date)
     );
 }
 
@@ -674,7 +673,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
     return _tr;
 }
 
-List<Widget> getTransactionCards(Function op, Function dp) {
+List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
     List<Widget> _tr = new List<Widget>();
     List<DateTime> _dates = getAllDates();
     _dates.sort((a, b) => a.compareTo(b));
@@ -755,7 +754,7 @@ List<Widget> getTransactionCards(Function op, Function dp) {
                             ),
                         SizedBox(height: 10),
                         Divider(color: _color),
-                        Expanded(child: transactionsBlock(currency, op, dp, _paramDate)),
+                        Expanded(child: transactionsBlock(currency, op, dp, fp, _paramDate)),
                     ],
                 ),
             ),

@@ -27,8 +27,9 @@ class BudgetScreen extends StatefulWidget {
     final Function onTransactionItemClick;
     final Function renewTransactions;
     final Function openEditPage;
+    final Function renewFixedPayments;
 
-    BudgetScreen({Key key, this.onTransactionItemClick, this.renewTransactions, this.openEditPage}): super(key: key);
+    BudgetScreen({Key key, this.onTransactionItemClick, this.renewTransactions, this.openEditPage, this.renewFixedPayments}): super(key: key);
 
     @override
     BudgetScreenState createState() => BudgetScreenState();
@@ -89,7 +90,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                 ),
                 SizedBox(height: 10),
                 Divider(color: Colors.grey),
-                Expanded( child: transactionsBlock(currency, widget.onTransactionItemClick, widget.renewTransactions)),
+                Expanded( child: transactionsBlock(currency, widget.onTransactionItemClick, widget.renewTransactions, widget.renewFixedPayments)),
                 AnimatedContainer(
                     curve: Curves.easeInOut,
                     duration: Duration(milliseconds: 200),

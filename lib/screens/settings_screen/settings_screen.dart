@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import '../../modules/settings.dart';
 import '../../modules/global.dart';
+import 'package:budget/modules/functions.dart';
+
+double _resetDialogState = 0;
 
 PreferredSizeWidget settingsHead() {
     return appBarWithGradientTitle(
@@ -228,11 +231,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         })
                         .toList()
                     ),
-                ),                
-                SizedBox(height:60),
+                ),
+                SizedBox(height: 40),
                 RawMaterialButton(
-                    shape: new CircleBorder(),
-                    onPressed: widget.resetSettingsAction,
+                    onPressed: () {
+                        launchURL("https://github.com/recoskyler/Budget");
+                    }, // widget.resetSettingsAction
+                    child: Text(
+                        "VIEW PROJECT ON GITHUB",
+                        style: TextStyle(
+                            fontSize: 28,
+                            fontFamily: "Montserrat",
+                            letterSpacing: 3,
+                            color: Colors.blueAccent[400],
+                        ),
+                        textAlign: TextAlign.center,
+                    ),
+                    elevation: 0.0,
+                    highlightElevation: 1.0,
+                    padding: EdgeInsets.all(10),
+                ),
+                SizedBox(height: 60),
+                RawMaterialButton(
+                    onPressed: () {
+                        setState(() {
+                            _resetDialogState = _resetDialogState == 0 ? 1 : 0;
+                        });
+                    }, // widget.resetSettingsAction
                     child: Text(
                         "RESET EVERYTHING",
                         style: TextStyle(
@@ -246,6 +271,37 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     highlightElevation: 1.0,
                     padding: EdgeInsets.all(10),
                 ),
+                AnimatedContainer(
+                    margin: EdgeInsets.all(20),
+                    height: _resetDialogState * 80,
+                    duration: Duration(milliseconds: 120),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: dimTextColors[theme],
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                            RawMaterialButton(
+                                onPressed: widget.resetSettingsAction,
+                                child: Text(
+                                    "YEAH, I'M SURE",
+                                    style: TextStyle(
+                                        fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                                        fontFamily: "Montserrat",
+                                        letterSpacing: 3,
+                                        color: Colors.redAccent[400],
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                ),      
+                                elevation: 0.0,
+                                highlightElevation: 1.0,
+                                padding: EdgeInsets.all(10),
+                            )
+                        ],
+                    ),
+                )
             ],
         );
     }
