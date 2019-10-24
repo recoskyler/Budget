@@ -134,7 +134,7 @@ Container customButton(double s, Color backColor, Color c, IconData i, String tx
     );
 }
 
-GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime date, PaymentType t, double amount, int id, Function op, Function bp, Function dp) {
+GestureDetector subscriptionItemBlock(String txt, String _currency, int date, PaymentType t, double amount, int id, Function op, Function bp, Function dp) {
     if (_currency == null) _currency = "";
 
     String _monS = _currency + amount.toStringAsFixed(2);
@@ -163,61 +163,79 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, DateTime dat
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                        Expanded(
-                            child: Text(
-                                txt,
-                                style: TextStyle(
-                                    color: textColors[theme],
-                                    fontSize: 5 * SizeConfig.safeBlockHorizontal,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.1
-                                )
-                            )
-                        ),
-                        Expanded(
-                            child: Text(
-                                _monS,
-                                style: TextStyle(
-                                    color: _monC,
-                                    fontSize: 7 * SizeConfig.safeBlockHorizontal,
-                                    fontFamily: "Montserrat",
-                                    letterSpacing: 1.5,
-                                ),
-                                textAlign: TextAlign.right,
-                            )
-                        )
-                    ],
-                ),
-                AnimatedContainer(
-                    height: selectedSubID == id ? 80 : 0,
-                    duration: Duration(milliseconds: 120),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                            RawMaterialButton(
-                                shape: new CircleBorder(),
-                                onPressed: () {bp(id, dp);},
+                            Expanded(
+                                child: 
+                                Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Text(
+                                            "${date.toString()}${getNumberText(date)} Day",
+                                            style: TextStyle(
+                                                color: dimTextColors[theme],
+                                                fontSize: 3.5 * SizeConfig.safeBlockHorizontal,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 1.1
+                                            )
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                            txt,
+                                            style: TextStyle(
+                                                color: textColors[theme],
+                                                fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 1.1
+                                            )
+                                        )
+                                    ]
+                                )
+                            ),
+                            Expanded(
                                 child: Text(
-                                    _remTxt,
+                                    _monS,
                                     style: TextStyle(
-                                        fontSize: 8 * SizeConfig.safeBlockHorizontal,
+                                        color: _monC,
+                                        fontSize: 7 * SizeConfig.safeBlockHorizontal,
                                         fontFamily: "Montserrat",
-                                        letterSpacing: 3,
-                                        color: Colors.redAccent[400]
-                                    )
-                                ),
-                                elevation: 0.0,
-                                highlightElevation: 1.0,
-                                padding: EdgeInsets.all(10),
+                                        letterSpacing: 1.5,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                )
                             )
                         ],
                     ),
-                )
-              ],
+                    AnimatedContainer(
+                        height: selectedSubID == id ? 80 : 0,
+                        duration: Duration(milliseconds: 120),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                                RawMaterialButton(
+                                    shape: new CircleBorder(),
+                                    onPressed: () {bp(id, dp);},
+                                    child: Text(
+                                        _remTxt,
+                                        style: TextStyle(
+                                            fontSize: 8 * SizeConfig.safeBlockHorizontal,
+                                            fontFamily: "Montserrat",
+                                            letterSpacing: 3,
+                                            color: Colors.redAccent[400]
+                                        )
+                                    ),
+                                    elevation: 0.0,
+                                    highlightElevation: 1.0,
+                                    padding: EdgeInsets.all(10),
+                                )
+                            ],
+                        ),
+                    )
+                ],
             )
         )
     );
@@ -348,6 +366,7 @@ List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
     List<Widget> _tr = new List<Widget>();
     List<Payment> _pt = new List<Payment>();
     List _t = orderByDateDescending(List<Payment>.from(settings["transactions"]));
+    _t.addAll(List<Payment>.from(settings["fixedPayments"]));
     int _renewalDay = settings["budgetRenewalDay"];
 
     bool _pushBreak = false;
@@ -358,13 +377,15 @@ List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
 
-        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak) {
+        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak && !fixedPaymentTypes.contains(_p.getPaymentType())) {
             break;
         }
 
         if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) > 0) continue;
 
-        if (thisMonths(_p.getDate(), _renewalDay, _date) && !rentalPaymentTypes.contains(_p.getPaymentType())) {
+        if (thisMonths(_p.getDate(), _renewalDay, _date) && !rentalPaymentTypes.contains(_p.getPaymentType()) && !fixedPaymentTypes.contains(_p.getPaymentType())) {
+            _pt.add(_p);
+        } else if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day) {
             _pt.add(_p);
         }
     }
@@ -372,7 +393,12 @@ List<Widget> getMonthTransactions(Function op, Function dp, [DateTime _date]) {
     _pt = orderByDateDescending(_pt);
 
     _pt.forEach((_p) {
-        _tr.add(transactionItemFromPayment(_p, op, dp));
+        if (fixedPaymentTypes.contains(_p.getPaymentType())) {
+            _tr.add(transactionItemFromPayment(_p, op, dp, new DateTime(_date.year, _date.month, _p.getRenewalDay())));
+        } else {
+            _tr.add(transactionItemFromPayment(_p, op, dp));
+        }
+        
         _tr.add(transactionItemDivider());
     });
 

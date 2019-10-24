@@ -1,3 +1,4 @@
+import 'package:budget/modules/functions.dart';
 import 'package:flutter/material.dart';
 import '../../modules/global.dart';
 import 'package:budget/modules/enums.dart';
@@ -82,7 +83,7 @@ class _EditSubsState extends State<EditSubs> {
     }
 
     void onActionPressed() {
-        if (_amount > 0.0 && _desc.replaceAll(" ", "") != "") {
+        if (settings["monthlyAllowence"] - calculateTotalFromPayment(PaymentType.FixedSavingDeposit, settings["fixedPayments"]) - _amount >= 0.0 && _desc.replaceAll(" ", "") != "") {
             setState(() {
                 List _ls = List.from(settings["fixedPayments"]);
 
@@ -262,7 +263,7 @@ class _EditSubsState extends State<EditSubs> {
                     child: FloatingActionButton(
                         heroTag: 1,
                         child: Icon(Icons.done),
-                        backgroundColor: _amount > 0.0 && _desc.replaceAll(" ", "") != "" ? Colors.greenAccent[400] : Colors.blueGrey[600],
+                        backgroundColor: settings["monthlyAllowence"] - calculateTotalFromPayment(PaymentType.FixedSavingDeposit, settings["fixedPayments"]) - _amount >= 0.0 && _desc.replaceAll(" ", "") != "" ? Colors.greenAccent[400] : Colors.blueGrey[600],
                         elevation: 0.0,
                         onPressed: onActionPressed,
                         highlightElevation: 1.0,

@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../modules/components.dart';
 import '../../modules/global.dart';
 
-// TODO Fix Formatting
-
 PreferredSizeWidget budgetHead([BuildContext context]) {
     return appBarWithGradientTitle(
         "BUDGET",
@@ -104,23 +102,51 @@ class BudgetScreenState extends State<BudgetScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                            customButton(16, Colors.amber[800], Colors.grey[50],
-                                Icons.archive, "Save", () {
-                            widget.openEditPage(0);
-                            }, EdgeInsets.fromLTRB(0, 20, 0, 40), 120.0, 50.0),
+                            customButton(
+                                16, 
+                                Colors.amber[800], 
+                                Colors.grey[50], 
+                                Icons.archive, 
+                                "Save", 
+                                () {
+                                    widget.openEditPage(0);
+                                }, 
+                                EdgeInsets.fromLTRB(0, 20, 0, 40), 
+                                120.0, 
+                                50.0
+                            ),
                             SizedBox(width: 5),
                             customButton(
-                                16, Colors.red, Colors.grey[50], Icons.remove, "Spend",
+                                16, 
+                                Colors.red, 
+                                Colors.grey[50], 
+                                Icons.remove, 
+                                "Spend",
                                 () {
-                            widget.openEditPage(1);
-                            }, EdgeInsets.fromLTRB(0, 20, 0, 40), 120.0, 50.0),
+                                    widget.openEditPage(1);
+                                }, 
+                                EdgeInsets.fromLTRB(0, 20, 0, 40), 
+                                120.0, 
+                                50.0
+                            ),
                             SizedBox(width: 5),
-                            customButton(16, Colors.greenAccent[400], Colors.grey[50],
-                                Icons.add, "Deposit", () {
-                            widget.openEditPage(2);
-                            }, EdgeInsets.fromLTRB(0, 20, 0, 40), 120.0, 50.0)
-                        ]))
-            ]
+                            customButton(
+                                16, 
+                                Colors.greenAccent[400], 
+                                Colors.grey[50],
+                                Icons.add, 
+                                "Deposit", 
+                                () {
+                                    widget.openEditPage(2);
+                                }, 
+                                EdgeInsets.fromLTRB(0, 20, 0, 40), 
+                                120.0, 
+                                50.0
+                            ),
+                        ],
+                    ),
+                ),
+            ],
         );
     }
 }

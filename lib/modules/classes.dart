@@ -29,6 +29,8 @@ class Payment {
     }
 
     int getRenewalDay() {
+        if (_renewalDay == null) return 1;
+        
         return _renewalDay;
     }
 
