@@ -14,10 +14,10 @@ This is a simple app I decided to make because I needed an app to manage my budg
 
 ## Plans
 
-- [ ] Add tablet and landscape support
+- [ ] ~~Add tablet and landscape support~~ (CANCELLED)
 - [ ] Add user system
 - [ ] Add web app
-- [ ] Release App on Google Play Store
+- [ ] Release App on Google Play Store (CURRENTLY IN INTERNAL TEST TRACK)
 - [ ] Release App on App Store
 
 ## Usage Rights
@@ -28,10 +28,11 @@ This is a simple app I decided to make because I needed an app to manage my budg
 
 ## Licenses
 
-* Icon was made in Adobe Photoshop CC (Licensed), using *"Magneto"* font. (Will change the icon before release)
+* ~~Icon was made in Adobe Photoshop CC 2019 (Licensed), using *"Magneto"* font. (Will change the icon before release)~~
+* Icon was made in Adobe Photoshop CC 2019 (Licensed), using open source *"Quicksand"* font from Google Fonts.
 * Fonts used in app are:
 ..* Montserrat
 ..* Fira Code
-* Both fonts are from Google Fonts.
+* *Both fonts are from Google Fonts.*
 * *EMPIRE* and *REBEL* icons are from [FlutterIcon.com](http://fluttericon.com/) and free to use.
-* All other icons are included in Flutter.
+* All other icons are included in Flutter/Dart.

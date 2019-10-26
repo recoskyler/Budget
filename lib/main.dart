@@ -1,5 +1,6 @@
 import 'package:budget/modules/settings.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/home_screen/home_screen.dart';
 import 'modules/settings.dart';
@@ -43,5 +44,7 @@ void main() async {
     
     loadSettings();
 
-    return runApp(new App());
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) { // Force Portrait orientation
+        return runApp(new App());
+    });
 }
