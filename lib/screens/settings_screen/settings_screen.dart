@@ -37,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     double _amount = settings["monthlyAllowence"];
     int _date = settings["budgetRenewalDay"];
     String _currencyVal = settings["currency"];
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"], initialValue: settings["monthlyAllowence"]);
+    var controller = new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"], initialValue: settings["monthlyAllowence"]);
     
     List<Widget> getMonthButtons(Function _op, int _indexVar, int s, int edition) {
         List<Widget> _buttons = new List<Widget>();
@@ -212,6 +212,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 currency = _newVal;
                                 _currencyVal = _newVal;
                                 settings["currency"] = currency;
+                                controller = new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: currency, initialValue: settings["monthlyAllowence"]);
                                 saveSettings();
                             });
                         },

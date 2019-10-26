@@ -134,6 +134,7 @@ List<DateTime> getAllDates([List<Payment> _ls, int _day]) {
 
     if (_ls == null) {
         _ls = List<Payment>.from(settings["transactions"]);
+        _ls.addAll(List<Payment>.from(settings["fixedPayments"]));
 
         if (_ls.length == 0) {
             _res.add(getRenewalDate(DateTime.now(), _day));
@@ -157,9 +158,19 @@ int getAllDateCount([List<Payment> _ls, int _day]) {
 	return getAllDates(_ls, _day).length;
 }
 
+// TODO Check if this solution works: Older fixed payments not showing up in Stats
+
 int getMonthCount([List<Payment> _ls, int _day]) {
-    _ls = _ls == null ? List<Payment>.from(settings["transactions"]) : _ls;
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
+
+    // * This part ******
+
+    if (_ls == null) {
+        _ls = List<Payment>.from(settings["transactions"]);
+        _ls.addAll(List<Payment>.from(settings["fixedPayments"]));
+    }
+
+    // * ******
 
     List<DateTime> _dates = getAllDates(_ls, _day);
 

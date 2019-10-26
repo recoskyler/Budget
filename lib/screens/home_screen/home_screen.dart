@@ -81,6 +81,7 @@ class _MyApp extends State<MySApp> {
         setState(() {
             refreshStats();
             selectedNavMenu = index;
+            buttonStateIndex = 0;
         });
     }
 

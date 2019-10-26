@@ -7,6 +7,7 @@ import '../../modules/settings.dart';
 import '../../modules/classes.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:intl/intl.dart';
 
 class EditSubs extends StatefulWidget {
     EditSubs({Key key}) : super(key: key);
@@ -19,9 +20,20 @@ class EditSubs extends StatefulWidget {
 class _EditSubsState extends State<EditSubs> {
     int _selectedButtonIndex = 0;
     double _amount = 0.0;
-    int _date = 1;
+    int _renewalDay = 1;
     String _desc = "";
+    DateTime _date = DateTime.now();
     final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"]);
+
+    Future _selectDate() async {
+        DateTime picked = await showDatePicker(
+            context: context,
+            initialDate: _date,
+            firstDate: DateTime(DateTime.now().year - 1),
+            lastDate: DateTime.now()
+        );
+        if(picked != null) setState(() => _date = picked);
+    }
 
     List<Widget> getButtons(int s) {
         if (s == 0) {
@@ -87,7 +99,7 @@ class _EditSubsState extends State<EditSubs> {
             setState(() {
                 List _ls = List.from(settings["fixedPayments"]);
 
-                Payment _p = new Payment(_desc, _amount, DateTime.now(), _selectedButtonIndex == 0 ? PaymentType.Subscription.index : PaymentType.FixedSavingDeposit.index, settings["keyIndex"], _date);
+                Payment _p = new Payment(_desc, _amount, _date, _selectedButtonIndex == 0 ? PaymentType.Subscription.index : PaymentType.FixedSavingDeposit.index, settings["keyIndex"], _renewalDay);
                 
                 _ls.add(_p);
                 settings["fixedPayments"] = _ls;
@@ -96,7 +108,7 @@ class _EditSubsState extends State<EditSubs> {
                 _amount = 0.0;
                 _selectedButtonIndex = 0;
                 _desc = "";
-                _date = 1;
+                _renewalDay = 1;
 
                 Navigator.pop(context);
             });
@@ -111,7 +123,7 @@ class _EditSubsState extends State<EditSubs> {
 
     void onSubDayClick(int index) {
         setState(() {
-            _date = index;
+            _renewalDay = index;
         });
     }
 
@@ -249,10 +261,40 @@ class _EditSubsState extends State<EditSubs> {
                                 height: 50,
                                 child: ListView(
                                     scrollDirection: Axis.horizontal,
-                                    children: getMonthButtons(onSubDayClick, _date, 30, 100),
+                                    children: getMonthButtons(onSubDayClick, _renewalDay, 30, 100),
                                     physics: AlwaysScrollableScrollPhysics(),
                                 )
                             ),
+                            SizedBox(height:30),
+                            Text(
+                                " STARTING DATE",
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w300,
+                                    color: textColors[theme],
+                                    letterSpacing: 2
+                                )
+                            ),
+                            SizedBox(height:10),
+                            Container(
+                                margin: EdgeInsets.fromLTRB(30, 20, 30, 10),
+                                child: FloatingActionButton.extended(
+                                    elevation: 0.0,
+                                    highlightElevation: 1.0,
+                                    heroTag: 7,
+                                    onPressed: _selectDate,
+                                    backgroundColor: Colors.blueAccent[400],
+                                    label: Text(
+                                        DateFormat("dd/MM/yyyy").format(_date),
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: "Montserrat"
+                                        )
+                                    ),
+                                )
+                            ),
+                            SizedBox(height: 60),
                         ]                    
                     )
                 ]
