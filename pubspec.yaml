@@ -53,7 +53,6 @@ flutter:
 
   assets:
     - assets/
-    - locale/
     - assets/icon/
     - assets/files/
     - assets/files/settings.json
@@ -61,6 +60,8 @@ flutter:
     - assets/images/
     - assets/images/favicon.png
     - assets/images/user.jpg
+    - locales/EN_US.json
+    - locales/TR_TR.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

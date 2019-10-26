@@ -14,7 +14,6 @@ const Map<String, dynamic> defaultPrefs = const {
     "utilitiesDay" : 1,
     "rentDay" : 1,
     "rentStartDate" : "",
-    "transactionDescriptions" : ["Food", "Drink", "Groceries", "Tech", "Top-Up", "Clothes", "Makeup", "Cinema", "Travel", "Hotel", "Game", "App", "Other"],
     "currency" : "€",
     "transactions" : [],
     "rents" : [],
@@ -83,7 +82,9 @@ Future<bool> saveSettings() async {
     }
 }
 
-void loadSettings([Function _f]) {
+void loadSettings() {
+    initTransactionDescriptions();
+
     try {
         String _s = settingsStorage.getString("settings");
 
@@ -139,7 +140,6 @@ void loadSettings([Function _f]) {
         checkSettings();
 
         refreshStats();
-        if (_f != null) _f(settings);
     } catch (e) {
         print("SETTINGS.DART LOAD SETTINGS ERROR :\n" + e.toString());
     }

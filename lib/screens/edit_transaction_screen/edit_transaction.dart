@@ -39,21 +39,21 @@ class _EditTransactionState extends State<EditTransaction> {
     List<Widget> getButtons(int s) {
         if (s == 0) {
             return [
-                customButton(20, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, "BUDGET", () {setState(() {
+                customButton(20, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, "SAVINGS", () {setState(() {
+                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, "BUDGET", () {setState(() {
+                customButton(20, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.amber[800], Colors.white, Icons.archive, "SAVINGS", () {setState(() {
+                customButton(20, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
@@ -66,10 +66,11 @@ class _EditTransactionState extends State<EditTransaction> {
         if ((_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && _amount > 0)) {
             setState(() {
                 List<dynamic> _ls = List.from(settings["transactions"]);
-                List _nm = settings["transactionDescriptions"];
+                List _nm = transactionDescriptions;
 
                 if (_desc.replaceAll(" ", "").length == 0) {
-                    _desc = _nm[_selectedNameIndex];
+                    // _desc = _nm[_selectedNameIndex];
+                    _desc = transactionDescriptions[_selectedNameIndex];
                 }
 
                 if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
@@ -114,7 +115,7 @@ class _EditTransactionState extends State<EditTransaction> {
 	Widget build(BuildContext context) {
         return Scaffold(
             backgroundColor: themeColors[theme],
-            appBar: appBarWithGradientTitle("SPEND", 25, Colors.redAccent[400], Colors.red[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
+            appBar: appBarWithGradientTitle(lBase.titles.spend, 25, Colors.redAccent[400], Colors.red[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             body: ListView(
                 children: [
                     Divider(),
@@ -123,7 +124,7 @@ class _EditTransactionState extends State<EditTransaction> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                             Text(
-                                " SOURCE",
+                                lBase.subTitles.source,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -146,7 +147,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: <Widget>[
                                         Text(
-                                            " DESCRIPTION",
+                                            lBase.subTitles.description,
                                             style: TextStyle(
                                                 fontSize: 24,
                                                 fontFamily: "Montserrat",
@@ -184,9 +185,9 @@ class _EditTransactionState extends State<EditTransaction> {
                             ),
                             SizedBox(height:10),
                             Visibility(
-                                visible: _selectedNameIndex == List.from(settings["transactionDescriptions"]).length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                visible: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
                                 child: Text(
-                                    " CUSTOM DESCRIPTION",
+                                    lBase.subTitles.customDesc,
                                     style: TextStyle(
                                         fontSize: 24,
                                         fontFamily: "Montserrat",
@@ -198,13 +199,13 @@ class _EditTransactionState extends State<EditTransaction> {
                             ),
                             SizedBox(height:10),
                             Visibility(
-                                visible: _selectedNameIndex == List.from(settings["transactionDescriptions"]).length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                visible: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
                                 child: Container(
                                     alignment: Alignment.center,
                                     height: 80,
                                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                     child: TextField(
-                                        enabled: _selectedNameIndex == List.from(settings["transactionDescriptions"]).length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                        enabled: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
                                         maxLines: 1,
                                         maxLength: 24,
                                         maxLengthEnforced: true,
@@ -233,7 +234,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                 )
                             ),
                             Text(
-                                " AMOUNT",
+                                lBase.subTitles.amount,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -273,7 +274,7 @@ class _EditTransactionState extends State<EditTransaction> {
                             ),
                             SizedBox(height:30),
                             Text(
-                                " DATE",
+                                lBase.subTitles.amount,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -315,7 +316,6 @@ class _EditTransactionState extends State<EditTransaction> {
                         elevation: 0.0,
                         onPressed: onActionPressed,
                         highlightElevation: 1.0,
-                        tooltip: "Done",
                     ),
                 )
             ),

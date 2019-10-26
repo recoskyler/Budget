@@ -294,7 +294,7 @@ class _EditSubsState extends State<EditSubs> {
                                     ),
                                 )
                             ),
-                            SizedBox(height: 60),
+                            SizedBox(height: 150),
                         ]                    
                     )
                 ]

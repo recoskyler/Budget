@@ -1,0 +1,65 @@
+{
+  "buttons": {
+    "save": "Birikim",
+    "spend": "Harcama",
+    "deposit": "Yatırım",
+    "notPaid": "Ödenmedi",
+    "paid": "Ödendi",
+    "cancel": "İPTAL ET",
+    "remove": "SİL",
+    "darkTheme": "ASİ",
+    "lightTheme": "İMPARATORLUK",
+    "reset": "SIFIRLA",
+    "resetSure": "EVET, EMINIM",
+    "viewGithub": "GITHUB PROJE SAYFASINI GÖSTER",
+    "self": "ŞAHSİ",
+    "budget": "BÜTÇE",
+    "savings": "BİRİKİMLER"
+  },
+  "descriptions": {
+    "food": "Yemek",
+    "drink": "İçecek",
+    "app": "Uygulama",
+    "game": "Oyun",
+    "cinema": "Sinema",
+    "makeup": "Makyaj",
+    "clothes": "Kıyafet",
+    "groceries": "Market",
+    "topUp": "Para Yükleme",
+    "tech": "Teknoloji",
+    "hobby": "Hobi",
+    "travel": "Seyahat",
+    "hotel": "Otel",
+    "hardware": "Hırdavat",
+    "household": "Beyaz Eşya",
+    "other": "Diğer",
+    "furniture": "Mobilya"
+  },
+  "misc": {
+    "tapRent": "Kira ve hizmet harcamalarını yönetmek için aşağıdaki butona tıklayın."
+  },
+  "subTitles": {
+    "transactions": " İŞLEMLER",
+    "transactionHistory": " İŞLEM GEÇMİŞİ",
+    "expenses": "HARCAMALAR ",
+    "savings": " BİRİKİMLER",
+    "remaining": "KALAN ",
+    "day": "Gün ",
+    "amount": " MİKTAR",
+    "date": " TARİH",
+    "customDesc": " AÇIKLAMA",
+    "description": " AÇIKLAMA",
+    "source": " KAYNAK"
+  },
+  "titles": {
+    "budget": "BÜTÇE",
+    "rent": "KİRA",
+    "fixedPayments": "SABİT ÖDEMELER",
+    "stats": "İSTATİSTİKLER",
+    "settings": "AYARLAR",
+    "utilities": "HİZMETLER",
+    "spend": "HARCA",
+    "save": "BİRİKTİR",
+    "deposit": "PARA YATIR"
+  }
+}

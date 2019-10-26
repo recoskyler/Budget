@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:budget/screens/stats_screen/stats_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:budget/generated/locale_base.dart';
 import 'settings.dart';
 import 'package:flutter/material.dart';
 import 'components.dart';
@@ -194,7 +194,7 @@ int getMonthCount([List<Payment> _ls, int _day]) {
 /// Adds a random Payment to settings["transactions"]. It will be visible only on Budget related screens/lists.
 void addRandomTransaction() {
     List _tr = List.from(settings["transactions"]);
-    List _desc = List.from(settings["transactionDescriptions"]);
+    List _desc = transactionDescriptions;
     DateTime _date = DateTime.now();
     int _key = settings["keyIndex"];
 
@@ -452,4 +452,26 @@ void launchURL(String url) async {
     } else {
         throw 'Could not launch $url';
     }
+}
+
+void initTransactionDescriptions() {
+    transactionDescriptions = [
+        lBase.descriptions.food,
+        lBase.descriptions.drink,
+        lBase.descriptions.groceries,
+        lBase.descriptions.clothes,
+        lBase.descriptions.makeup,
+        lBase.descriptions.topUp,
+        lBase.descriptions.cinema,
+        lBase.descriptions.tech,
+        lBase.descriptions.hobby,
+        lBase.descriptions.travel,
+        lBase.descriptions.hotel,
+        lBase.descriptions.app,
+        lBase.descriptions.game,
+        lBase.descriptions.hardware,
+        lBase.descriptions.furniture,
+        lBase.descriptions.household,
+        lBase.descriptions.other
+    ];
 }

@@ -1,3 +1,5 @@
+import 'package:budget/generated/locale_base.dart';
+import 'package:budget/modules/global.dart';
 import 'package:budget/modules/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +42,15 @@ class SizeConfig {
 }
 
 void main() async {
+    lBase = LocaleBase();
+    
     settingsStorage = await SharedPreferences.getInstance();
+
+    if (!settingsStorage.containsKey("lang")) {
+        settingsStorage.setString("lang", "locale/EN_US.json");
+    }
+
+    await lBase.load(settingsStorage.getString("lang"));
     
     loadSettings();
 

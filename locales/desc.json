@@ -1,0 +1,34 @@
+{
+  "buttons": {
+    "save": "Save (as payment)",
+    "spend": "Spend",
+    "deposit": "Deposit",
+    "notPaid": "Not Paid",
+    "paid": "Paid",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "darkTheme": "Dark Theme",
+    "lightTheme": "Light Theme",
+    "reset": "Reset",
+    "resetSure": "Reset Sure",
+    "viewGithub": "View Github"
+  },
+  "descriptions": {},
+  "misc": {},
+  "subTitles": {
+    "transactions": "Transactions",
+    "transactionHistory": "Transaction History",
+    "expenses": "Expenses",
+    "savings": "Savings",
+    "remaining": "Remaining",
+    "day": "Day count"
+  },
+  "titles": {
+    "budget": "Budet",
+    "rent": "Rent",
+    "fixedPayments": "Fixed Payments",
+    "stats": "Stats",
+    "settings": "Settings",
+    "utilities": "Utils"
+  }
+}

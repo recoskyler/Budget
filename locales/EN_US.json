@@ -1,0 +1,65 @@
+{
+  "buttons": {
+    "save": "Save",
+    "spend": "Spend",
+    "deposit": "Deposit",
+    "notPaid": "Not Paid",
+    "paid": "Paid",
+    "cancel": "CANCEL",
+    "remove": "REMOVE",
+    "darkTheme": "REBEL",
+    "lightTheme": "EMPIRE",
+    "reset": "RESET EVERYTHING",
+    "resetSure": "YES, I'M SURE",
+    "viewGithub": "VIEW PROJECT ON GITHUB",
+    "self": "SELF",
+    "budget": "BUDGET",
+    "savings": "SAVINGS"
+  },
+  "descriptions": {
+    "food": "Food",
+    "drink": "Drink",
+    "app": "App",
+    "game": "Game",
+    "cinema": "Cinema",
+    "makeup": "Makeup",
+    "clothes": "Clothes",
+    "groceries": "Groceries",
+    "topUp": "Top-Up",
+    "tech": "Tech",
+    "hobby": "Hobby",
+    "travel": "Travel",
+    "hotel": "Hotel",
+    "hardware": "Hardware",
+    "household": "Household Appliences",
+    "other": "Other",
+    "furniture": "Furniture"
+  },
+  "misc": {
+    "tapRent": "Tap the button below to set up rent and utilities."
+  },
+  "subTitles": {
+    "transactions": " TRANSACTIONS",
+    "transactionHistory": " TRANSACTION HISTORY",
+    "expenses": "EXPENSES ",
+    "savings": " SAVINGS",
+    "remaining": "REMAINING ",
+    "day": "Day ",
+    "amount": " AMOUNT",
+    "date": " DATE",
+    "customDesc": " CUSTOM DESCRIPTION",
+    "description": " DESCRIPTION",
+    "source": " SOURCE"
+  },
+  "titles": {
+    "budget": "BUDGET",
+    "rent": "RENT",
+    "fixedPayments": "FIXED PAYMENTS",
+    "stats": "STATS",
+    "settings": "SETTINGS",
+    "utilities": "UTILITIES",
+    "spend": "SPEND",
+    "save": "SAVE",
+    "deposit": "DEPOSIT"
+  }
+}

@@ -1,3 +1,4 @@
+import 'package:budget/generated/locale_base.dart';
 import 'package:flutter/material.dart';
 import 'functions.dart';
 
@@ -19,6 +20,7 @@ double savings = calculateTotalSavings();
 String currency = "";
 int rentPage = -1;        // Rent screen selected card index
 int theme = 0;
+LocaleBase lBase;
 
 List<String> currencies = ['€', '\$', '£', '¥', '₩', '₺', ''];
 
@@ -48,6 +50,10 @@ List<Color> textColors = [
     Colors.grey[800],
     Colors.grey[600]
 ];
+
+// * DESC
+
+List<String> transactionDescriptions;
 
 //
 // Old code, implemented 'shared_preferences' package instead

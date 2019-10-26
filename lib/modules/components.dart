@@ -138,7 +138,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, int date, Pa
     if (_currency == null) _currency = "";
 
     String _monS = _currency + amount.toStringAsFixed(2);
-    String _remTxt = "CANCEL";
+    String _remTxt = lBase.buttons.cancel;
     Color _monC = Colors.red;
 
     if (txt.length > 25) {
@@ -247,14 +247,14 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
     String _monS = _currency + amount.toStringAsFixed(2);
     String _datS = DateFormat('dd/MM/yyyy').format(date);
     Color _monC = Colors.red;
-    String _remTxt = "REMOVE";
+    String _remTxt = lBase.buttons.remove;
 
     if (txt.length > 25) {
         txt = txt.substring(0, 24);
     }
 
     if (fixedPaymentTypes.contains(t))
-        _remTxt = "CANCEL";
+        _remTxt = lBase.buttons.cancel;
 
     // * Set Amount Text Color
 
@@ -446,7 +446,7 @@ Divider transactionItemDivider() {
 
 ListView namesBlock(Function _op, int _indexVar) {
     List<Widget> _items = new List<Widget>();
-    List _names = settings["transactionDescriptions"];
+    List _names = transactionDescriptions;
     int i = 0;
 
     _items.add(SizedBox(width: 10));
@@ -501,7 +501,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
             Container(
                 alignment: Alignment.center,
                 child: Text(
-                    "Tap the button below to set up rent and utilities.",
+                    lBase.misc.tapRent,
                     style: TextStyle(
                         fontSize: 4 * SizeConfig.safeBlockHorizontal,
                         fontFamily: "Montserrat",
