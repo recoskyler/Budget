@@ -11,7 +11,7 @@ double _resetDialogState = 0;
 
 PreferredSizeWidget settingsHead() {
     return appBarWithGradientTitle(
-        "SETTINGS", 
+        lBase.titles.settings, 
         25, 
         Colors.cyanAccent[400], 
         Colors.cyan[900], 
@@ -75,15 +75,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     List<Widget> getButtons(int s, Function _top) {
         if (s == 0) {
             return [
-                customButton(20, Colors.red, Colors.white, CustomIcons.rebel, "REBEL", () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
+                customButton(20, Colors.red, Colors.white, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.grey[300], Colors.grey[900], CustomIcons.empire, "EMPIRE", () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
+                customButton(20, Colors.grey[300], Colors.grey[900], CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.red[50], Colors.red, CustomIcons.rebel, "REBEL", () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
+                customButton(20, Colors.red[50], Colors.red, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.grey[900], Colors.white, CustomIcons.empire, "EMPIRE", () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
+                customButton(20, Colors.grey[900], Colors.white, CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
             ];
         }
 
@@ -106,7 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             children: <Widget>[
                 SizedBox(height:10),
                 Text(
-                    " ALLOWENCE AMOUNT",
+                    lBase.subTitles.allowanceAmount,
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Montserrat",
@@ -150,7 +150,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 SizedBox(height:30),
                 Text(
-                    " RENEWAL DAY",
+                    lBase.subTitles.renewalDay,
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Montserrat",
@@ -170,7 +170,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 SizedBox(height:30),
                 Text(
-                    " SIDE",
+                    lBase.subTitles.side,
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Montserrat",
@@ -187,7 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 SizedBox(height:30),
                 Text(
-                    " CURRENCY",
+                    lBase.subTitles.currency,
                     style: TextStyle(
                         fontSize: 24,
                         fontFamily: "Montserrat",
@@ -233,13 +233,60 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         .toList()
                     ),
                 ),
+                SizedBox(height:30),
+                Text(
+                    lBase.subTitles.language,
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontFamily: "Montserrat",
+                        fontWeight: FontWeight.w300,
+                        color: textColors[theme],
+                        letterSpacing: 2
+                    )
+                ),
+                SizedBox(height:10),
+                Container(
+                    margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
+                    child: DropdownButton(
+                        icon: Container(),
+                        value: languages[settingsStorage.getInt("lang")],
+                        elevation: 0,
+                        underline: Container(
+                            height: 2,
+                            color: Colors.deepPurpleAccent[400],
+                        ),
+                        onChanged: (String _newVal) {
+                            setState(() {
+                                settingsStorage.setInt("lang", languages.indexOf(_newVal)).then((_) {
+                                    lBase.load(languageLocales[settingsStorage.getInt("lang")]).then((_) {
+                                        initTransactionDescriptions();
+                                    });
+                                });
+                            });
+                        },
+                        items: languages.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                    value,
+                                    style: TextStyle(
+                                        color: textColors[theme],
+                                        fontSize: 25,
+                                        fontFamily: "Montserrat",
+                                    ),
+                                    textAlign: TextAlign.center,
+                                ),
+                            );
+                        }).toList()
+                    ),
+                ),
                 SizedBox(height: 40),
                 RawMaterialButton(
                     onPressed: () {
                         launchURL("https://github.com/recoskyler/Budget");
                     }, // widget.resetSettingsAction
                     child: Text(
-                        "VIEW PROJECT ON GITHUB",
+                        lBase.buttons.viewGithub,
                         style: TextStyle(
                             fontSize: 28,
                             fontFamily: "Montserrat",
@@ -260,7 +307,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         });
                     }, // widget.resetSettingsAction
                     child: Text(
-                        "RESET EVERYTHING",
+                        lBase.buttons.reset,
                         style: TextStyle(
                             fontSize: 24,
                             fontFamily: "Montserrat",
@@ -287,7 +334,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             RawMaterialButton(
                                 onPressed: widget.resetSettingsAction,
                                 child: Text(
-                                    "YEAH, I'M SURE",
+                                    lBase.buttons.resetSure,
                                     style: TextStyle(
                                         fontSize: 5 * SizeConfig.safeBlockHorizontal,
                                         fontFamily: "Montserrat",

@@ -20,7 +20,7 @@ double savings = calculateTotalSavings();
 String currency = "";
 int rentPage = -1;        // Rent screen selected card index
 int theme = 0;
-LocaleBase lBase;
+LocaleBase lBase = LocaleBase();
 
 List<String> currencies = ['€', '\$', '£', '¥', '₩', '₺', ''];
 
@@ -51,9 +51,19 @@ List<Color> textColors = [
     Colors.grey[600]
 ];
 
-// * DESC
+// * DESC/LANG
 
 List<String> transactionDescriptions;
+
+List<String> languages = [
+    "English",
+    "Türkçe"
+];
+
+List<String> languageLocales = [
+    "locales/EN.json",
+    "locales/TR.json"
+];
 
 //
 // Old code, implemented 'shared_preferences' package instead

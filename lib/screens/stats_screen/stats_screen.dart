@@ -49,7 +49,7 @@ class _StatsScreenState extends State<StatsScreen> {
         List<Widget> _transactionCards = getTransactionCards(onTransactionItemClick, renewTransactions, renewFixedPayments);
 
         return Scaffold(
-            appBar: appBarWithGradientTitle("STATS", 25, Colors.cyanAccent[400], Colors.cyan[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
+            appBar: appBarWithGradientTitle(lBase.titles.stats, 25, Colors.cyanAccent[400], Colors.cyan[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             backgroundColor: themeColors[theme],
             body: ListView(
                 physics: AlwaysScrollableScrollPhysics(),
@@ -62,8 +62,8 @@ class _StatsScreenState extends State<StatsScreen> {
                                 padding: EdgeInsets.all(5),
                                 child: Row(
                                     children: [
-                                        infoBlock(calculateTotalFromPayments([PaymentType.Withdraw, PaymentType.Subscription]) / getMonthCount(), currency, "AVG EXPENSES", Colors.red, CrossAxisAlignment.start),
-                                        infoBlock(calculateTotalFromPayment(PaymentType.PaidUtility, settings["rents"]) / getMonthCount(settings["rents"], settings["utilitiesDay"]), currency, "AVG UTILITIES", Colors.indigoAccent[700], CrossAxisAlignment.end),
+                                        infoBlock(calculateTotalFromPayments([PaymentType.Withdraw, PaymentType.Subscription]) / getMonthCount(), currency, lBase.subTitles.avgExpenses, Colors.red, CrossAxisAlignment.start),
+                                        infoBlock(calculateTotalFromPayment(PaymentType.PaidUtility, settings["rents"]) / getMonthCount(settings["rents"], settings["utilitiesDay"]), currency, lBase.subTitles.avgUtilities, Colors.indigoAccent[700], CrossAxisAlignment.end),
                                     ],
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 ),
@@ -72,7 +72,7 @@ class _StatsScreenState extends State<StatsScreen> {
                             Divider(color: Colors.grey),
                             SizedBox(height: 20),
                             Text(
-                                " TRANSACTION HISTORY",
+                                lBase.subTitles.transactionHistory,
                                 style: TextStyle(
                                     color: textColors[theme],
                                     fontFamily: "Montserrat",

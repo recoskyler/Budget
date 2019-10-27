@@ -69,7 +69,6 @@ class _EditTransactionState extends State<EditTransaction> {
                 List _nm = transactionDescriptions;
 
                 if (_desc.replaceAll(" ", "").length == 0) {
-                    // _desc = _nm[_selectedNameIndex];
                     _desc = transactionDescriptions[_selectedNameIndex];
                 }
 

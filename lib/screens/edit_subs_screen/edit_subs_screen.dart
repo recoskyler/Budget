@@ -38,21 +38,21 @@ class _EditSubsState extends State<EditSubs> {
     List<Widget> getButtons(int s) {
         if (s == 0) {
             return [
-                customButton(18, Colors.purpleAccent[400], Colors.white, Icons.subject, "CONTRACT", () {setState(() {
+                customButton(18, Colors.purpleAccent[400], Colors.white, Icons.subject, lBase.buttons.contract, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, "SAVING", () {setState(() {
+                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.saving, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(18, Colors.purple[50], Colors.purpleAccent[400], Icons.subject, "CONTRACT", () {setState(() {
+                customButton(18, Colors.purple[50], Colors.purpleAccent[400], Icons.subject, lBase.buttons.contract, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.amber[800], Colors.white, Icons.archive, "SAVING", () {setState(() {
+                customButton(20, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.saving, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
@@ -131,7 +131,7 @@ class _EditSubsState extends State<EditSubs> {
 	Widget build(BuildContext context) {
         return Scaffold(
             backgroundColor: themeColors[theme],
-            appBar: appBarWithGradientTitle("ADD FIXED PAYMENT", 25, Colors.redAccent[400], Colors.red[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
+            appBar: appBarWithGradientTitle(lBase.titles.addFixed, 25, Colors.redAccent[400], Colors.red[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             body: ListView(
                 children: [
                     Divider(),
@@ -140,7 +140,7 @@ class _EditSubsState extends State<EditSubs> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                             Text(
-                                " TYPE",
+                                lBase.subTitles.type,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -162,7 +162,7 @@ class _EditSubsState extends State<EditSubs> {
                                     crossAxisAlignment: CrossAxisAlignment.stretch,
                                     children: <Widget>[
                                         Text(
-                                            " DESCRIPTION",
+                                            lBase.subTitles.description,
                                             style: TextStyle(
                                                 fontSize: 24,
                                                 fontFamily: "Montserrat",
@@ -207,7 +207,7 @@ class _EditSubsState extends State<EditSubs> {
                             ),
                             SizedBox(height:30),
                             Text(
-                                " AMOUNT",
+                                lBase.subTitles.amount,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -247,7 +247,7 @@ class _EditSubsState extends State<EditSubs> {
                             ),
                             SizedBox(height:30),
                             Text(
-                                " RENEWAL DAY",
+                                lBase.subTitles.renewalDay,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -267,7 +267,7 @@ class _EditSubsState extends State<EditSubs> {
                             ),
                             SizedBox(height:30),
                             Text(
-                                " STARTING DATE",
+                                lBase.subTitles.startingDate,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -309,7 +309,6 @@ class _EditSubsState extends State<EditSubs> {
                         elevation: 0.0,
                         onPressed: onActionPressed,
                         highlightElevation: 1.0,
-                        tooltip: "Done",
                     ),
                 )
             ),

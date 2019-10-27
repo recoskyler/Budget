@@ -4,7 +4,7 @@ import '../../modules/global.dart';
 
 PreferredSizeWidget subsHead() {
     return appBarWithGradientTitle(
-        "FIXED PAYMENTS", 
+        lBase.titles.fixedPayments, 
         25, 
         Colors.redAccent[400], 
         Colors.red[900], 
@@ -39,16 +39,16 @@ class SubsScreenState extends State<SubsScreen> {
                 SizedBox(height: 20),
                 Row(
                     children: [
-                        Expanded(child: infoBlock(budget, currency, "BUDGET", Colors.greenAccent[700], CrossAxisAlignment.start)),
-                        Expanded(child: infoBlock(subexpense, currency, "FIXED EXPENSES", Colors.red, CrossAxisAlignment.end)),
+                        Expanded(child: infoBlock(budget, currency, lBase.subTitles.budget, Colors.greenAccent[700], CrossAxisAlignment.start)),
+                        Expanded(child: infoBlock(subexpense, currency, lBase.subTitles.fixedExpenses, Colors.red, CrossAxisAlignment.end)),
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                 ),
                 SizedBox(height: 30),
                 Row(
                     children: [
-                        Expanded(child: infoBlock(savings, currency, "TOTAL SAVINGS", Colors.amber[800], CrossAxisAlignment.start)),
-                        Expanded(child: infoBlock(budget - subexpense, currency, "REMAINING", budget - subexpense >= 0 ? Colors.blueAccent[700] : Colors.redAccent[700], CrossAxisAlignment.end)),
+                        Expanded(child: infoBlock(savings, currency, lBase.subTitles.totalSavings, Colors.amber[800], CrossAxisAlignment.start)),
+                        Expanded(child: infoBlock(budget - subexpense, currency, lBase.subTitles.remaining, budget - subexpense >= 0 ? Colors.blueAccent[700] : Colors.redAccent[700], CrossAxisAlignment.end)),
                     ],
                     mainAxisAlignment: MainAxisAlignment.center,
                 ),
@@ -56,7 +56,7 @@ class SubsScreenState extends State<SubsScreen> {
                 Divider(color: Colors.grey),
                 SizedBox(height: 20),
                 Text(
-                    " FIXED PAYMENTS",
+                    lBase.subTitles.fixedPayments,
                     style: TextStyle(
                         color: textColors[theme],
                         fontFamily: "Montserrat",
@@ -93,7 +93,6 @@ class SubsButtonState extends State<SubsButton> {
                 elevation: 0.0,
                 onPressed: widget.onActionPressed,
                 highlightElevation: 1.0,
-                tooltip: "Add Fixed Payment",
             )
         );
     }

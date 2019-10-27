@@ -8,7 +8,7 @@ import 'package:budget/modules/classes.dart';
 
 PreferredSizeWidget rentHead([BuildContext context]) {
     return appBarWithGradientTitle(
-        "RENT", 
+        lBase.titles.rent, 
         25,
         Colors.indigoAccent[700], 
         Colors.indigo[900], 

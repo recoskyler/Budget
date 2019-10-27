@@ -41,16 +41,14 @@ class SizeConfig {
     }
 }
 
-void main() async {
-    lBase = LocaleBase();
-    
+void main() async {    
     settingsStorage = await SharedPreferences.getInstance();
 
     if (!settingsStorage.containsKey("lang")) {
-        settingsStorage.setString("lang", "locale/EN_US.json");
+        settingsStorage.setInt("lang", 0);
     }
 
-    await lBase.load(settingsStorage.getString("lang"));
+    await lBase.load(languageLocales[settingsStorage.getInt("lang")]);
     
     loadSettings();
 

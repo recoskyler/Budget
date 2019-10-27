@@ -56,6 +56,10 @@ class Localebuttons {
   String get self => _data["self"];
   String get budget => _data["budget"];
   String get savings => _data["savings"];
+  String get rebel => _data["rebel"];
+  String get empire => _data["empire"];
+  String get saving => _data["saving"];
+  String get contract => _data["contract"];
 }
 class Localedescriptions {
   final Map<String, String> _data;
@@ -100,6 +104,23 @@ class LocalesubTitles {
   String get customDesc => _data["customDesc"];
   String get description => _data["description"];
   String get source => _data["source"];
+  String get language => _data["language"];
+  String get currency => _data["currency"];
+  String get side => _data["side"];
+  String get renewalDay => _data["renewalDay"];
+  String get allowanceAmount => _data["allowanceAmount"];
+  String get budget => _data["budget"];
+  String get utilities => _data["utilities"];
+  String get rent => _data["rent"];
+  String get avgExpenses => _data["avgExpenses"];
+  String get avgUtilities => _data["avgUtilities"];
+  String get totalSavings => _data["totalSavings"];
+  String get duration => _data["duration"];
+  String get startingDate => _data["startingDate"];
+  String get rentAmount => _data["rentAmount"];
+  String get type => _data["type"];
+  String get fixedExpenses => _data["fixedExpenses"];
+  String get fixedPayments => _data["fixedPayments"];
 }
 class Localetitles {
   final Map<String, String> _data;
@@ -114,4 +135,5 @@ class Localetitles {
   String get spend => _data["spend"];
   String get save => _data["save"];
   String get deposit => _data["deposit"];
+  String get addFixed => _data["addFixed"];
 }

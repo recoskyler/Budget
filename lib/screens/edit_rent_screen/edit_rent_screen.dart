@@ -163,7 +163,7 @@ class _EditRentState extends State<EditRent> {
                             */
                             //
                             Text(
-                                " RENT AMOUNT",
+                                lBase.subTitles.rentAmount,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -229,7 +229,7 @@ class _EditRentState extends State<EditRent> {
                             //
                             SizedBox(height:30),
                             Text(
-                                " STARTING DATE",
+                                lBase.subTitles.startingDate,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -258,7 +258,7 @@ class _EditRentState extends State<EditRent> {
                             ),
                             SizedBox(height:30),
                             Text(
-                                " DURATION (YEARS)",
+                                lBase.subTitles.duration,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -290,7 +290,6 @@ class _EditRentState extends State<EditRent> {
                         elevation: 0.0,
                         onPressed: onActionPressed,
                         highlightElevation: 1.0,
-                        tooltip: "Done",
                     ),
                 )
             ),

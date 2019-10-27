@@ -37,21 +37,21 @@ class _EditSavingState extends State<EditSaving> {
     List<Widget> getButtons(int s) {
         if (s == 0) {
             return [
-                customButton(20, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, "BUDGET", () {setState(() {
+                customButton(20, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.greenAccent[100], Colors.green[800], Icons.person, "SELF", () {setState(() {
+                customButton(20, Colors.greenAccent[100], Colors.green[800], Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, "BUDGET", () {setState(() {
+                customButton(20, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.greenAccent[700], Colors.white, Icons.person, "SELF", () {setState(() {
+                customButton(20, Colors.greenAccent[700], Colors.white, Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
             ];
@@ -91,7 +91,7 @@ class _EditSavingState extends State<EditSaving> {
 	Widget build(BuildContext context) {
         return Scaffold(
             backgroundColor: themeColors[theme],
-            appBar: appBarWithGradientTitle("SAVE", 25, Colors.amberAccent[700], Colors.amber[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
+            appBar: appBarWithGradientTitle(lBase.titles.save, 25, Colors.amberAccent[700], Colors.amber[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             body: ListView(
                 children: [
                     Divider(),
@@ -100,7 +100,7 @@ class _EditSavingState extends State<EditSaving> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                             Text(
-                                " SOURCE",
+                                lBase.subTitles.source,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -116,7 +116,7 @@ class _EditSavingState extends State<EditSaving> {
                             ),
                             SizedBox(height:10),
                             Text(
-                                " AMOUNT",
+                                lBase.subTitles.amount,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -156,7 +156,7 @@ class _EditSavingState extends State<EditSaving> {
                             ),
                             SizedBox(height:30),
                             Text(
-                                " DATE",
+                                lBase.subTitles.date,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -197,7 +197,6 @@ class _EditSavingState extends State<EditSaving> {
                         elevation: 0.0,
                         onPressed: onActionPressed,
                         highlightElevation: 1.0,
-                        tooltip: "Done",
                     ),
                 )
             ),

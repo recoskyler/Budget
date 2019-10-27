@@ -37,21 +37,21 @@ class _EditDepositState extends State<EditDeposit> {
     List<Widget> getButtons(int s) {
         if (s == 0) {
             return [
-                customButton(20, Colors.greenAccent[700], Colors.white, Icons.person, "SELF", () {setState(() {
+                customButton(20, Colors.greenAccent[700], Colors.white, Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, "SAVINGS", () {setState(() {
+                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.greenAccent[100], Colors.green[700], Icons.person, "SELF", () {setState(() {
+                customButton(20, Colors.greenAccent[100], Colors.green[700], Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.amber[800], Colors.white, Icons.archive, "SAVINGS", () {setState(() {
+                customButton(20, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
@@ -91,7 +91,7 @@ class _EditDepositState extends State<EditDeposit> {
 	Widget build(BuildContext context) {
         return Scaffold(
             backgroundColor: themeColors[theme],
-            appBar: appBarWithGradientTitle("DEPOSIT", 25, Colors.greenAccent[700], Colors.green[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
+            appBar: appBarWithGradientTitle(lBase.titles.deposit, 25, Colors.greenAccent[700], Colors.green[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             body: ListView(
                 children: [
                     Divider(),
@@ -100,7 +100,7 @@ class _EditDepositState extends State<EditDeposit> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                             Text(
-                                " SOURCE",
+                                lBase.subTitles.source,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -116,7 +116,7 @@ class _EditDepositState extends State<EditDeposit> {
                             ),
                             SizedBox(height:10),
                             Text(
-                                " AMOUNT",
+                                lBase.subTitles.amount,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -156,7 +156,7 @@ class _EditDepositState extends State<EditDeposit> {
                             ),
                             SizedBox(height:30),
                             Text(
-                                " DATE",
+                                lBase.subTitles.date,
                                 style: TextStyle(
                                     fontSize: 24,
                                     fontFamily: "Montserrat",
@@ -197,7 +197,6 @@ class _EditDepositState extends State<EditDeposit> {
                       elevation: 0.0,
                       onPressed: onActionPressed,
                       highlightElevation: 1.0,
-                      tooltip: "Done",
                   ),
                 )
             ),

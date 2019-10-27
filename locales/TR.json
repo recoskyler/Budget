@@ -14,7 +14,11 @@
     "viewGithub": "GITHUB PROJE SAYFASINI GÖSTER",
     "self": "ŞAHSİ",
     "budget": "BÜTÇE",
-    "savings": "BİRİKİMLER"
+    "savings": "BİRİKİMLER",
+    "rebel": "ASİ",
+    "empire": "IMPARATORLUK",
+    "saving": "BİRİKİM",
+    "contract": "ANLAŞMA"
   },
   "descriptions": {
     "food": "Yemek",
@@ -41,15 +45,32 @@
   "subTitles": {
     "transactions": " İŞLEMLER",
     "transactionHistory": " İŞLEM GEÇMİŞİ",
-    "expenses": "HARCAMALAR ",
-    "savings": " BİRİKİMLER",
-    "remaining": "KALAN ",
+    "expenses": "HARCAMALAR",
+    "savings": "BİRİKİMLER",
+    "remaining": "KALAN",
     "day": "Gün ",
     "amount": " MİKTAR",
     "date": " TARİH",
     "customDesc": " AÇIKLAMA",
     "description": " AÇIKLAMA",
-    "source": " KAYNAK"
+    "source": " KAYNAK",
+    "language": " DİL",
+    "currency": " PARA BİRİMİ",
+    "side": " TARAF",
+    "renewalDay": " YENİLENME GÜNÜ",
+    "allowanceAmount": " AYLIK BÜTÇE",
+    "budget": "BÜTÇE",
+    "utilities": "HİZMETLER ",
+    "rent": " KİRA",
+    "avgExpenses": "ORT HARCAMALAR",
+    "avgUtilities": "ORT HIZMETLER",
+    "totalSavings": " TÜM BİRİKİMLER",
+    "duration": " SÜRE (YIL)",
+    "startingDate": " BAŞLANGIÇ TARİHİ",
+    "rentAmount": " AYLIK KİRA",
+    "type": " TÜR",
+    "fixedExpenses": "SABİT HARCAMALAR",
+    "fixedPayments": " SABİT ÖDEMELER"
   },
   "titles": {
     "budget": "BÜTÇE",
@@ -60,6 +81,7 @@
     "utilities": "HİZMETLER",
     "spend": "HARCA",
     "save": "BİRİKTİR",
-    "deposit": "PARA YATIR"
+    "deposit": "PARA YATIR",
+    "addFixed": "SABİT HARCAMA EKLE"
   }
 }

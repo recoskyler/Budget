@@ -5,7 +5,7 @@ import '../../modules/global.dart';
 
 PreferredSizeWidget budgetHead([BuildContext context]) {
     return appBarWithGradientTitle(
-        "BUDGET",
+        lBase.titles.budget,
         25,
         Colors.purpleAccent[400],
         Colors.purple[800],
@@ -52,20 +52,20 @@ class BudgetScreenState extends State<BudgetScreen> {
                     children: <Widget>[
                         Row(
                             children: [
-                                Expanded(child: infoBlock(budget, currency, "BUDGET", Colors.greenAccent[700], CrossAxisAlignment.start)),
-                                Expanded(child: infoBlock(expense, currency, "EXPENSE", Colors.red, CrossAxisAlignment.end)),
+                                Expanded(child: infoBlock(budget, currency, lBase.subTitles.budget, Colors.greenAccent[700], CrossAxisAlignment.start)),
+                                Expanded(child: infoBlock(expense, currency, lBase.subTitles.expenses, Colors.red, CrossAxisAlignment.end)),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
                         ),
                         SizedBox(height: 30),
                         Row(
                             children: [
-                                Expanded( child: infoBlock(savings, currency, "TOTAL SAVINGS", Colors.amber[800], CrossAxisAlignment.start)),
+                                Expanded( child: infoBlock(savings, currency, lBase.subTitles.totalSavings, Colors.amber[800], CrossAxisAlignment.start)),
                                 Expanded(
                                     child: infoBlock(
                                         budget - expense,
                                         currency,
-                                        "REMAINING",
+                                        lBase.subTitles.remaining,
                                         budget - expense >= 0
                                             ? Colors.blueAccent[700]
                                             : Colors.redAccent[700],
@@ -80,7 +80,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                 SizedBox(height: 20),
                 Divider(color: Colors.grey),
                 SizedBox(height: 20),
-                Text(" TRANSACTIONS",
+                Text(lBase.subTitles.transactions,
                     style: TextStyle(
                         color: textColors[theme],
                         fontFamily: "Montserrat",
@@ -108,7 +108,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                                 Colors.amber[800], 
                                 Colors.grey[50], 
                                 Icons.archive, 
-                                "Save", 
+                                lBase.buttons.save, 
                                 () {
                                     widget.openEditPage(0);
                                 }, 
@@ -122,7 +122,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                                 Colors.red, 
                                 Colors.grey[50], 
                                 Icons.remove, 
-                                "Spend",
+                                lBase.buttons.spend,
                                 () {
                                     widget.openEditPage(1);
                                 }, 
@@ -136,7 +136,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                                 Colors.greenAccent[400], 
                                 Colors.grey[50],
                                 Icons.add, 
-                                "Deposit", 
+                                lBase.buttons.deposit, 
                                 () {
                                     widget.openEditPage(2);
                                 }, 
@@ -173,7 +173,6 @@ class BudgetButtonState extends State<BudgetButton> {
                 elevation: 0.0,
                 onPressed: widget.onActionPressed,
                 highlightElevation: 1.0,
-                tooltip: "Actions",
             )
         );
     }

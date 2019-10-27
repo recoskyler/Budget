@@ -174,7 +174,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, int date, Pa
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                         Text(
-                                            "${date.toString()}${getNumberText(date)} Day",
+                                            "${lBase.subTitles.day} {date.toString()}",
                                             style: TextStyle(
                                                 color: dimTextColors[theme],
                                                 fontSize: 3.5 * SizeConfig.safeBlockHorizontal,
@@ -557,7 +557,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: <Widget>[
                                             Text(
-                                                "RENT",
+                                                lBase.subTitles.rent,
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
@@ -582,7 +582,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                         crossAxisAlignment: CrossAxisAlignment.end,
                                         children: <Widget>[
                                             Text(
-                                                "UTILITIES ",
+                                                lBase.subTitles.utilities,
                                                 textAlign: TextAlign.right,
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
@@ -648,7 +648,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                             _u.isPaid() ? Colors.deepOrangeAccent[400] : Colors.deepOrange[100],
                                             _u.isPaid() ? Colors.white : Colors.deepOrangeAccent[400],
                                             _u.isPaid() ? Icons.done : Icons.close,
-                                            _u.isPaid() ? "Paid" : "Not Paid",
+                                            _u.isPaid() ? lBase.buttons.paid : lBase.buttons.notPaid,
                                             () {
                                                 setPaid(utilityID: _u.getID(), utilityPaid: !_u.isPaid(), rentID: _p.getID(), rentPaid: _p.isPaid());
                                             },
@@ -715,10 +715,10 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
                         Row(
                             children: [
                             Expanded(
-                                child: infoBlock(budget, currency, "BUDGET",
+                                child: infoBlock(budget, currency, lBase.subTitles.budget,
                                     Colors.greenAccent[700], CrossAxisAlignment.start, 3.5, 7)),
                             Expanded(
-                                child: infoBlock(calculateExpenses(false, _paramDate), currency, "EXPENSE", Colors.red,
+                                child: infoBlock(calculateExpenses(false, _paramDate), currency, lBase.subTitles.expenses, Colors.red,
                                     CrossAxisAlignment.end, 3.5, 7)),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -727,13 +727,10 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
                         Row(
                             children: [
                             Expanded(
-                                child: infoBlock(calculateSavings(_paramDate), currency, "SAVINGS",
+                                child: infoBlock(calculateSavings(_paramDate), currency, lBase.subTitles.savings,
                                     Colors.amber[800], CrossAxisAlignment.start, 3.5, 7)),
                             Expanded(
-                                child: infoBlock(
-                                    budget - calculateExpenses(false, _paramDate),
-                                    currency,
-                                    "REMAINING",
+                                child: infoBlock(budget - calculateExpenses(false, _paramDate), currency, lBase.subTitles.remaining,
                                     budget - calculateExpenses(false, _paramDate) >= 0
                                         ? Colors.blueAccent[700]
                                         : Colors.redAccent[700],
@@ -744,7 +741,7 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
                         SizedBox(height: 20),
                         Divider(color: _color),
                         SizedBox(height: 20),
-                        Text(" TRANSACTIONS",
+                        Text(lBase.subTitles.transactions,
                             style: TextStyle(
                                 color: textColors[theme],
                                 fontFamily: "Montserrat",

@@ -14,7 +14,11 @@
     "viewGithub": "VIEW PROJECT ON GITHUB",
     "self": "SELF",
     "budget": "BUDGET",
-    "savings": "SAVINGS"
+    "savings": "SAVINGS",
+    "rebel": "REBEL",
+    "empire": "EMPIRE",
+    "saving": "SAVING",
+    "contract": "CONTRACT"
   },
   "descriptions": {
     "food": "Food",
@@ -41,15 +45,32 @@
   "subTitles": {
     "transactions": " TRANSACTIONS",
     "transactionHistory": " TRANSACTION HISTORY",
-    "expenses": "EXPENSES ",
-    "savings": " SAVINGS",
-    "remaining": "REMAINING ",
+    "expenses": "EXPENSES",
+    "savings": "SAVINGS",
+    "remaining": "REMAINING",
     "day": "Day ",
     "amount": " AMOUNT",
     "date": " DATE",
     "customDesc": " CUSTOM DESCRIPTION",
     "description": " DESCRIPTION",
-    "source": " SOURCE"
+    "source": " SOURCE",
+    "language": " LANGUAGE",
+    "currency": " CURRENCY",
+    "side": " SIDE",
+    "renewalDay": " RENEWAL DAY",
+    "allowanceAmount": " MONTHLY BUDGET",
+    "budget": "BUDGET",
+    "utilities": "UTILITIES ",
+    "rent": " RENT",
+    "avgExpenses": "AVG EXPENSES",
+    "avgUtilities": "AVG UTILITIES",
+    "totalSavings": " TOTAL SAVINGS",
+    "duration": " DURATION (YEARS)",
+    "startingDate": " STARTING DATE",
+    "rentAmount": " MONTHLY RENT",
+    "type": " TYPE",
+    "fixedExpenses": "FIXED EXPENSES",
+    "fixedPayments": " FIXED PAYMENTS"
   },
   "titles": {
     "budget": "BUDGET",
@@ -60,6 +81,7 @@
     "utilities": "UTILITIES",
     "spend": "SPEND",
     "save": "SAVE",
-    "deposit": "DEPOSIT"
+    "deposit": "DEPOSIT",
+    "addFixed": "ADD FIXED PAYMENT"
   }
 }
