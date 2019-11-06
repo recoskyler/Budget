@@ -1,3 +1,5 @@
+import 'package:budget/modules/functions.dart';
+import 'package:budget/modules/global.dart';
 import 'package:budget/modules/settings.dart';
 
 import 'enums.dart';
@@ -45,6 +47,10 @@ class Payment {
     }
 
     String getDescription() {
+        if (isNumeric(_description)) {
+            return transactionDescriptions[int.parse(_description)];
+        }
+
         return _description;
     }
 
@@ -52,8 +58,14 @@ class Payment {
         return _date;
     }
 
-    DateTime getStartingDate() {
-        return _date;
+    DateTime getFPRenewalDate(DateTime _date) {
+        DateTime _res = new DateTime(_date.year, _date.month, _renewalDay);
+
+        if (getRenewalDate(_date, settings["budgetRenewalDay"]) != getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) {
+            _res = getNextRenewalDate(_date, _renewalDay);
+        }
+
+        return _res;
     }
 
 	bool isFixed() {

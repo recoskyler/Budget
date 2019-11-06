@@ -64,10 +64,10 @@ Container boxContGradient(double margin, double padding, double h, double radius
     );
 }
 
-Column infoBlock(double _amount, String _currency, String _name, Color _color, CrossAxisAlignment _align, [double _titleSize = 5, double _amountSize = 10]) {
+Column infoBlock(double _amount, String _currency, String _name, Color _color, CrossAxisAlignment _align, [int _decimals = 2, double _titleSize = 4.5, double _amountSize = 8]) {
     if (_currency == null) _currency = "";
 
-    String _amountStr = _currency + _amount.toStringAsFixed(2);
+    String _amountStr = _currency + _amount.toStringAsFixed(_decimals);
 
     return
     Column(
@@ -75,7 +75,7 @@ Column infoBlock(double _amount, String _currency, String _name, Color _color, C
         crossAxisAlignment: _align,
         children: [
             Text(
-                " $_name ",
+                " $_name",
                 style: TextStyle(
                     color: textColors[theme],
                     fontFamily: "Montserrat",
@@ -134,7 +134,7 @@ Container customButton(double s, Color backColor, Color c, IconData i, String tx
     );
 }
 
-GestureDetector subscriptionItemBlock(String txt, String _currency, int date, PaymentType t, double amount, int id, Function op, Function bp, Function dp) {
+Widget subscriptionItemBlock(String txt, String _currency, DateTime date, int renewal, PaymentType t, double amount, int id, Function op, Function bp, Function dp) {
     if (_currency == null) _currency = "";
 
     String _monS = _currency + amount.toStringAsFixed(2);
@@ -174,10 +174,10 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, int date, Pa
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                         Text(
-                                            "${lBase.subTitles.day} {date.toString()}",
+                                            "${lBase.subTitles.day} ${renewal.toString()} | ${DateFormat('dd/MM/yyyy').format(date)}",
                                             style: TextStyle(
                                                 color: dimTextColors[theme],
-                                                fontSize: 3.5 * SizeConfig.safeBlockHorizontal,
+                                                fontSize: 3.3 * SizeConfig.safeBlockHorizontal,
                                                 fontWeight: FontWeight.w500,
                                                 letterSpacing: 1.1
                                             )
@@ -187,7 +187,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, int date, Pa
                                             txt,
                                             style: TextStyle(
                                                 color: textColors[theme],
-                                                fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                                                fontSize: 4 * SizeConfig.safeBlockHorizontal,
                                                 fontWeight: FontWeight.w500,
                                                 letterSpacing: 1.1
                                             )
@@ -200,7 +200,7 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, int date, Pa
                                     _monS,
                                     style: TextStyle(
                                         color: _monC,
-                                        fontSize: 7 * SizeConfig.safeBlockHorizontal,
+                                        fontSize: 6 * SizeConfig.safeBlockHorizontal,
                                         fontFamily: "Montserrat",
                                         letterSpacing: 1.5,
                                     ),
@@ -241,20 +241,20 @@ GestureDetector subscriptionItemBlock(String txt, String _currency, int date, Pa
     );
 }
 
-GestureDetector transactionItemBlock(String txt, String _currency, DateTime date, PaymentType t, double amount, int id, Function op, Function bp, Function dp) {
+Widget transactionItemBlock(String txt, String _currency, DateTime date, PaymentType t, double amount, int id, Function op, Function bp, Function dp) {
     if (_currency == null) _currency = "";
 
     String _monS = _currency + amount.toStringAsFixed(2);
     String _datS = DateFormat('dd/MM/yyyy').format(date);
     Color _monC = Colors.red;
-    String _remTxt = lBase.buttons.remove;
+    //String _remTxt = lBase.buttons.remove;
 
     if (txt.length > 25) {
         txt = txt.substring(0, 24);
     }
 
-    if (fixedPaymentTypes.contains(t))
-        _remTxt = lBase.buttons.cancel;
+    //if (fixedPaymentTypes.contains(t))
+    //    _remTxt = lBase.buttons.cancel;
 
     // * Set Amount Text Color
 
@@ -267,6 +267,79 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
     else if (t == PaymentType.SavingToBudget)
         _monC = Colors.indigo[900];
     
+    return Dismissible(
+        key: Key(id.toString() + txt),
+        background: Container(alignment: Alignment.center, color: Colors.red, child: Icon(Icons.delete, color: Colors.white,)),
+        direction: DismissDirection.horizontal,
+        onDismissed: (_) {
+            if (dp != null) bp(id, dp); 
+            selectedID = -1;
+        },
+        child: Container(
+            decoration: BoxDecoration(
+                color: selectedID == id ? selectedItemColors[theme] : themeColors[theme],
+                borderRadius: BorderRadius.all(Radius.circular(10))
+            ),
+            padding: EdgeInsets.only(top:10, right:10, left:10),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                            Expanded(
+                                child: 
+                                Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                        Text(
+                                            _datS,
+                                            style: TextStyle(
+                                                color: dimTextColors[theme],
+                                                fontSize: 3.3 * SizeConfig.safeBlockHorizontal,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 1.1
+                                            )
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                            txt,
+                                            style: TextStyle(
+                                                color: textColors[theme],
+                                                fontSize: 4 * SizeConfig.safeBlockHorizontal,
+                                                fontWeight: FontWeight.w500,
+                                                letterSpacing: 1.1
+                                            )
+                                        )
+                                    ]
+                                )
+                            ),
+                            Expanded(
+                                child: Text(
+                                    _monS,
+                                    style: TextStyle(
+                                        color: _monC,
+                                        fontSize: 6 * SizeConfig.safeBlockHorizontal,
+                                        fontFamily: "Montserrat",
+                                        letterSpacing: 1.5,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                )
+                            )
+                        ],
+                    ),
+                    transactionItemDivider(),
+                ],
+            )
+        ),
+    );
+
+
+    // Old Code //
+
+    /*
     return GestureDetector(
         onTap: () {
             if (op != null) op(id);
@@ -295,7 +368,7 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                                             _datS,
                                             style: TextStyle(
                                                 color: dimTextColors[theme],
-                                                fontSize: 3.5 * SizeConfig.safeBlockHorizontal,
+                                                fontSize: 3.3 * SizeConfig.safeBlockHorizontal,
                                                 fontWeight: FontWeight.w500,
                                                 letterSpacing: 1.1
                                             )
@@ -305,7 +378,7 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                                             txt,
                                             style: TextStyle(
                                                 color: textColors[theme],
-                                                fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                                                fontSize: 4 * SizeConfig.safeBlockHorizontal,
                                                 fontWeight: FontWeight.w500,
                                                 letterSpacing: 1.1
                                             )
@@ -318,7 +391,7 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
                                     _monS,
                                     style: TextStyle(
                                         color: _monC,
-                                        fontSize: 7 * SizeConfig.safeBlockHorizontal,
+                                        fontSize: 6 * SizeConfig.safeBlockHorizontal,
                                         fontFamily: "Montserrat",
                                         letterSpacing: 1.5,
                                     ),
@@ -359,7 +432,10 @@ GestureDetector transactionItemBlock(String txt, String _currency, DateTime date
             )
         )
     );
+    */
 }
+
+// TODO Fix this part
 
 List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTime _date]) {
     List<Widget> _tr = new List<Widget>();
@@ -378,15 +454,19 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
         Payment _p = _t[i];
 
         if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak && !fixedPaymentTypes.contains(_p.getPaymentType())) {
-            break;
+            //break;
         }
 
         if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) > 0) continue;
 
-        if (thisMonths(_p.getDate(), _renewalDay, _date) && !rentalPaymentTypes.contains(_p.getPaymentType()) && !fixedPaymentTypes.contains(_p.getPaymentType())) {
+        if (!fixedPaymentTypes.contains(_p.getPaymentType()) && thisMonths(_p.getDate(), _renewalDay, _date)) {
+            _pt.add(_p);
+        } else if (fixedPaymentTypes.contains(_p.getPaymentType()) && thisMonths(_p.getFPRenewalDate(_date), _renewalDay, _date) && _p.getDate().compareTo(_date) <= 0) {
             _pt.add(_p);
         } else if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day) {
-            _pt.add(_p);
+            //_pt.add(_p);
+        } else if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) <= 0 && !_pushBreak) {
+            //_pt.add(_p);
         }
     }
 
@@ -398,8 +478,6 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
         } else {
             _tr.add(transactionItemFromPayment(_p, op, dp, fp));
         }
-        
-        _tr.add(transactionItemDivider());
     });
 
     return _tr;
@@ -456,13 +534,13 @@ ListView namesBlock(Function _op, int _indexVar) {
             height: 50,
             child: FloatingActionButton.extended(
                 heroTag: i + 5,
-                backgroundColor: (i == _indexVar ? Colors.redAccent[400] : Colors.red[50]),
+                backgroundColor: (i == _indexVar ? Colors.redAccent[400] : dayButtonColors[theme]),
                 label: Text(
                     _name,
                     style: TextStyle(
                         fontFamily: "FiraCode",
-                        fontSize: 20,
-                        color: (i != _indexVar ? Colors.redAccent[400] : Colors.white)
+                        fontSize: buttonTextSize,
+                        color: (i != _indexVar ? dayButtonTextColors[theme] : Colors.white)
                     ),
                     textAlign: TextAlign.center
                 ),
@@ -562,7 +640,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 style: TextStyle(
                                                     color: Colors.grey[700],
                                                     fontFamily: "Montserrat",
-                                                    fontSize: 20
+                                                    fontSize: 24
                                                 ),
                                             ),
                                             SizedBox(height: 16),
@@ -598,7 +676,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 child: TextField(
                                                     textAlign: TextAlign.end,
                                                     expands: false,
-                                                    controller: new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', initialValue: _u.getAmount(), leftSymbol: settings["currency"]),
+                                                    controller: new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', initialValue: _u.getAmount(), ),
                                                     keyboardType: TextInputType.number,
                                                     decoration: new InputDecoration(
                                                         focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700])),
@@ -634,7 +712,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                             _p.isPaid() ? Colors.indigoAccent[700] : Colors.blue[100],
                                             _p.isPaid() ? Colors.white : Colors.indigo[700],
                                             _p.isPaid() ? Icons.done : Icons.close,
-                                            _p.isPaid() ? "Paid" : "Not Paid",
+                                            _p.isPaid() ? lBase.buttons.paid : lBase.buttons.notPaid,
                                             () {
                                                 setPaid(rentID: _p.getID(), rentPaid: !_p.isPaid(), utilityID: _u.getID(), utilityPaid: _u.isPaid());
                                             },
@@ -681,6 +759,11 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
     _dates.forEach((DateTime _date) {
         Color _color = getRenewalDate(_date, settings["budgetRenewalDay"]) == getRenewalDate(DateTime.now(), settings["budgetRenewalDay"]) ? Colors.cyanAccent[700] : dimTextColors[theme];
         DateTime _paramDate = _date;
+        String _nextDateString = "${settings["budgetRenewalDay"]}/${DateFormat("MM/yyyy").format(getNextRenewalDate(_date, settings["budgetRenewalDay"])).toString()}";
+
+        if (getRenewalDate(_date, settings["budgetRenewalDay"]) == getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) {
+            _nextDateString = lBase.subTitles.today;
+        }
 
         if (getRenewalDate(_date, settings["budgetRenewalDay"]).compareTo(getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) == 0) {
             _paramDate = null;
@@ -701,7 +784,7 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
                         Container(
                             height: 20,
                             child: Text(
-                                DateFormat("MM/yyyy").format(_date).toString(),
+                                "${settings["budgetRenewalDay"]}/${DateFormat("MM/yyyy").format(_date).toString()} - $_nextDateString",
                                 style: TextStyle(
                                     color: _color,
                                     fontSize: 15,
@@ -715,11 +798,11 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
                         Row(
                             children: [
                             Expanded(
-                                child: infoBlock(budget, currency, lBase.subTitles.budget,
-                                    Colors.greenAccent[700], CrossAxisAlignment.start, 3.5, 7)),
+                                child: infoBlock(calculateAllowence(_paramDate), currency, lBase.subTitles.budget,
+                                    Colors.greenAccent[700], CrossAxisAlignment.start, 0, 3.5, 7)),
                             Expanded(
                                 child: infoBlock(calculateExpenses(false, _paramDate), currency, lBase.subTitles.expenses, Colors.red,
-                                    CrossAxisAlignment.end, 3.5, 7)),
+                                    CrossAxisAlignment.end, 2, 3.5, 7)),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
                         ),
@@ -728,27 +811,23 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
                             children: [
                             Expanded(
                                 child: infoBlock(calculateSavings(_paramDate), currency, lBase.subTitles.savings,
-                                    Colors.amber[800], CrossAxisAlignment.start, 3.5, 7)),
+                                    Colors.amber[800], CrossAxisAlignment.start, 0, 3.5, 7)),
                             Expanded(
                                 child: infoBlock(budget - calculateExpenses(false, _paramDate), currency, lBase.subTitles.remaining,
                                     budget - calculateExpenses(false, _paramDate) >= 0
                                         ? Colors.blueAccent[700]
                                         : Colors.redAccent[700],
-                                    CrossAxisAlignment.end, 3.5, 7)),
+                                    CrossAxisAlignment.end, 2, 3.5, 7)),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
                         ),
                         SizedBox(height: 20),
                         Divider(color: _color),
                         SizedBox(height: 20),
-                        Text(lBase.subTitles.transactions,
-                            style: TextStyle(
-                                color: textColors[theme],
-                                fontFamily: "Montserrat",
-                                fontSize: 22.0,
-                                fontWeight: FontWeight.w300
-                                )
-                            ),
+                        Text(
+                            lBase.subTitles.transactions,
+                            style: subTitle
+                        ),
                         SizedBox(height: 10),
                         Divider(color: _color),
                         Expanded(child: transactionsBlock(currency, op, dp, fp, _paramDate)),
@@ -759,4 +838,16 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
     });
 
     return _tr;
+}
+
+Widget brokenWidget() {
+    return Text(
+        lBase.misc.broken,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+            color: Colors.red,
+            fontFamily: "FiraCode",
+            fontSize: SizeConfig.safeBlockHorizontal * 4,
+        ),
+    );
 }

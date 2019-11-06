@@ -22,7 +22,7 @@ class _EditSavingState extends State<EditSaving> {
     int _selectedButtonIndex = 0;
     double _amount = 0.0;
     DateTime _date = DateTime.now();
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"]);
+    final controller = new MoneyMaskedTextController(precision: 0, decimalSeparator: '', thousandSeparator: ',');
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
@@ -37,21 +37,21 @@ class _EditSavingState extends State<EditSaving> {
     List<Widget> getButtons(int s) {
         if (s == 0) {
             return [
-                customButton(20, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
+                customButton(buttonTextSize, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.greenAccent[100], Colors.green[800], Icons.person, lBase.buttons.self, () {setState(() {
+                customButton(buttonTextSize, Colors.greenAccent[100], Colors.green[800], Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
+                customButton(buttonTextSize, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.greenAccent[700], Colors.white, Icons.person, lBase.buttons.self, () {setState(() {
+                customButton(buttonTextSize, Colors.greenAccent[700], Colors.white, Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
             ];
@@ -101,13 +101,7 @@ class _EditSavingState extends State<EditSaving> {
                         children: [
                             Text(
                                 lBase.subTitles.source,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -117,13 +111,7 @@ class _EditSavingState extends State<EditSaving> {
                             SizedBox(height:10),
                             Text(
                                 lBase.subTitles.amount,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             Container(
                                 alignment: Alignment.center,
@@ -138,7 +126,7 @@ class _EditSavingState extends State<EditSaving> {
                                     ),
                                     cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.greenAccent[700],
                                     style: TextStyle(
-                                        fontSize: 40,
+                                        fontSize: amountTextSize,
                                         fontFamily: "Montserrat",
                                         color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.greenAccent[700]
                                     ),
@@ -157,13 +145,7 @@ class _EditSavingState extends State<EditSaving> {
                             SizedBox(height:30),
                             Text(
                                 lBase.subTitles.date,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(
@@ -177,7 +159,7 @@ class _EditSavingState extends State<EditSaving> {
                                     label: Text(
                                         DateFormat("dd/MM/yyyy").format(_date),
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: buttonTextSize,
                                             fontFamily: "Montserrat"
                                         )
                                     ),

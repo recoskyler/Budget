@@ -58,6 +58,7 @@ class _StatsScreenState extends State<StatsScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
+                            brokenWidget(),
                             Container(
                                 padding: EdgeInsets.all(5),
                                 child: Row(

@@ -24,7 +24,7 @@ class _EditTransactionState extends State<EditTransaction> {
     double _amount = 0.0;
     DateTime _date = DateTime.now();
     String _desc = "";
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"]);
+    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', );
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
@@ -39,21 +39,21 @@ class _EditTransactionState extends State<EditTransaction> {
     List<Widget> getButtons(int s) {
         if (s == 0) {
             return [
-                customButton(20, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
+                customButton(buttonTextSize, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.savings, () {setState(() {
+                customButton(buttonTextSize, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
+                customButton(buttonTextSize, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.savings, () {setState(() {
+                customButton(buttonTextSize, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
@@ -66,10 +66,13 @@ class _EditTransactionState extends State<EditTransaction> {
         if ((_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && _amount > 0)) {
             setState(() {
                 List<dynamic> _ls = List.from(settings["transactions"]);
-                List _nm = transactionDescriptions;
 
                 if (_desc.replaceAll(" ", "").length == 0) {
                     _desc = transactionDescriptions[_selectedNameIndex];
+                }
+
+                if (_selectedNameIndex != transactionDescriptions.length - 1) {
+                    _desc = _selectedNameIndex.toString();
                 }
 
                 if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
@@ -124,13 +127,7 @@ class _EditTransactionState extends State<EditTransaction> {
                         children: [
                             Text(
                                 lBase.subTitles.source,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -147,13 +144,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                     children: <Widget>[
                                         Text(
                                             lBase.subTitles.description,
-                                            style: TextStyle(
-                                                fontSize: 24,
-                                                fontFamily: "Montserrat",
-                                                fontWeight: FontWeight.w300,
-                                                color: textColors[theme],
-                                                letterSpacing: 2
-                                            )
+                                            style: subTitle
                                         ),
                                         Container(
                                             margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
@@ -187,13 +178,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                 visible: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
                                 child: Text(
                                     lBase.subTitles.customDesc,
-                                    style: TextStyle(
-                                        fontSize: 24,
-                                        fontFamily: "Montserrat",
-                                        fontWeight: FontWeight.w300,
-                                        color: textColors[theme],
-                                        letterSpacing: 2
-                                    )
+                                    style: subTitle
                                 ),
                             ),
                             SizedBox(height:10),
@@ -215,7 +200,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                         ),
                                         cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800],
                                         style: TextStyle(
-                                            fontSize: 40,
+                                            fontSize: amountTextSize,
                                             fontFamily: "Montserrat",
                                             color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
                                         ),
@@ -234,13 +219,7 @@ class _EditTransactionState extends State<EditTransaction> {
                             ),
                             Text(
                                 lBase.subTitles.amount,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             Container(
                                 alignment: Alignment.center,
@@ -255,7 +234,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                     ),
                                     cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800],
                                     style: TextStyle(
-                                        fontSize: 40,
+                                        fontSize: amountTextSize,
                                         fontFamily: "Montserrat",
                                         color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
                                     ),
@@ -274,13 +253,7 @@ class _EditTransactionState extends State<EditTransaction> {
                             SizedBox(height:30),
                             Text(
                                 lBase.subTitles.amount,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(
@@ -294,7 +267,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                     label: Text(
                                         DateFormat("dd/MM/yyyy").format(_date),
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: buttonTextSize,
                                             fontFamily: "Montserrat"
                                         )
                                     ),

@@ -11,7 +11,7 @@ int _date = 1;
 
 PreferredSizeWidget setupHead() {
     return appBarWithGradientTitle(
-        "SETUP", 
+        lBase.titles.setup, 
         25, 
         Colors.cyanAccent[400], 
         Colors.cyan[900], 
@@ -33,7 +33,7 @@ class SetupScreen extends StatefulWidget {
 }
 
 class _SetupScreenState extends State<SetupScreen> {
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"]);
+    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', );
     
     List<Widget> getMonthButtons(Function _op, int _indexVar, int s, int edition) {
         List<Widget> _buttons = new List<Widget>();
@@ -51,7 +51,7 @@ class _SetupScreenState extends State<SetupScreen> {
                             i.toString(),
                             style: TextStyle(
                                 fontFamily: "FiraCode",
-                                fontSize: 20,
+                                fontSize: buttonTextSize,
                                 color: (i != _indexVar ? Colors.redAccent[400] : Colors.white)
                             ),
                             textAlign: TextAlign.center
@@ -71,15 +71,15 @@ class _SetupScreenState extends State<SetupScreen> {
     List<Widget> getButtons(int s, Function _top) {
         if (s == 0) {
             return [
-                customButton(20, Colors.red, Colors.white, CustomIcons.rebel, "REBEL", () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
+                customButton(buttonTextSize, Colors.red, Colors.white, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.grey[300], Colors.grey[900], CustomIcons.empire, "EMPIRE", () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
+                customButton(buttonTextSize, Colors.grey[300], Colors.grey[900], CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.red[50], Colors.red, CustomIcons.rebel, "REBEL", () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
+                customButton(buttonTextSize, Colors.red[50], Colors.red, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.grey[900], Colors.white, CustomIcons.empire, "EMPIRE", () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
+                customButton(buttonTextSize, Colors.grey[900], Colors.white, CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
             ];
         }
 
@@ -105,7 +105,7 @@ class _SetupScreenState extends State<SetupScreen> {
                     children: [
                         SizedBox(height:10),
                         Text(
-                            " ALLOWENCE AMOUNT",
+                            lBase.subTitles.allowanceAmount,
                             style: TextStyle(
                                 fontSize: 24,
                                 fontFamily: "Montserrat",
@@ -127,7 +127,7 @@ class _SetupScreenState extends State<SetupScreen> {
                                 ),
                                 cursorColor: Colors.greenAccent[700],
                                 style: TextStyle(
-                                    fontSize: 40,
+                                    fontSize: amountTextSize,
                                     fontFamily: "Montserrat",
                                     color: Colors.greenAccent[700]
                                 ),
@@ -141,7 +141,7 @@ class _SetupScreenState extends State<SetupScreen> {
                         ),
                         SizedBox(height:30),
                         Text(
-                            " RENEWAL DAY",
+                            lBase.subTitles.renewalDay,
                             style: TextStyle(
                                 fontSize: 24,
                                 fontFamily: "Montserrat",
@@ -161,7 +161,7 @@ class _SetupScreenState extends State<SetupScreen> {
                         ),
                         SizedBox(height:30),
                         Text(
-                            " SIDE",
+                            lBase.subTitles.side,
                             style: TextStyle(
                                 fontSize: 24,
                                 fontFamily: "Montserrat",
@@ -203,7 +203,6 @@ class SetupButtonState extends State<SetupButton> {
                 elevation: 0.0,
                 onPressed: () {widget.onActionPressed(_amount, _date);},
                 highlightElevation: 1.0,
-                tooltip: "Done",
             )
         );
     }

@@ -37,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     double _amount = settings["monthlyAllowence"];
     int _date = settings["budgetRenewalDay"];
     String _currencyVal = settings["currency"];
-    var controller = new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"], initialValue: settings["monthlyAllowence"]);
+    var controller = new MoneyMaskedTextController(precision: 0, decimalSeparator: '', thousandSeparator: ',',  initialValue: settings["monthlyAllowence"]);
     
     List<Widget> getMonthButtons(Function _op, int _indexVar, int s, int edition) {
         List<Widget> _buttons = new List<Widget>();
@@ -50,13 +50,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     height: 50,
                     child: FloatingActionButton.extended(
                         heroTag: edition + i + 13,
-                        backgroundColor: (i == _indexVar ? Colors.redAccent[400] : Colors.red[50]),
+                        backgroundColor: (i == _indexVar ? Colors.redAccent[400] : dayButtonColors[theme]),
                         label: Text(
                             i.toString(),
                             style: TextStyle(
                                 fontFamily: "FiraCode",
-                                fontSize: 20,
-                                color: (i != _indexVar ? Colors.redAccent[400] : Colors.white)
+                                fontSize: buttonTextSize,
+                                color: (i != _indexVar ? dayButtonTextColors[theme] : Colors.white)
                             ),
                             textAlign: TextAlign.center
                         ),
@@ -75,15 +75,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     List<Widget> getButtons(int s, Function _top) {
         if (s == 0) {
             return [
-                customButton(20, Colors.red, Colors.white, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
+                customButton(buttonTextSize, Colors.blueGrey, Colors.white, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 40 * SizeConfig.safeBlockHorizontal, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.grey[300], Colors.grey[900], CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
+                customButton(buttonTextSize, Colors.grey[300], Colors.grey[900], CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 40 * SizeConfig.safeBlockHorizontal, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.red[50], Colors.red, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
+                customButton(buttonTextSize, Colors.blueGrey[100], Colors.blueGrey[800], CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 40 * SizeConfig.safeBlockHorizontal, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.grey[900], Colors.white, CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
+                customButton(buttonTextSize, Colors.grey[900], Colors.white, CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 40 * SizeConfig.safeBlockHorizontal, 50.0)
             ];
         }
 
@@ -107,13 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(height:10),
                 Text(
                     lBase.subTitles.allowanceAmount,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w300,
-                        color: textColors[theme],
-                        letterSpacing: 2
-                    )
+                    style: subTitle
                 ),
                 Container(
                     alignment: Alignment.center,
@@ -128,7 +122,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         cursorColor: Colors.greenAccent[700],
                         style: TextStyle(
-                            fontSize: 40,
+                            fontSize: amountTextSize,
                             fontFamily: "Montserrat",
                             color: Colors.greenAccent[700]
                         ),
@@ -151,13 +145,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(height:30),
                 Text(
                     lBase.subTitles.renewalDay,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w300,
-                        color: textColors[theme],
-                        letterSpacing: 2
-                    )
+                    style: subTitle
                 ),
                 SizedBox(height:10),
                 Container(
@@ -171,13 +159,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(height:30),
                 Text(
                     lBase.subTitles.side,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w300,
-                        color: textColors[theme],
-                        letterSpacing: 2
-                    )
+                    style: subTitle
                 ),
                 SizedBox(height:10),
                 Row(
@@ -188,25 +170,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(height:30),
                 Text(
                     lBase.subTitles.currency,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w300,
-                        color: textColors[theme],
-                        letterSpacing: 2
-                    )
+                    style: subTitle
                 ),
                 SizedBox(height:10),
                 Container(
                     margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                     child: DropdownButton(
-                        icon: Container(),
+                        icon: Icon(Icons.monetization_on),
                         value: _currencyVal,
                         elevation: 0,
                         underline: Container(
                             height: 2,
                             color: Colors.deepPurpleAccent[400],
                         ),
+                        isExpanded: true,
                         onChanged: (String _newVal) {
                             setState(() {
                                 currency = _newVal;
@@ -221,11 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 value: value,
                                 child: Text(
                                     value,
-                                    style: TextStyle(
-                                        color: textColors[theme],
-                                        fontSize: 25,
-                                        fontFamily: "Montserrat",
-                                    ),
+                                    style: regular,
                                     textAlign: TextAlign.center,
                                 ),
                             );
@@ -236,25 +209,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SizedBox(height:30),
                 Text(
                     lBase.subTitles.language,
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontFamily: "Montserrat",
-                        fontWeight: FontWeight.w300,
-                        color: textColors[theme],
-                        letterSpacing: 2
-                    )
+                    style: subTitle
                 ),
                 SizedBox(height:10),
                 Container(
                     margin: EdgeInsets.fromLTRB(20, 5, 20, 5),
                     child: DropdownButton(
-                        icon: Container(),
+                        icon: Icon(Icons.translate),
                         value: languages[settingsStorage.getInt("lang")],
                         elevation: 0,
                         underline: Container(
                             height: 2,
                             color: Colors.deepPurpleAccent[400],
                         ),
+                        isExpanded: true,
                         onChanged: (String _newVal) {
                             setState(() {
                                 settingsStorage.setInt("lang", languages.indexOf(_newVal)).then((_) {
@@ -269,11 +237,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 value: value,
                                 child: Text(
                                     value,
-                                    style: TextStyle(
-                                        color: textColors[theme],
-                                        fontSize: 25,
-                                        fontFamily: "Montserrat",
-                                    ),
+                                    style: regular,
                                     textAlign: TextAlign.center,
                                 ),
                             );
@@ -288,7 +252,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Text(
                         lBase.buttons.viewGithub,
                         style: TextStyle(
-                            fontSize: 28,
+                            fontSize: subTitleTextSize,
                             fontFamily: "Montserrat",
                             letterSpacing: 3,
                             color: Colors.blueAccent[400],
@@ -309,7 +273,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: Text(
                         lBase.buttons.reset,
                         style: TextStyle(
-                            fontSize: 24,
+                            fontSize: buttonTextSize,
                             fontFamily: "Montserrat",
                             letterSpacing: 3,
                             color: Colors.redAccent[400]

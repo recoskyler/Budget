@@ -10,13 +10,13 @@
     "darkTheme": "ASİ",
     "lightTheme": "İMPARATORLUK",
     "reset": "SIFIRLA",
-    "resetSure": "EVET, EMINIM",
+    "resetSure": "EVET, EMİNİM",
     "viewGithub": "GITHUB PROJE SAYFASINI GÖSTER",
     "self": "ŞAHSİ",
     "budget": "BÜTÇE",
     "savings": "BİRİKİMLER",
-    "rebel": "ASİ",
-    "empire": "IMPARATORLUK",
+    "rebel": "BEYAZ",
+    "empire": "SİYAH",
     "saving": "BİRİKİM",
     "contract": "ANLAŞMA"
   },
@@ -40,7 +40,8 @@
     "furniture": "Mobilya"
   },
   "misc": {
-    "tapRent": "Kira ve hizmet harcamalarını yönetmek için aşağıdaki butona tıklayın."
+    "tapRent": "Kira ve hizmet harcamalarını yönetmek için aşağıdaki butona tıklayın.",
+    "broken": "Uygulamanin bu kısmı şuan bozuk, düzeltilmekte!!!"
   },
   "subTitles": {
     "transactions": " İŞLEMLER",
@@ -56,21 +57,23 @@
     "source": " KAYNAK",
     "language": " DİL",
     "currency": " PARA BİRİMİ",
-    "side": " TARAF",
+    "side": " TEMA",
     "renewalDay": " YENİLENME GÜNÜ",
     "allowanceAmount": " AYLIK BÜTÇE",
     "budget": "BÜTÇE",
     "utilities": "HİZMETLER ",
-    "rent": " KİRA",
-    "avgExpenses": "ORT HARCAMALAR",
-    "avgUtilities": "ORT HIZMETLER",
-    "totalSavings": " TÜM BİRİKİMLER",
+    "rent": "KİRA",
+    "avgExpenses": "ORT HARCAMA",
+    "avgUtilities": "ORT HIZMET",
+    "totalSavings": "TÜM BİRİKİMLER",
     "duration": " SÜRE (YIL)",
     "startingDate": " BAŞLANGIÇ TARİHİ",
     "rentAmount": " AYLIK KİRA",
     "type": " TÜR",
-    "fixedExpenses": "SABİT HARCAMALAR",
-    "fixedPayments": " SABİT ÖDEMELER"
+    "fixedExpenses": "SABİT HARCAMA",
+    "fixedPayments": " SABİT ÖDEMELER",
+    "monthlySavings": "BİRİKİMLER",
+    "today": "BUGÜN"
   },
   "titles": {
     "budget": "BÜTÇE",
@@ -82,6 +85,7 @@
     "spend": "HARCA",
     "save": "BİRİKTİR",
     "deposit": "PARA YATIR",
-    "addFixed": "SABİT HARCAMA EKLE"
+    "addFixed": "SABİT HARCAMA EKLE",
+    "setup": "KURULUM"
   }
 }

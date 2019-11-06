@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:math';
 import 'package:budget/screens/stats_screen/stats_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:budget/generated/locale_base.dart';
 import 'settings.dart';
 import 'package:flutter/material.dart';
 import 'components.dart';
@@ -44,7 +43,7 @@ void deletePaymentByID(int id, Function dp) {
     dp(_t);
 }
 
-void deleteFixedPaymentByID(int id, Function dp) {
+bool deleteFixedPaymentByID(int id, Function dp) {
     int _index = -1;
     List<Payment> _t = List<Payment>.from(settings["fixedPayments"]);
 
@@ -58,11 +57,13 @@ void deleteFixedPaymentByID(int id, Function dp) {
         _t.removeAt(_index);
     
     dp(_t);
+
+    return true;
 }
 
 // * WIDGETS
 
-GestureDetector transactionItemFromPayment(Payment _p, Function op, Function dp, Function fp, [DateTime _date]) {
+Widget transactionItemFromPayment(Payment _p, Function op, Function dp, Function fp, [DateTime _date]) {
     _date = _date == null ? _p.getDate() : _date;
     Function _delF = deletePaymentByID;
     Function _renF = dp;
@@ -75,8 +76,8 @@ GestureDetector transactionItemFromPayment(Payment _p, Function op, Function dp,
     return transactionItemBlock(_p.getDescription(), settings["currency"], _date, _p.getPaymentType(), _p.getAmount(), _p.getID(), op, _delF, _renF);
 }
 
-GestureDetector subscriptionItemFromPayment(Payment _p, Function op, Function dp) {
-    return subscriptionItemBlock(_p.getDescription(), settings["currency"], _p.getRenewalDay(), _p.getPaymentType(), _p.getAmount(), _p.getID(), op, deleteFixedPaymentByID, dp);
+Widget subscriptionItemFromPayment(Payment _p, Function op, Function dp) {
+    return subscriptionItemBlock(_p.getDescription(), settings["currency"], _p.getDate(), _p.getRenewalDay(), _p.getPaymentType(), _p.getAmount(), _p.getID(), op, deleteFixedPaymentByID, dp);
 }
 
 // * DATE FUNCTIONS
@@ -127,12 +128,13 @@ bool thisMonths(DateTime _date, int _renewalDay, DateTime _compDate) {
 }
 
 /// Returns a List<DateTime> of all the Renewal Dates where there was a payment, no matter what kind.
-List<DateTime> getAllDates([List<Payment> _ls, int _day]) {
+List<DateTime> getAllDates([List _l1, int _day]) {
+    List<Payment> _ls;
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
 
     List<DateTime> _res = new List<DateTime>();
 
-    if (_ls == null) {
+    if (_l1 == null) {
         _ls = List<Payment>.from(settings["transactions"]);
         _ls.addAll(List<Payment>.from(settings["fixedPayments"]));
 
@@ -141,36 +143,41 @@ List<DateTime> getAllDates([List<Payment> _ls, int _day]) {
 
             return _res;
         }
+    } else {
+        _ls = List<Payment>.from(_l1);
     }
 
 	_ls.forEach((Payment _p) {
 		DateTime _date = getRenewalDate(_p.getDate(), _day);
 
-		if (!_res.contains(_date)) _res.add(_date);
+        if (fixedPaymentTypes.contains(_p.getPaymentType())) {
+            DateTime _next = getRenewalDate(_date, _day);
+
+            while (_next.compareTo(getRenewalDate(DateTime.now(), _day)) < 0) {
+                if (!_res.contains(_next)) _res.add(_next);
+
+                _next = getNextRenewalDate(_next, _day);
+            }
+        } else if (!_res.contains(_date)) _res.add(_date);
 	});
 
 	return _res;
 }
 
-// Yeah, really... 'Because I can!' is the answer to your question.
-
-int getAllDateCount([List<Payment> _ls, int _day]) {
+int getAllDateCount([List _ls, int _day]) {
 	return getAllDates(_ls, _day).length;
 }
 
-// TODO Check if this solution works: Older fixed payments not showing up in Stats
-
-int getMonthCount([List<Payment> _ls, int _day]) {
+int getMonthCount([List _l1, int _day]) {
+    List<Payment> _ls;
 	_day = _day == null ? settings["budgetRenewalDay"] : _day;
 
-    // * This part ******
-
-    if (_ls == null) {
+    if (_l1 == null) {
         _ls = List<Payment>.from(settings["transactions"]);
         _ls.addAll(List<Payment>.from(settings["fixedPayments"]));
+    } else {
+        _ls = List<Payment>.from(_l1);
     }
-
-    // * ******
 
     List<DateTime> _dates = getAllDates(_ls, _day);
 
@@ -246,7 +253,9 @@ double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
 
         if (thisMonths(_p.getDate(), _renewalDay, _date) && expensePaymentTypes.contains(_p.getPaymentType()) && _p.getPaymentType() != PaymentType.Subscription) {
             _res += _p.getAmount();
-        } else if (_p.getPaymentType() == PaymentType.Subscription && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day) {
+        } else if (_p.getPaymentType() == PaymentType.Subscription && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day && _pushBreak) {
+            _res += _p.getAmount();
+        } else if (_p.getPaymentType() == PaymentType.Subscription && _p.getDate().compareTo(_date) <= 0 && !_pushBreak) {
             _res += _p.getAmount();
         }
     }
@@ -284,7 +293,7 @@ double calculateSavings([DateTime _date]) {
             _res -= _p.getAmount();
         }
 
-        if (_p.getPaymentType() == PaymentType.FixedSavingDeposit && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day) {
+        if (_p.getPaymentType() == PaymentType.FixedSavingDeposit && _p.getDate().compareTo(_date) <= 0 && !_pushBreak) {
             _res += _p.getAmount();
         }
     }
@@ -310,19 +319,21 @@ double calculateAllowence([DateTime _date]) {
     for (int i = 0; i < _transactions.length; i++) {
         Payment _p = _transactions[i];
 
-        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak) {
+        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak && _p.getPaymentType() != PaymentType.FixedSavingDeposit) {
             break;
         }
 
-        if (thisMonths(_p.getDate(), _renewalDay, DateTime.now()) && (_p.getPaymentType() == PaymentType.Deposit || _p.getPaymentType() == PaymentType.SavingToBudget)) {
+        if (thisMonths(_p.getDate(), _renewalDay, _date) && (_p.getPaymentType() == PaymentType.Deposit || _p.getPaymentType() == PaymentType.SavingToBudget)) {
             _res += _p.getAmount();
         }
 
-        if (thisMonths(_p.getDate(), _renewalDay, DateTime.now()) && _p.getPaymentType() == PaymentType.Saving) {
+        if (thisMonths(_p.getDate(), _renewalDay, _date) && _p.getPaymentType() == PaymentType.Saving) {
             _res -= _p.getAmount();
         }
 
-        if (_p.getPaymentType() == PaymentType.FixedSavingDeposit && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day) {
+        if (_p.getPaymentType() == PaymentType.FixedSavingDeposit && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day && _pushBreak) {
+            _res -= _p.getAmount();
+        } else if (_p.getPaymentType() == PaymentType.FixedSavingDeposit && _p.getDate().compareTo(_date) <= 0 && !_pushBreak) {
             _res -= _p.getAmount();
         }
     }
@@ -400,7 +411,20 @@ double calculateTotalFromPayments(List<PaymentType> _type, [List _l, int _day]) 
 	double _res = 0.0;
 
 	_ls.forEach((Payment _p) {
-		if (_type.contains(_p.getPaymentType())) _res += _p.getAmount();
+        if (fixedPaymentTypes.contains(_p.getPaymentType()) && _type.contains(_p.getPaymentType())) {
+            double _fs = _p.getAmount();
+            DateTime _td = _p.getDate();
+            _td = getRenewalDate(_td, settings["budgetRenewalDay"]);
+
+            DateTime _next = getRenewalDate(_td, _day);
+
+            while (_next.compareTo(getRenewalDate(DateTime.now(), _day)) < 0) {
+                _next = getNextRenewalDate(_next, _day);
+                _res += _p.getAmount();
+            }
+
+            _res += _fs;
+        } else if (_type.contains(_p.getPaymentType())) _res += _p.getAmount();
 	});
 
 	return _res;
@@ -474,4 +498,11 @@ void initTransactionDescriptions() {
         lBase.descriptions.household,
         lBase.descriptions.other
     ];
+}
+
+bool isNumeric(String str) {
+    if(str == null) {
+        return false;
+    }
+    return double.tryParse(str) != null;
 }

@@ -1,4 +1,3 @@
-import 'package:budget/generated/locale_base.dart';
 import 'package:budget/modules/global.dart';
 import 'package:budget/modules/settings.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,5 @@
 import 'package:budget/generated/locale_base.dart';
+import 'package:budget/main.dart';
 import 'package:flutter/material.dart';
 import 'functions.dart';
 
@@ -19,12 +20,20 @@ double budget = calculateAllowence();
 double savings = calculateTotalSavings();
 String currency = "";
 int rentPage = -1;        // Rent screen selected card index
-int theme = 0;
+int theme = 0;            // 0 - Light : 1 - Dark
 LocaleBase lBase = LocaleBase();
 
-List<String> currencies = ['€', '\$', '£', '¥', '₩', '₺', ''];
+List<String> currencies = ['€', '\$', '£', '¥', '₩', '₺', ' '];
 
 // * STYLES
+
+double globalInsetPercent = SizeConfig.safeBlockHorizontal * 2.5;
+double buttonTextSize = SizeConfig.safeBlockHorizontal * 4.2;
+double regularTextSize = SizeConfig.safeBlockHorizontal * 4.3;
+double subTitleTextSize = SizeConfig.safeBlockHorizontal * 4.5;
+double amountPercentSize = 8;
+double amountTextSize = SizeConfig.safeBlockHorizontal * 7;
+EdgeInsets globalInset = new EdgeInsets.fromLTRB(globalInsetPercent, 0, globalInsetPercent, 0);
 
 List<Color> themeColors = [
     Colors.grey[50],
@@ -48,8 +57,31 @@ List<Color> dimTextColors = [
 
 List<Color> textColors = [
     Colors.grey[800],
-    Colors.grey[600]
+    Colors.grey[500]
 ];
+
+List<Color> dayButtonColors = [
+    Colors.red[50],
+    Colors.red[900]
+];
+
+List<Color> dayButtonTextColors = [
+    Colors.redAccent[400],
+    Colors.white
+];
+
+TextStyle subTitle = new TextStyle(
+    color: textColors[theme],
+    fontFamily: "Montserrat",
+    fontSize: subTitleTextSize,
+    fontWeight: FontWeight.w300
+);
+
+TextStyle regular = new TextStyle(
+    color: textColors[theme],
+    fontSize: regularTextSize,
+    fontFamily: "Montserrat",
+);
 
 // * DESC/LANG
 

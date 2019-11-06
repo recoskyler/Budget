@@ -15,8 +15,8 @@
     "self": "SELF",
     "budget": "BUDGET",
     "savings": "SAVINGS",
-    "rebel": "REBEL",
-    "empire": "EMPIRE",
+    "rebel": "LIGHT",
+    "empire": "DARK",
     "saving": "SAVING",
     "contract": "CONTRACT"
   },
@@ -40,7 +40,8 @@
     "furniture": "Furniture"
   },
   "misc": {
-    "tapRent": "Tap the button below to set up rent and utilities."
+    "tapRent": "Tap the button below to set up rent and utilities.",
+    "broken": "This part of the app is currently broken, and being fixed!!!"
   },
   "subTitles": {
     "transactions": " TRANSACTIONS",
@@ -48,7 +49,7 @@
     "expenses": "EXPENSES",
     "savings": "SAVINGS",
     "remaining": "REMAINING",
-    "day": "Day ",
+    "day": "Day",
     "amount": " AMOUNT",
     "date": " DATE",
     "customDesc": " CUSTOM DESCRIPTION",
@@ -56,21 +57,23 @@
     "source": " SOURCE",
     "language": " LANGUAGE",
     "currency": " CURRENCY",
-    "side": " SIDE",
+    "side": " THEME",
     "renewalDay": " RENEWAL DAY",
     "allowanceAmount": " MONTHLY BUDGET",
     "budget": "BUDGET",
     "utilities": "UTILITIES ",
-    "rent": " RENT",
+    "rent": "RENT",
     "avgExpenses": "AVG EXPENSES",
     "avgUtilities": "AVG UTILITIES",
-    "totalSavings": " TOTAL SAVINGS",
+    "totalSavings": "TOTAL SAVINGS",
     "duration": " DURATION (YEARS)",
     "startingDate": " STARTING DATE",
     "rentAmount": " MONTHLY RENT",
     "type": " TYPE",
     "fixedExpenses": "FIXED EXPENSES",
-    "fixedPayments": " FIXED PAYMENTS"
+    "fixedPayments": " FIXED PAYMENTS",
+    "monthlySavings": "SAVINGS",
+    "today": "TODAY"
   },
   "titles": {
     "budget": "BUDGET",
@@ -82,6 +85,7 @@
     "spend": "SPEND",
     "save": "SAVE",
     "deposit": "DEPOSIT",
-    "addFixed": "ADD FIXED PAYMENT"
+    "addFixed": "ADD FIXED PAYMENT",
+    "setup": "SETUP"
   }
 }

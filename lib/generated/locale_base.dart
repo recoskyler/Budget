@@ -88,6 +88,7 @@ class Localemisc {
   Localemisc(this._data);
 
   String get tapRent => _data["tapRent"];
+  String get broken => _data["broken"];
 }
 class LocalesubTitles {
   final Map<String, String> _data;
@@ -121,6 +122,8 @@ class LocalesubTitles {
   String get type => _data["type"];
   String get fixedExpenses => _data["fixedExpenses"];
   String get fixedPayments => _data["fixedPayments"];
+  String get monthlySavings => _data["monthlySavings"];
+  String get today => _data["today"];
 }
 class Localetitles {
   final Map<String, String> _data;
@@ -136,4 +139,5 @@ class Localetitles {
   String get save => _data["save"];
   String get deposit => _data["deposit"];
   String get addFixed => _data["addFixed"];
+  String get setup => _data["setup"];
 }

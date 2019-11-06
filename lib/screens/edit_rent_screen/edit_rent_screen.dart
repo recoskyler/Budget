@@ -24,7 +24,7 @@ class _EditRentState extends State<EditRent> {
     int _selectedDuration = 1;
     double _amount = settings["rentAmount"];
     DateTime _date = DateTime.now();
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', initialValue: settings["rentAmount"] ,leftSymbol: settings["currency"]);
+    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', initialValue: settings["rentAmount"] ,);
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
@@ -66,13 +66,13 @@ class _EditRentState extends State<EditRent> {
                     height: 50,
                     child: FloatingActionButton.extended(
                         heroTag: edition + i + 13,
-                        backgroundColor: (i == _indexVar ? Colors.redAccent[400] : Colors.red[50]),
+                        backgroundColor: (i == _indexVar ? Colors.redAccent[400] : dayButtonColors[theme]),
                         label: Text(
                             i.toString(),
                             style: TextStyle(
                                 fontFamily: "FiraCode",
-                                fontSize: 20,
-                                color: (i != _indexVar ? Colors.redAccent[400] : Colors.white)
+                                fontSize: buttonTextSize,
+                                color: (i != _indexVar ? dayButtonTextColors[theme] : Colors.white)
                             ),
                             textAlign: TextAlign.center
                         ),
@@ -142,13 +142,7 @@ class _EditRentState extends State<EditRent> {
                             /*
                             Text(
                                 " RENT DAY",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(
@@ -164,13 +158,7 @@ class _EditRentState extends State<EditRent> {
                             //
                             Text(
                                 lBase.subTitles.rentAmount,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(
@@ -186,7 +174,7 @@ class _EditRentState extends State<EditRent> {
                                     ),
                                     cursorColor: Colors.indigoAccent[700],
                                     style: TextStyle(
-                                        fontSize: 40,
+                                        fontSize: amountTextSize,
                                         fontFamily: "Montserrat",
                                         color: Colors.indigoAccent[700]
                                     ),
@@ -208,13 +196,7 @@ class _EditRentState extends State<EditRent> {
                             SizedBox(height:30),
                             Text(
                                 " UTILITIES DAY",
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(
@@ -230,13 +212,7 @@ class _EditRentState extends State<EditRent> {
                             SizedBox(height:30),
                             Text(
                                 lBase.subTitles.startingDate,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(
@@ -250,7 +226,7 @@ class _EditRentState extends State<EditRent> {
                                     label: Text(
                                         DateFormat("MM/yyyy").format(_date),
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: buttonTextSize,
                                             fontFamily: "Montserrat"
                                         )
                                     ),
@@ -259,13 +235,7 @@ class _EditRentState extends State<EditRent> {
                             SizedBox(height:30),
                             Text(
                                 lBase.subTitles.duration,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(

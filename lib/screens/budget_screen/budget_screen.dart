@@ -1,3 +1,4 @@
+import 'package:budget/main.dart';
 import 'package:budget/modules/functions.dart';
 import 'package:flutter/material.dart';
 import '../../modules/components.dart';
@@ -52,7 +53,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                     children: <Widget>[
                         Row(
                             children: [
-                                Expanded(child: infoBlock(budget, currency, lBase.subTitles.budget, Colors.greenAccent[700], CrossAxisAlignment.start)),
+                                Expanded(child: infoBlock(budget, currency, lBase.subTitles.budget, Colors.greenAccent[700], CrossAxisAlignment.start, 0)),
                                 Expanded(child: infoBlock(expense, currency, lBase.subTitles.expenses, Colors.red, CrossAxisAlignment.end)),
                             ],
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -60,7 +61,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                         SizedBox(height: 30),
                         Row(
                             children: [
-                                Expanded( child: infoBlock(savings, currency, lBase.subTitles.totalSavings, Colors.amber[800], CrossAxisAlignment.start)),
+                                Expanded( child: infoBlock(savings, currency, lBase.subTitles.totalSavings, Colors.amber[800], CrossAxisAlignment.start, 0)),
                                 Expanded(
                                     child: infoBlock(
                                         budget - expense,
@@ -81,12 +82,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                 Divider(color: Colors.grey),
                 SizedBox(height: 20),
                 Text(lBase.subTitles.transactions,
-                    style: TextStyle(
-                        color: textColors[theme],
-                        fontFamily: "Montserrat",
-                        fontSize: 22.0,
-                        fontWeight: FontWeight.w300
-                    )
+                    style: subTitle
                 ),
                 SizedBox(height: 10),
                 Divider(color: Colors.grey),
@@ -98,50 +94,51 @@ class BudgetScreenState extends State<BudgetScreen> {
                     decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         color: navBarColors[theme],
+                        borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))
                     ),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                             customButton(
-                                16, 
+                                buttonTextSize, 
                                 Colors.amber[800], 
-                                Colors.grey[50], 
+                                Colors.white, 
                                 Icons.archive, 
                                 lBase.buttons.save, 
                                 () {
                                     widget.openEditPage(0);
                                 }, 
                                 EdgeInsets.fromLTRB(0, 20, 0, 40), 
-                                120.0, 
+                                SizeConfig.safeBlockHorizontal * 30, 
                                 50.0
                             ),
                             SizedBox(width: 5),
                             customButton(
-                                16, 
+                                buttonTextSize, 
                                 Colors.red, 
-                                Colors.grey[50], 
+                                Colors.white, 
                                 Icons.remove, 
                                 lBase.buttons.spend,
                                 () {
                                     widget.openEditPage(1);
                                 }, 
                                 EdgeInsets.fromLTRB(0, 20, 0, 40), 
-                                120.0, 
+                                SizeConfig.safeBlockHorizontal * 30, 
                                 50.0
                             ),
                             SizedBox(width: 5),
                             customButton(
-                                16, 
+                                buttonTextSize, 
                                 Colors.greenAccent[400], 
-                                Colors.grey[50],
+                                Colors.white,
                                 Icons.add, 
                                 lBase.buttons.deposit, 
                                 () {
                                     widget.openEditPage(2);
                                 }, 
                                 EdgeInsets.fromLTRB(0, 20, 0, 40), 
-                                120.0, 
+                                SizeConfig.safeBlockHorizontal * 30, 
                                 50.0
                             ),
                         ],

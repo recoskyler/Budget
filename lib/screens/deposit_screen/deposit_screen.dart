@@ -22,7 +22,7 @@ class _EditDepositState extends State<EditDeposit> {
     int _selectedButtonIndex = 0;
     double _amount = 0.0;
     DateTime _date = DateTime.now();
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"]);
+    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', );
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
@@ -37,21 +37,21 @@ class _EditDepositState extends State<EditDeposit> {
     List<Widget> getButtons(int s) {
         if (s == 0) {
             return [
-                customButton(20, Colors.greenAccent[700], Colors.white, Icons.person, lBase.buttons.self, () {setState(() {
+                customButton(buttonTextSize, Colors.greenAccent[700], Colors.white, Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.savings, () {setState(() {
+                customButton(buttonTextSize, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(20, Colors.greenAccent[100], Colors.green[700], Icons.person, lBase.buttons.self, () {setState(() {
+                customButton(buttonTextSize, Colors.greenAccent[100], Colors.green[700], Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.savings, () {setState(() {
+                customButton(buttonTextSize, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
@@ -138,7 +138,7 @@ class _EditDepositState extends State<EditDeposit> {
                                     ),
                                     cursorColor: _selectedButtonIndex == 0 ? Colors.greenAccent[700] : Colors.amber[800],
                                     style: TextStyle(
-                                        fontSize: 40,
+                                        fontSize: amountTextSize,
                                         fontFamily: "Montserrat",
                                         color: _selectedButtonIndex == 0 ? Colors.greenAccent[700] : Colors.amber[800]
                                     ),
@@ -177,7 +177,7 @@ class _EditDepositState extends State<EditDeposit> {
                                     label: Text(
                                         DateFormat("dd/MM/yyyy").format(_date),
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: buttonTextSize,
                                             fontFamily: "Montserrat"
                                         )
                                     ),

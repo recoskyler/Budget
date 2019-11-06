@@ -204,12 +204,12 @@ class _MyApp extends State<MySApp> {
         // * ADD BODIES TO THE WATER
 
         if (bodiesInWater.length == 0) {
-            bodiesInWater.add(BudgetScreen(onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
+            bodiesInWater.add(BudgetScreen(renewFixedPayments: renewFixedPayments, onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
             bodiesInWater.add(RentScreen(controller: controller));
             bodiesInWater.add(SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewTransactions));
             bodiesInWater.add(SettingsScreen(themeButtonFunction: themeButtonPressed));
         } else {
-            bodiesInWater[0] = (BudgetScreen(onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
+            bodiesInWater[0] = (BudgetScreen(renewFixedPayments: renewFixedPayments, onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
             bodiesInWater[1] = (RentScreen(controller: controller));
             bodiesInWater[2] = (SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewFixedPayments));
             bodiesInWater[3] = (SettingsScreen(themeButtonFunction: themeButtonPressed, resetSettingsAction: resetSettingsAction));
@@ -245,13 +245,13 @@ class _MyApp extends State<MySApp> {
 
         controller = PageController(keepPage: true, initialPage: settings["rentPage"]);
 
-        // bool _first = settings["firstTime"];
-        bool _first = false;
+        bool _first = settings["firstTime"];
+        // bool _first = false;
         
         return Scaffold(
             backgroundColor: themeColors[theme],
             appBar: _first ? setupHead() : headsInWater[selectedNavMenu],
-            body: _first ? SetupScreen(themeButtonFunction: themeButtonPressed,) : bodiesInWater[selectedNavMenu],
+            body: _first ? Container(margin: globalInset, child: SetupScreen(themeButtonFunction: themeButtonPressed)) : Container(margin: globalInset, child: bodiesInWater[selectedNavMenu]),
             bottomNavigationBar: _first ? Container(height: SizeConfig.blockSizeVertical * 5,) : BottomNavigationBar(
                 items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(

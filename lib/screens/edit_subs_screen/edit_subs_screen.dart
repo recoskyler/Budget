@@ -23,7 +23,7 @@ class _EditSubsState extends State<EditSubs> {
     int _renewalDay = 1;
     String _desc = "";
     DateTime _date = DateTime.now();
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', leftSymbol: settings["currency"]);
+    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', );
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
@@ -38,21 +38,21 @@ class _EditSubsState extends State<EditSubs> {
     List<Widget> getButtons(int s) {
         if (s == 0) {
             return [
-                customButton(18, Colors.purpleAccent[400], Colors.white, Icons.subject, lBase.buttons.contract, () {setState(() {
+                customButton(buttonTextSize, Colors.purpleAccent[400], Colors.white, Icons.subject, lBase.buttons.contract, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.saving, () {setState(() {
+                customButton(buttonTextSize, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.saving, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(18, Colors.purple[50], Colors.purpleAccent[400], Icons.subject, lBase.buttons.contract, () {setState(() {
+                customButton(buttonTextSize, Colors.purple[50], Colors.purpleAccent[400], Icons.subject, lBase.buttons.contract, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(20, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.saving, () {setState(() {
+                customButton(buttonTextSize, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.saving, () {setState(() {
                     _selectedButtonIndex = 1;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
@@ -72,13 +72,13 @@ class _EditSubsState extends State<EditSubs> {
                     height: 50,
                     child: FloatingActionButton.extended(
                         heroTag: edition + i + 13,
-                        backgroundColor: (i == _indexVar ? Colors.redAccent[400] : Colors.red[50]),
+                        backgroundColor: (i == _indexVar ? Colors.redAccent[400] : dayButtonColors[theme]),
                         label: Text(
                             i.toString(),
                             style: TextStyle(
                                 fontFamily: "FiraCode",
-                                fontSize: 20,
-                                color: (i != _indexVar ? Colors.redAccent[400] : Colors.white)
+                                fontSize: buttonTextSize,
+                                color: (i != _indexVar ? dayButtonTextColors[theme] : Colors.white)
                             ),
                             textAlign: TextAlign.center
                         ),
@@ -95,7 +95,7 @@ class _EditSubsState extends State<EditSubs> {
     }
 
     void onActionPressed() {
-        if ((((settings["monthlyAllowence"] - calculateTotalFromPayment(PaymentType.FixedSavingDeposit, settings["fixedPayments"]) - _amount >= 0.0 && _selectedButtonIndex == 1)) || (_selectedButtonIndex == 0 && _amount > 0.0)) && _desc.replaceAll(" ", "") != "") {
+        if (_amount > 0.0 && (((settings["monthlyAllowence"] - calculateSavings() - _amount >= 0.0 && _selectedButtonIndex == 1)) || (_selectedButtonIndex == 0 && _amount > 0.0)) && _desc.replaceAll(" ", "") != "") {
             setState(() {
                 List _ls = List.from(settings["fixedPayments"]);
 
@@ -141,13 +141,7 @@ class _EditSubsState extends State<EditSubs> {
                         children: [
                             Text(
                                 lBase.subTitles.type,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -163,13 +157,7 @@ class _EditSubsState extends State<EditSubs> {
                                     children: <Widget>[
                                         Text(
                                             lBase.subTitles.description,
-                                            style: TextStyle(
-                                                fontSize: 24,
-                                                fontFamily: "Montserrat",
-                                                fontWeight: FontWeight.w300,
-                                                color: textColors[theme],
-                                                letterSpacing: 2
-                                            )
+                                            style: subTitle
                                         ),
                                         Container(
                                             alignment: Alignment.center,
@@ -186,7 +174,7 @@ class _EditSubsState extends State<EditSubs> {
                                                 ),
                                                 cursorColor: Colors.redAccent[400],
                                                 style: TextStyle(
-                                                    fontSize: 40,
+                                                    fontSize: amountTextSize,
                                                     fontFamily: "Montserrat",
                                                     color: Colors.redAccent[400]
                                                 ),
@@ -208,13 +196,7 @@ class _EditSubsState extends State<EditSubs> {
                             SizedBox(height:30),
                             Text(
                                 lBase.subTitles.amount,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             Container(
                                 alignment: Alignment.center,
@@ -229,7 +211,7 @@ class _EditSubsState extends State<EditSubs> {
                                     ),
                                     cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800],
                                     style: TextStyle(
-                                        fontSize: 40,
+                                        fontSize: amountTextSize,
                                         fontFamily: "Montserrat",
                                         color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
                                     ),
@@ -248,13 +230,7 @@ class _EditSubsState extends State<EditSubs> {
                             SizedBox(height:30),
                             Text(
                                 lBase.subTitles.renewalDay,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(
@@ -268,13 +244,7 @@ class _EditSubsState extends State<EditSubs> {
                             SizedBox(height:30),
                             Text(
                                 lBase.subTitles.startingDate,
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.w300,
-                                    color: textColors[theme],
-                                    letterSpacing: 2
-                                )
+                                style: subTitle
                             ),
                             SizedBox(height:10),
                             Container(
@@ -288,7 +258,7 @@ class _EditSubsState extends State<EditSubs> {
                                     label: Text(
                                         DateFormat("dd/MM/yyyy").format(_date),
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: buttonTextSize,
                                             fontFamily: "Montserrat"
                                         )
                                     ),
@@ -305,7 +275,7 @@ class _EditSubsState extends State<EditSubs> {
                     child: FloatingActionButton(
                         heroTag: 1,
                         child: Icon(Icons.done),
-                        backgroundColor: (((settings["monthlyAllowence"] - calculateTotalFromPayment(PaymentType.FixedSavingDeposit, settings["fixedPayments"]) - _amount >= 0.0 && _selectedButtonIndex == 1)) || (_selectedButtonIndex == 0 && _amount > 0.0)) && _desc.replaceAll(" ", "") != "" ? Colors.greenAccent[400] : Colors.blueGrey[600],
+                        backgroundColor: (((settings["monthlyAllowence"] - calculateSavings() - _amount >= 0.0 && _selectedButtonIndex == 1)) || (_selectedButtonIndex == 0 && _amount > 0.0)) && _desc.replaceAll(" ", "") != "" ? Colors.greenAccent[400] : Colors.blueGrey[600],
                         elevation: 0.0,
                         onPressed: onActionPressed,
                         highlightElevation: 1.0,
