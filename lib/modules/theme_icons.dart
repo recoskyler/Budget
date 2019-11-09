@@ -17,6 +17,11 @@
 ///         License:   SIL ()
 ///         Homepage:  http://fortawesome.github.com/Font-Awesome/
 ///
+/// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
+/// Please check the GitHub Page for usage rights.
+/// https://github.com/recoskyler/Budget
+///
+
 import 'package:flutter/widgets.dart';
 
 class CustomIcons {

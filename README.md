@@ -29,10 +29,15 @@ This is a simple app I decided to make because I needed an app to manage my budg
 ## Licenses
 
 * ~~Icon was made in Adobe Photoshop CC 2019 (Licensed), using *"Magneto"* font. (Will change the icon before release)~~
-* Icon was made in Adobe Photoshop CC 2019 (Licensed), using open source *"Quicksand"* font from Google Fonts.
+* ~~Icon was made in Adobe Photoshop CC 2019 (Licensed), using the open source *"Quicksand"* font from Google Fonts.~~
+* Icon was made in Adobe Illustrator CC 2020 (Trial).
 * Fonts used in app are:
-..* Montserrat
-..* Fira Code
-* *Both fonts are from Google Fonts.*
+  * Montserrat
+  * Fira Code
+  *Both fonts are from Google Fonts.*
 * *EMPIRE* and *REBEL* icons are from [FlutterIcon.com](http://fluttericon.com/) and free to use.
 * All other icons are included in Flutter/Dart.
+
+## About
+
+Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019.

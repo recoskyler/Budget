@@ -1,3 +1,8 @@
+/// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
+/// Please check the GitHub Page for usage rights.
+/// https://github.com/recoskyler/Budget
+///
+
 import 'package:budget/generated/locale_base.dart';
 import 'package:budget/main.dart';
 import 'package:flutter/material.dart';

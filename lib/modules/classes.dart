@@ -1,7 +1,11 @@
+/// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
+/// Please check the GitHub Page for usage rights.
+/// https://github.com/recoskyler/Budget
+///
+
 import 'package:budget/modules/functions.dart';
 import 'package:budget/modules/global.dart';
 import 'package:budget/modules/settings.dart';
-
 import 'enums.dart';
 
 Type paymentAsType = Payment;

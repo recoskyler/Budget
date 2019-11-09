@@ -1,3 +1,8 @@
+/// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
+/// Please check the GitHub Page for usage rights.
+/// https://github.com/recoskyler/Budget
+///
+
 import 'package:budget/main.dart';
 import 'package:budget/modules/components.dart';
 import 'package:budget/modules/theme_icons.dart';
