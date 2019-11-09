@@ -21,6 +21,8 @@ class LocaleBase {
   Localebuttons get buttons => _buttons;
   Localedescriptions _descriptions;
   Localedescriptions get descriptions => _descriptions;
+  Localehints _hints;
+  Localehints get hints => _hints;
   Localemisc _misc;
   Localemisc get misc => _misc;
   LocalesubTitles _subTitles;
@@ -31,6 +33,7 @@ class LocaleBase {
   void initAll() {
     _buttons = Localebuttons(Map<String, String>.from(_data['buttons']));
     _descriptions = Localedescriptions(Map<String, String>.from(_data['descriptions']));
+    _hints = Localehints(Map<String, String>.from(_data['hints']));
     _misc = Localemisc(Map<String, String>.from(_data['misc']));
     _subTitles = LocalesubTitles(Map<String, String>.from(_data['subTitles']));
     _titles = Localetitles(Map<String, String>.from(_data['titles']));
@@ -82,6 +85,13 @@ class Localedescriptions {
   String get household => _data["household"];
   String get other => _data["other"];
   String get furniture => _data["furniture"];
+}
+class Localehints {
+  final Map<String, String> _data;
+  Localehints(this._data);
+
+  String get savingExpenseOverflow => _data["savingExpenseOverflow"];
+  String get savingNoBudget => _data["savingNoBudget"];
 }
 class Localemisc {
   final Map<String, String> _data;

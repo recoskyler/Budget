@@ -247,14 +247,14 @@ Widget transactionItemBlock(String txt, String _currency, DateTime date, Payment
     String _monS = _currency + amount.toStringAsFixed(2);
     String _datS = DateFormat('dd/MM/yyyy').format(date);
     Color _monC = Colors.red;
-    //String _remTxt = lBase.buttons.remove;
+    String _remTxt = lBase.buttons.remove;
 
     if (txt.length > 25) {
         txt = txt.substring(0, 24);
     }
 
-    //if (fixedPaymentTypes.contains(t))
-    //    _remTxt = lBase.buttons.cancel;
+    if (fixedPaymentTypes.contains(t))
+        _remTxt = lBase.buttons.cancel;
 
     // * Set Amount Text Color
 
@@ -267,6 +267,8 @@ Widget transactionItemBlock(String txt, String _currency, DateTime date, Payment
     else if (t == PaymentType.SavingToBudget)
         _monC = Colors.indigo[900];
     
+
+    /*
     return Dismissible(
         key: Key(id.toString() + txt),
         background: Container(alignment: Alignment.center, color: Colors.red, child: Icon(Icons.delete, color: Colors.white,)),
@@ -335,11 +337,8 @@ Widget transactionItemBlock(String txt, String _currency, DateTime date, Payment
             )
         ),
     );
+    */
 
-
-    // Old Code //
-
-    /*
     return GestureDetector(
         onTap: () {
             if (op != null) op(id);
@@ -432,7 +431,6 @@ Widget transactionItemBlock(String txt, String _currency, DateTime date, Payment
             )
         )
     );
-    */
 }
 
 // TODO Fix this part
@@ -706,9 +704,9 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                     Container(
-                                        width: 150,
+                                        width: 40 * SizeConfig.blockSizeHorizontal,
                                         child: customButton(
-                                            20,
+                                            buttonTextSize,
                                             _p.isPaid() ? Colors.indigoAccent[700] : Colors.blue[100],
                                             _p.isPaid() ? Colors.white : Colors.indigo[700],
                                             _p.isPaid() ? Icons.done : Icons.close,
@@ -720,9 +718,9 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                         )
                                     ),
                                     Container(
-                                        width: 150,
+                                        width: 40 * SizeConfig.blockSizeHorizontal,
                                         child: customButton(
-                                            20,
+                                            buttonTextSize,
                                             _u.isPaid() ? Colors.deepOrangeAccent[400] : Colors.deepOrange[100],
                                             _u.isPaid() ? Colors.white : Colors.deepOrangeAccent[400],
                                             _u.isPaid() ? Icons.done : Icons.close,
@@ -785,12 +783,7 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
                             height: 20,
                             child: Text(
                                 "${settings["budgetRenewalDay"]}/${DateFormat("MM/yyyy").format(_date).toString()} - $_nextDateString",
-                                style: TextStyle(
-                                    color: _color,
-                                    fontSize: 15,
-                                    fontFamily: "Montserrat",
-                                    letterSpacing: 1.5
-                                ),
+                                style: subTitle,
                                 textAlign: TextAlign.center,
                             )
                         ),

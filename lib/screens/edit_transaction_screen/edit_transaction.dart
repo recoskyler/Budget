@@ -24,7 +24,8 @@ class _EditTransactionState extends State<EditTransaction> {
     double _amount = 0.0;
     DateTime _date = DateTime.now();
     String _desc = "";
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', );
+    String hint = "";
+    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', precision: 2);
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
@@ -37,6 +38,16 @@ class _EditTransactionState extends State<EditTransaction> {
     }
 
     List<Widget> getButtons(int s) {
+        if (s == 1 && _amount > calculateTotalSavings()) {
+            setState(() {
+                hint = lBase.hints.savingExpenseOverflow;
+            });
+        } else {
+            setState(() {
+                hint = "";
+            });
+        }
+        
         if (s == 0) {
             return [
                 customButton(buttonTextSize, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
@@ -118,82 +129,114 @@ class _EditTransactionState extends State<EditTransaction> {
         return Scaffold(
             backgroundColor: themeColors[theme],
             appBar: appBarWithGradientTitle(lBase.titles.spend, 25, Colors.redAccent[400], Colors.red[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
-            body: ListView(
-                children: [
-                    Divider(),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                            Text(
-                                lBase.subTitles.source,
-                                style: subTitle
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: getButtons(_selectedButtonIndex)
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                height: 120,
-                                child: Column(
-                                    mainAxisSize: _selectedButtonIndex == 0 ? MainAxisSize.max : MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: <Widget>[
-                                        Text(
-                                            lBase.subTitles.description,
-                                            style: subTitle
-                                        ),
-                                        Container(
-                                            margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                                            height: 50,
-                                            child: _selectedButtonIndex == 0 ? namesBlock(onDescClick, _selectedNameIndex) : Container(
-                                                margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                                height: 50,
-                                                child: FloatingActionButton.extended(
-                                                    heroTag: 5,
-                                                    backgroundColor: Colors.redAccent[400],
-                                                    label: Text(
-                                                        asString[PaymentType.SavingExpense.index],
-                                                        style: TextStyle(
-                                                            fontFamily: "FiraCode",
-                                                            fontSize: 20,
-                                                            color: Colors.white
-                                                        ),
-                                                        textAlign: TextAlign.center
-                                                    ),
-                                                    onPressed: () {},
-                                                    elevation: 0.0,
-                                                    highlightElevation: 1.0,
-                                                )
-                                            )
-                                        ),
-                                    ],
-                                ),
-                            ),
-                            SizedBox(height:10),
-                            Visibility(
-                                visible: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
-                                child: Text(
-                                    lBase.subTitles.customDesc,
+            body: Container(
+                margin: globalInset,
+                child: ListView(
+                    children: [
+                        Divider(),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                                Text(
+                                    lBase.subTitles.source,
                                     style: subTitle
                                 ),
-                            ),
-                            SizedBox(height:10),
-                            Visibility(
-                                visible: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
-                                child: Container(
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: getButtons(_selectedButtonIndex)
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    height: 120,
+                                    child: Column(
+                                        mainAxisSize: _selectedButtonIndex == 0 ? MainAxisSize.max : MainAxisSize.min,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: <Widget>[
+                                            Text(
+                                                lBase.subTitles.description,
+                                                style: subTitle
+                                            ),
+                                            Container(
+                                                margin: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                                                height: 50,
+                                                child: _selectedButtonIndex == 0 ? namesBlock(onDescClick, _selectedNameIndex) : Container(
+                                                    margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                    height: 50,
+                                                    child: FloatingActionButton.extended(
+                                                        heroTag: 5,
+                                                        backgroundColor: Colors.redAccent[400],
+                                                        label: Text(
+                                                            asString[PaymentType.SavingExpense.index],
+                                                            style: TextStyle(
+                                                                fontFamily: "FiraCode",
+                                                                fontSize: buttonTextSize,
+                                                                color: Colors.white
+                                                            ),
+                                                            textAlign: TextAlign.center
+                                                        ),
+                                                        onPressed: () {},
+                                                        elevation: 0.0,
+                                                        highlightElevation: 1.0,
+                                                    )
+                                                )
+                                            ),
+                                        ],
+                                    ),
+                                ),
+                                SizedBox(height:10),
+                                Visibility(
+                                    visible: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                    child: Text(
+                                        lBase.subTitles.customDesc,
+                                        style: subTitle
+                                    ),
+                                ),
+                                SizedBox(height:10),
+                                Visibility(
+                                    visible: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                    child: Container(
+                                        alignment: Alignment.center,
+                                        height: 80,
+                                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                        child: TextField(
+                                            enabled: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
+                                            maxLines: 1,
+                                            maxLength: 24,
+                                            maxLengthEnforced: true,
+                                            keyboardType: TextInputType.text,
+                                            decoration: new InputDecoration(
+                                                focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800])),
+                                                enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[100] : Colors.amber[200]))
+                                            ),
+                                            cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800],
+                                            style: TextStyle(
+                                                fontSize: amountTextSize,
+                                                fontFamily: "Montserrat",
+                                                color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
+                                            ),
+                                            onSubmitted: (_t) {
+                                                _desc = _t;
+                                            },
+                                            onChanged: (_t) {
+                                                _desc = _t;
+                                            },
+                                        )
+                                    )
+                                ),
+                                Text(
+                                    lBase.subTitles.amount,
+                                    style: subTitle
+                                ),
+                                Container(
                                     alignment: Alignment.center,
                                     height: 80,
                                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                     child: TextField(
-                                        enabled: _selectedNameIndex == transactionDescriptions.length - 1 && _selectedButtonIndex == 0 ? true : false,
-                                        maxLines: 1,
-                                        maxLength: 24,
-                                        maxLengthEnforced: true,
-                                        keyboardType: TextInputType.text,
+                                        controller: controller,
+                                        keyboardType: TextInputType.number,
                                         decoration: new InputDecoration(
                                             focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800])),
                                             enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[100] : Colors.amber[200]))
@@ -205,78 +248,78 @@ class _EditTransactionState extends State<EditTransaction> {
                                             color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
                                         ),
                                         onSubmitted: (_t) {
+                                            _amount = controller.numberValue;
+
+                                            if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
+                                                setState(() {
+                                                    hint = lBase.hints.savingExpenseOverflow;
+                                                });
+                                            } else {
+                                                setState(() {
+                                                    hint = "";
+                                                });
+                                            }
+
                                             setState(() {
-                                                _desc = _t;
+                                                _amount = controller.numberValue;
                                             });
                                         },
                                         onChanged: (_t) {
+                                            _amount = controller.numberValue;
+
+                                            if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
+                                                setState(() {
+                                                    hint = lBase.hints.savingExpenseOverflow;
+                                                });
+                                            } else {
+                                                setState(() {
+                                                    hint = "";
+                                                });
+                                            }
+
                                             setState(() {
-                                                _desc = _t;
+                                                _amount = controller.numberValue;
                                             });
                                         },
                                     )
-                                )
-                            ),
-                            Text(
-                                lBase.subTitles.amount,
-                                style: subTitle
-                            ),
-                            Container(
-                                alignment: Alignment.center,
-                                height: 80,
-                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                child: TextField(
-                                    controller: controller,
-                                    keyboardType: TextInputType.number,
-                                    decoration: new InputDecoration(
-                                        focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800])),
-                                        enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[100] : Colors.amber[200]))
+                                ),
+                                SizedBox(height: 10),
+                                Container(
+                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    child: Text(
+                                        hint,
+                                        style: tfHintStyle,
+                                        textAlign: TextAlign.justify,
                                     ),
-                                    cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800],
-                                    style: TextStyle(
-                                        fontSize: amountTextSize,
-                                        fontFamily: "Montserrat",
-                                        color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
-                                    ),
-                                     onSubmitted: (_t) {
-                                        setState(() {
-                                            _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
-                                        });
-                                    },
-                                    onChanged: (_t) {
-                                        setState(() {
-                                            _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
-                                        });
-                                    },
-                                )
-                            ),
-                            SizedBox(height:30),
-                            Text(
-                                lBase.subTitles.amount,
-                                style: subTitle
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                margin: EdgeInsets.fromLTRB(30, 20, 30, 10),
-                                child: FloatingActionButton.extended(
-                                    elevation: 0.0,
-                                    highlightElevation: 1.0,
-                                    heroTag: 2,
-                                    onPressed: _selectDate,
-                                    backgroundColor: Colors.blueAccent[400],
-                                    label: Text(
-                                        DateFormat("dd/MM/yyyy").format(_date),
-                                        style: TextStyle(
-                                            fontSize: buttonTextSize,
-                                            fontFamily: "Montserrat"
-                                        )
-                                    ),
-                                )
-                            ),
-                            SizedBox(height:150)
-                        ]                    
-                    )
-                ]
+                                ),
+                                SizedBox(height:30),
+                                Text(
+                                    lBase.subTitles.date,
+                                    style: subTitle
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    margin: EdgeInsets.fromLTRB(30, 20, 30, 10),
+                                    child: FloatingActionButton.extended(
+                                        elevation: 0.0,
+                                        highlightElevation: 1.0,
+                                        heroTag: 2,
+                                        onPressed: _selectDate,
+                                        backgroundColor: Colors.blueAccent[400],
+                                        label: Text(
+                                            DateFormat("dd/MM/yyyy").format(_date),
+                                            style: TextStyle(
+                                                fontSize: buttonTextSize,
+                                                fontFamily: "Montserrat"
+                                            )
+                                        ),
+                                    )
+                                ),
+                                SizedBox(height:150)
+                            ]                    
+                        )
+                    ]
+                ),
             ),
             floatingActionButton: GestureDetector(
                 child: Padding(

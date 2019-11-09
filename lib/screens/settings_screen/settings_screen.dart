@@ -128,14 +128,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         onSubmitted: (_t) {
                             setState(() {
-                                _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
+                                _amount = controller.numberValue;
                                 settings["monthlyAllowence"] = _amount;
                                 saveSettings();
                             });
                         },
                         onChanged: (_t) {
                             setState(() {
-                                _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
+                                _amount = controller.numberValue;
                                 settings["monthlyAllowence"] = _amount;
                                 saveSettings();
                             });

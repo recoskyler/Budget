@@ -24,7 +24,7 @@ class _EditRentState extends State<EditRent> {
     int _selectedDuration = 1;
     double _amount = settings["rentAmount"];
     DateTime _date = DateTime.now();
-    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', initialValue: settings["rentAmount"] ,);
+    final controller = MoneyMaskedTextController(decimalSeparator: '', thousandSeparator: ',', initialValue: settings["rentAmount"], precision: 0);
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
@@ -180,12 +180,12 @@ class _EditRentState extends State<EditRent> {
                                     ),
                                     onSubmitted: (_t) {
                                         setState(() {
-                                            _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
+                                            _amount = controller.numberValue;
                                         });
                                     },
                                     onChanged: (_t) {
                                         setState(() {
-                                            _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
+                                            _amount = controller.numberValue;
                                         });
                                     },
                                 )

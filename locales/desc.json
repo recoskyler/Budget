@@ -39,6 +39,10 @@
     "other": "Other",
     "furniture": "Furniture"
   },
+  "hints": {
+    "savingExpenseOverflow": "saving overflow",
+    "savingNoBudget": "saving no budget"
+  },
   "misc": {
     "tapRent": "Tap the button below to set up rent and utilities.",
     "broken": "broken"

@@ -132,12 +132,12 @@ class _EditSavingState extends State<EditSaving> {
                                     ),
                                     onSubmitted: (_t) {
                                         setState(() {
-                                            _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
+                                            _amount = controller.numberValue;
                                         });
                                     },
                                     onChanged: (_t) {
                                         setState(() {
-                                            _amount = double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], ""));
+                                            _amount = controller.numberValue;
                                         });
                                     },
                                 )

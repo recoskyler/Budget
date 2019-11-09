@@ -39,6 +39,10 @@
     "other": "Other",
     "furniture": "Furniture"
   },
+  "hints": {
+    "savingExpenseOverflow": "If the amount entered is more than the total savings, Budget will automatically add a second transaction spending the difference from the budget.",
+    "savingNoBudget": "The amount entered cannot be more than the allowence left."
+  },
   "misc": {
     "tapRent": "Tap the button below to set up rent and utilities.",
     "broken": "This part of the app is currently broken, and being fixed!!!"

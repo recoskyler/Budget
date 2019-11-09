@@ -33,6 +33,7 @@ double regularTextSize = SizeConfig.safeBlockHorizontal * 4.3;
 double subTitleTextSize = SizeConfig.safeBlockHorizontal * 4.5;
 double amountPercentSize = 8;
 double amountTextSize = SizeConfig.safeBlockHorizontal * 7;
+double smolTextSize = SizeConfig.safeBlockHorizontal * 3;
 EdgeInsets globalInset = new EdgeInsets.fromLTRB(globalInsetPercent, 0, globalInsetPercent, 0);
 
 List<Color> themeColors = [
@@ -62,12 +63,12 @@ List<Color> textColors = [
 
 List<Color> dayButtonColors = [
     Colors.red[50],
-    Colors.red[900]
+    Colors.redAccent[100]
 ];
 
 List<Color> dayButtonTextColors = [
     Colors.redAccent[400],
-    Colors.white
+    Colors.redAccent[700]
 ];
 
 TextStyle subTitle = new TextStyle(
@@ -81,6 +82,12 @@ TextStyle regular = new TextStyle(
     color: textColors[theme],
     fontSize: regularTextSize,
     fontFamily: "Montserrat",
+);
+
+TextStyle tfHintStyle = new TextStyle(
+    color: Colors.red,
+    fontSize: smolTextSize,
+    fontFamily: "FiraCode",
 );
 
 // * DESC/LANG

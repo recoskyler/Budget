@@ -39,6 +39,10 @@
     "other": "Diğer",
     "furniture": "Mobilya"
   },
+  "hints": {
+    "savingExpenseOverflow": "Eğer girilen miktr toplam birikimlerden fazla ise, Bütçe otomatik olarak miktar farkı kadar bir harcama yaratacaktır.",
+    "savingNoBudget": "Girilen miktar kalan bütçeden fazla olamaz."
+  },
   "misc": {
     "tapRent": "Kira ve hizmet harcamalarını yönetmek için aşağıdaki butona tıklayın.",
     "broken": "Uygulamanin bu kısmı şuan bozuk, düzeltilmekte!!!"
