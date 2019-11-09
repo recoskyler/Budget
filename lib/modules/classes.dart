@@ -51,6 +51,13 @@ class Payment {
             return transactionDescriptions[int.parse(_description)];
         }
 
+        if (_description.contains("budgetpaymentexpenseasstring")) {
+            List<String> _l = _description.split(".");
+            int _ind = int.parse(_l[1]);
+
+            return asString[_ind];
+        }
+
         return _description;
     }
 

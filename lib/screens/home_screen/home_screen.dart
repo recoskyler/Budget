@@ -7,7 +7,7 @@ import 'package:budget/screens/subs_screen/subs_screen.dart';
 import 'package:flutter/material.dart';
 import '../../modules/settings.dart';
 import '../../modules/global.dart';
-import 'package:budget/screens/deposit_screen/deposit_screen.dart';
+import 'package:budget/screens/edit_deposit_screen/edit_deposit_screen.dart';
 import 'package:budget/screens/edit_saving_screen/edit_saving_screen.dart';
 import 'package:budget/screens/rent_screen/rent_screen.dart';
 import 'package:budget/screens/budget_screen/budget_screen.dart';

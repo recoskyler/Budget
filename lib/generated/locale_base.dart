@@ -25,6 +25,8 @@ class LocaleBase {
   Localehints get hints => _hints;
   Localemisc _misc;
   Localemisc get misc => _misc;
+  LocalepaymentDesc _paymentDesc;
+  LocalepaymentDesc get paymentDesc => _paymentDesc;
   LocalesubTitles _subTitles;
   LocalesubTitles get subTitles => _subTitles;
   Localetitles _titles;
@@ -35,6 +37,7 @@ class LocaleBase {
     _descriptions = Localedescriptions(Map<String, String>.from(_data['descriptions']));
     _hints = Localehints(Map<String, String>.from(_data['hints']));
     _misc = Localemisc(Map<String, String>.from(_data['misc']));
+    _paymentDesc = LocalepaymentDesc(Map<String, String>.from(_data['paymentDesc']));
     _subTitles = LocalesubTitles(Map<String, String>.from(_data['subTitles']));
     _titles = Localetitles(Map<String, String>.from(_data['titles']));
   }
@@ -99,6 +102,23 @@ class Localemisc {
 
   String get tapRent => _data["tapRent"];
   String get broken => _data["broken"];
+}
+class LocalepaymentDesc {
+  final Map<String, String> _data;
+  LocalepaymentDesc(this._data);
+
+  String get deposit => _data["deposit"];
+  String get expense => _data["expense"];
+  String get fixedSaving => _data["fixedSaving"];
+  String get rentPayment => _data["rentPayment"];
+  String get finRentPayment => _data["finRentPayment"];
+  String get utilityPayment => _data["utilityPayment"];
+  String get finUtilityPayment => _data["finUtilityPayment"];
+  String get subscription => _data["subscription"];
+  String get savingDeposit => _data["savingDeposit"];
+  String get savingExpense => _data["savingExpense"];
+  String get savingToBudget => _data["savingToBudget"];
+  String get existingSaving => _data["existingSaving"];
 }
 class LocalesubTitles {
   final Map<String, String> _data;

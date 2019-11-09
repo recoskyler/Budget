@@ -10,20 +10,19 @@ import 'package:intl/intl.dart';
 import 'dart:async';
 import '../../modules/functions.dart';
 
-class EditSaving extends StatefulWidget {
-    EditSaving({Key key}) : super(key: key);
+class EditDeposit extends StatefulWidget {
+    EditDeposit({Key key}) : super(key: key);
 
     @override
-    _EditSavingState createState() => _EditSavingState();
+    _EditDepositState createState() => _EditDepositState();
 }
 
 
-class _EditSavingState extends State<EditSaving> {
+class _EditDepositState extends State<EditDeposit> {
     int _selectedButtonIndex = 0;
     double _amount = 0.0;
     DateTime _date = DateTime.now();
-    String _hint = "";
-    final controller = new MoneyMaskedTextController(precision: 0, decimalSeparator: '', thousandSeparator: ',');
+    final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', );
 
     Future _selectDate() async {
         DateTime picked = await showDatePicker(
@@ -36,35 +35,25 @@ class _EditSavingState extends State<EditSaving> {
     }
 
     List<Widget> getButtons(int s) {
-        if (s == 0 && calculateAllowence() - _amount < 0 && _amount > 0) {
-            setState(() {
-                _hint = lBase.hints.savingNoBudget;
-            });
-        } else {
-            setState(() {
-                _hint = "";
-            });
-        }
-
         if (s == 0) {
             return [
-                customButton(buttonTextSize, Colors.purpleAccent[400], Colors.white, Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
+                customButton(buttonTextSize, Colors.greenAccent[700], Colors.white, Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(buttonTextSize, Colors.greenAccent[100], Colors.green[800], Icons.person, lBase.buttons.self, () {setState(() {
+                customButton(buttonTextSize, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
-                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
+                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(buttonTextSize, Colors.purple[50], Colors.purpleAccent[400], Icons.account_balance_wallet, lBase.buttons.budget, () {setState(() {
+                customButton(buttonTextSize, Colors.greenAccent[100], Colors.green[700], Icons.person, lBase.buttons.self, () {setState(() {
                     _selectedButtonIndex = 0;
                 });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
                 SizedBox(width:5),
-                customButton(buttonTextSize, Colors.greenAccent[700], Colors.white, Icons.person, lBase.buttons.self, () {setState(() {
+                customButton(buttonTextSize, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.savings, () {setState(() {
                     _selectedButtonIndex = 1;
-                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
+                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
             ];
         }
 
@@ -72,10 +61,10 @@ class _EditSavingState extends State<EditSaving> {
     }
 
     void onActionPressed() {
-        if ((_selectedButtonIndex == 1 && _amount > 0) || (calculateExpenses() + _amount <= calculateAllowence() && _amount > 0 && _selectedButtonIndex == 0)) {
+        if ((_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && calculateTotalSavings() - _amount >= 0 && _amount > 0)) {
             setState(() {
                 List _ls = List.from(settings["transactions"]);
-                PaymentType _pt = _selectedButtonIndex == 0 ? PaymentType.Saving : PaymentType.ExistingSaving;
+                PaymentType _pt = _selectedButtonIndex == 0 ? PaymentType.Deposit : PaymentType.SavingToBudget;
 
                 Payment _p = new Payment("budgetpaymentexpenseasstring.${_pt.index}", _amount, _date, _pt.index, settings["keyIndex"]);
                 
@@ -86,7 +75,7 @@ class _EditSavingState extends State<EditSaving> {
                 _amount = 0.0;
                 _date = DateTime.now();
                 _selectedButtonIndex = 0;
-                
+
                 Navigator.pop(context);
             });
         }
@@ -102,7 +91,7 @@ class _EditSavingState extends State<EditSaving> {
 	Widget build(BuildContext context) {
         return Scaffold(
             backgroundColor: themeColors[theme],
-            appBar: appBarWithGradientTitle(lBase.titles.save, 25, Colors.amberAccent[700], Colors.amber[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
+            appBar: appBarWithGradientTitle(lBase.titles.deposit, 25, Colors.greenAccent[700], Colors.green[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             body: Container(
                 padding: globalInset,
                 child: ListView(
@@ -134,28 +123,18 @@ class _EditSavingState extends State<EditSaving> {
                                         controller: controller,
                                         keyboardType: TextInputType.number,
                                         decoration: new InputDecoration(
-                                            focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.greenAccent[700])),
-                                            enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[100]  : Colors.greenAccent[200]))
+                                            focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.greenAccent[700] : Colors.amber[800])),
+                                            enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.greenAccent[200] : Colors.amber[200]))
                                         ),
-                                        cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.greenAccent[700],
+                                        cursorColor: _selectedButtonIndex == 0 ? Colors.greenAccent[700] : Colors.amber[800],
                                         style: TextStyle(
                                             fontSize: amountTextSize,
                                             fontFamily: "Montserrat",
-                                            color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.greenAccent[700]
+                                            color: _selectedButtonIndex == 0 ? Colors.greenAccent[700] : Colors.amber[800]
                                         ),
                                         onSubmitted: (_t) {
                                             _amount = controller.numberValue;
-
-                                            if (_selectedButtonIndex == 0 && calculateAllowence() - _amount < 0 && _amount > 0) {
-                                                setState(() {
-                                                    _hint = lBase.hints.savingNoBudget;
-                                                });
-                                            } else {
-                                                setState(() {
-                                                    _hint = "";
-                                                });
-                                            }
-
+                                            
                                             setState(() {
                                                 _amount = controller.numberValue;
                                             });
@@ -163,30 +142,11 @@ class _EditSavingState extends State<EditSaving> {
                                         onChanged: (_t) {
                                             _amount = controller.numberValue;
 
-                                            if (_selectedButtonIndex == 0 && calculateAllowence() - _amount < 0 && _amount > 0) {
-                                                setState(() {
-                                                    _hint = lBase.hints.savingNoBudget;
-                                                });
-                                            } else {
-                                                setState(() {
-                                                    _hint = "";
-                                                });
-                                            }
-
                                             setState(() {
                                                 _amount = controller.numberValue;
                                             });
                                         },
                                     )
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                    child: Text(
-                                        _hint,
-                                        style: tfHintStyle,
-                                        textAlign: TextAlign.justify,
-                                    ),
                                 ),
                                 SizedBox(height:30),
                                 Text(
@@ -199,7 +159,7 @@ class _EditSavingState extends State<EditSaving> {
                                     child: FloatingActionButton.extended(
                                         elevation: 0.0,
                                         highlightElevation: 1.0,
-                                        heroTag: 4,
+                                        heroTag: 7,
                                         onPressed: _selectDate,
                                         backgroundColor: Colors.blueAccent[400],
                                         label: Text(
@@ -218,15 +178,15 @@ class _EditSavingState extends State<EditSaving> {
             ),
             floatingActionButton: GestureDetector(
                 child: Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: FloatingActionButton(
-                        heroTag: 3,
-                        child: Icon(Icons.done),
-                        backgroundColor: (_amount > 0.0 && _selectedButtonIndex == 1) || (_selectedButtonIndex == 0 && calculateAllowence() - _amount >= 0 && _amount > 0) ? Colors.greenAccent[400] : Colors.blueGrey[600],
-                        elevation: 0.0,
-                        onPressed: onActionPressed,
-                        highlightElevation: 1.0,
-                    ),
+                  padding: const EdgeInsets.all(30),
+                  child: FloatingActionButton(
+                      heroTag: 6,
+                      child: Icon(Icons.done),
+                      backgroundColor: (_amount > 0.0 && _selectedButtonIndex == 0) || (_selectedButtonIndex == 1 && calculateTotalSavings() - _amount >= 0 && _amount > 0) ? Colors.greenAccent[400] : Colors.blueGrey[600],
+                      elevation: 0.0,
+                      onPressed: onActionPressed,
+                      highlightElevation: 1.0,
+                  ),
                 )
             ),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

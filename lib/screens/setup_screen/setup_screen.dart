@@ -1,6 +1,5 @@
 import 'package:budget/modules/components.dart';
 import 'package:budget/modules/global.dart';
-import 'package:budget/modules/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import '../../main.dart';

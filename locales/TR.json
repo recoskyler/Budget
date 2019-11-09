@@ -47,6 +47,20 @@
     "tapRent": "Kira ve hizmet harcamalarını yönetmek için aşağıdaki butona tıklayın.",
     "broken": "Uygulamanin bu kısmı şuan bozuk, düzeltilmekte!!!"
   },
+  "paymentDesc": {
+    "deposit": "Yatırım",
+    "expense": "Harcama",
+    "fixedSaving": "Sabit Birikim",
+    "rentPayment": "Kira",
+    "finRentPayment": "Ödenmiş Kira",
+    "utilityPayment": "Hizmet",
+    "finUtilityPayment": "Ödenmiş Hizmet",
+    "subscription": "Sabit Ödeme",
+    "savingDeposit": "Birikim",
+    "savingExpense": "Birikim Harcaması",
+    "savingToBudget": "Birikimden Bütçeye",
+    "existingSaving": "Şahsi Birikim"
+  },
   "subTitles": {
     "transactions": " İŞLEMLER",
     "transactionHistory": " İŞLEM GEÇMİŞİ",

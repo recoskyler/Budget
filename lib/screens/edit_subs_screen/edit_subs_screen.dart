@@ -132,142 +132,149 @@ class _EditSubsState extends State<EditSubs> {
         return Scaffold(
             backgroundColor: themeColors[theme],
             appBar: appBarWithGradientTitle(lBase.titles.addFixed, 25, Colors.redAccent[400], Colors.red[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
-            body: ListView(
-                children: [
-                    Divider(),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                            Text(
-                                lBase.subTitles.type,
-                                style: subTitle
-                            ),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: getButtons(_selectedButtonIndex)
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                height: 120,
-                                child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                                    children: <Widget>[
-                                        Text(
-                                            lBase.subTitles.description,
-                                            style: subTitle
+            body: Container(
+                padding: globalInset,
+                child: ListView(
+                    children: [
+                        Divider(),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                                Text(
+                                    lBase.subTitles.type,
+                                    style: subTitle
+                                ),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: getButtons(_selectedButtonIndex)
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    height: 120,
+                                    child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                                        children: <Widget>[
+                                            Text(
+                                                lBase.subTitles.description,
+                                                style: subTitle
+                                            ),
+                                            Container(
+                                                alignment: Alignment.center,
+                                                height: 80,
+                                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                child: TextField(
+                                                    maxLines: 1,
+                                                    maxLength: 18,
+                                                    maxLengthEnforced: true,
+                                                    keyboardType: TextInputType.text,
+                                                    decoration: new InputDecoration(
+                                                        focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.redAccent[400])),
+                                                        enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.redAccent[100]))
+                                                    ),
+                                                    cursorColor: Colors.redAccent[400],
+                                                    style: TextStyle(
+                                                        fontSize: amountTextSize,
+                                                        fontFamily: "Montserrat",
+                                                        color: Colors.redAccent[400]
+                                                    ),
+                                                    onSubmitted: (_t) {
+                                                        setState(() {
+                                                            _desc = _t;
+                                                        });
+                                                    },
+                                                    onChanged: (_t) {
+                                                        setState(() {
+                                                            _desc = _t;
+                                                        });
+                                                    },
+                                                )
+                                            ),
+                                        ],
+                                    ),
+                                ),
+                                SizedBox(height:30),
+                                Text(
+                                    lBase.subTitles.amount,
+                                    style: subTitle
+                                ),
+                                Container(
+                                    alignment: Alignment.center,
+                                    height: 80,
+                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    child: TextField(
+                                        controller: controller,
+                                        keyboardType: TextInputType.number,
+                                        decoration: new InputDecoration(
+                                            focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800])),
+                                            enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[100] : Colors.amber[200]))
                                         ),
-                                        Container(
-                                            alignment: Alignment.center,
-                                            height: 80,
-                                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                            child: TextField(
-                                                maxLines: 1,
-                                                maxLength: 18,
-                                                maxLengthEnforced: true,
-                                                keyboardType: TextInputType.text,
-                                                decoration: new InputDecoration(
-                                                    focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.redAccent[400])),
-                                                    enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.redAccent[100]))
-                                                ),
-                                                cursorColor: Colors.redAccent[400],
-                                                style: TextStyle(
-                                                    fontSize: amountTextSize,
-                                                    fontFamily: "Montserrat",
-                                                    color: Colors.redAccent[400]
-                                                ),
-                                                onSubmitted: (_t) {
-                                                    setState(() {
-                                                        _desc = _t;
-                                                    });
-                                                },
-                                                onChanged: (_t) {
-                                                    setState(() {
-                                                        _desc = _t;
-                                                    });
-                                                },
+                                        cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800],
+                                        style: TextStyle(
+                                            fontSize: amountTextSize,
+                                            fontFamily: "Montserrat",
+                                            color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
+                                        ),
+                                        onSubmitted: (_t) {
+                                            _amount = controller.numberValue;
+
+                                            setState(() {
+                                                _amount = controller.numberValue;
+                                            });
+                                        },
+                                        onChanged: (_t) {
+                                            _amount = controller.numberValue;
+                                            
+                                            setState(() {
+                                                _amount = controller.numberValue;
+                                            });
+                                        },
+                                    )
+                                ),
+                                SizedBox(height:30),
+                                Text(
+                                    lBase.subTitles.renewalDay,
+                                    style: subTitle
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    height: 50,
+                                    child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: getMonthButtons(onSubDayClick, _renewalDay, 30, 100),
+                                        physics: AlwaysScrollableScrollPhysics(),
+                                    )
+                                ),
+                                SizedBox(height:30),
+                                Text(
+                                    lBase.subTitles.startingDate,
+                                    style: subTitle
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    margin: EdgeInsets.fromLTRB(30, 20, 30, 10),
+                                    child: FloatingActionButton.extended(
+                                        elevation: 0.0,
+                                        highlightElevation: 1.0,
+                                        heroTag: 7,
+                                        onPressed: _selectDate,
+                                        backgroundColor: Colors.blueAccent[400],
+                                        label: Text(
+                                            DateFormat("dd/MM/yyyy").format(_date),
+                                            style: TextStyle(
+                                                fontSize: buttonTextSize,
+                                                fontFamily: "Montserrat"
                                             )
                                         ),
-                                    ],
+                                    )
                                 ),
-                            ),
-                            SizedBox(height:30),
-                            Text(
-                                lBase.subTitles.amount,
-                                style: subTitle
-                            ),
-                            Container(
-                                alignment: Alignment.center,
-                                height: 80,
-                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                child: TextField(
-                                    controller: controller,
-                                    keyboardType: TextInputType.number,
-                                    decoration: new InputDecoration(
-                                        focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800])),
-                                        enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _selectedButtonIndex == 0 ? Colors.purpleAccent[100] : Colors.amber[200]))
-                                    ),
-                                    cursorColor: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800],
-                                    style: TextStyle(
-                                        fontSize: amountTextSize,
-                                        fontFamily: "Montserrat",
-                                        color: _selectedButtonIndex == 0 ? Colors.purpleAccent[700] : Colors.amber[800]
-                                    ),
-                                    onSubmitted: (_t) {
-                                        setState(() {
-                                            _amount = controller.numberValue;
-                                        });
-                                    },
-                                    onChanged: (_t) {
-                                        setState(() {
-                                            _amount = controller.numberValue;
-                                        });
-                                    },
-                                )
-                            ),
-                            SizedBox(height:30),
-                            Text(
-                                lBase.subTitles.renewalDay,
-                                style: subTitle
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                height: 50,
-                                child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: getMonthButtons(onSubDayClick, _renewalDay, 30, 100),
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                )
-                            ),
-                            SizedBox(height:30),
-                            Text(
-                                lBase.subTitles.startingDate,
-                                style: subTitle
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                margin: EdgeInsets.fromLTRB(30, 20, 30, 10),
-                                child: FloatingActionButton.extended(
-                                    elevation: 0.0,
-                                    highlightElevation: 1.0,
-                                    heroTag: 7,
-                                    onPressed: _selectDate,
-                                    backgroundColor: Colors.blueAccent[400],
-                                    label: Text(
-                                        DateFormat("dd/MM/yyyy").format(_date),
-                                        style: TextStyle(
-                                            fontSize: buttonTextSize,
-                                            fontFamily: "Montserrat"
-                                        )
-                                    ),
-                                )
-                            ),
-                            SizedBox(height: 150),
-                        ]                    
-                    )
-                ]
+                                SizedBox(height: 150),
+                            ]                    
+                        )
+                    ]
+                ),
             ),
             floatingActionButton: GestureDetector(
                 child: Padding(

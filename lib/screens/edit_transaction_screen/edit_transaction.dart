@@ -24,7 +24,7 @@ class _EditTransactionState extends State<EditTransaction> {
     double _amount = 0.0;
     DateTime _date = DateTime.now();
     String _desc = "";
-    String hint = "";
+    String _hint = "";
     final controller = MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', precision: 2);
 
     Future _selectDate() async {
@@ -40,11 +40,11 @@ class _EditTransactionState extends State<EditTransaction> {
     List<Widget> getButtons(int s) {
         if (s == 1 && _amount > calculateTotalSavings()) {
             setState(() {
-                hint = lBase.hints.savingExpenseOverflow;
+                _hint = lBase.hints.savingExpenseOverflow;
             });
         } else {
             setState(() {
-                hint = "";
+                _hint = "";
             });
         }
         
@@ -87,13 +87,13 @@ class _EditTransactionState extends State<EditTransaction> {
                 }
 
                 if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
-                    Payment _sp = new Payment(asString[PaymentType.SavingExpense.index], calculateTotalSavings(), _date, PaymentType.SavingExpense.index, settings["keyIndex"]);
-                    Payment _rp = new Payment(asString[PaymentType.SavingExpense.index], _amount - calculateTotalSavings(), _date, PaymentType.Withdraw.index, settings["keyIndex"]);
+                    Payment _sp = new Payment("budgetpaymentexpenseasstring.${PaymentType.SavingExpense.index}", calculateTotalSavings(), _date, PaymentType.SavingExpense.index, settings["keyIndex"]);
+                    Payment _rp = new Payment("budgetpaymentexpenseasstring.${PaymentType.SavingExpense.index}", _amount - calculateTotalSavings(), _date, PaymentType.Withdraw.index, settings["keyIndex"]);
 
                     _ls.add(_sp);
                     _ls.add(_rp);
                 } else {
-                    Payment _p = new Payment(_selectedButtonIndex == 0 ? _desc : asString[PaymentType.SavingExpense.index], _amount, _date, _selectedButtonIndex == 0 ? PaymentType.Withdraw.index : PaymentType.SavingExpense.index, settings["keyIndex"]);
+                    Payment _p = new Payment(_selectedButtonIndex == 0 ? _desc : "budgetpaymentexpenseasstring.${PaymentType.SavingExpense.index}", _amount, _date, _selectedButtonIndex == 0 ? PaymentType.Withdraw.index : PaymentType.SavingExpense.index, settings["keyIndex"]);
 
                     _ls.add(_p);
                 }
@@ -252,11 +252,11 @@ class _EditTransactionState extends State<EditTransaction> {
 
                                             if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
                                                 setState(() {
-                                                    hint = lBase.hints.savingExpenseOverflow;
+                                                    _hint = lBase.hints.savingExpenseOverflow;
                                                 });
                                             } else {
                                                 setState(() {
-                                                    hint = "";
+                                                    _hint = "";
                                                 });
                                             }
 
@@ -269,11 +269,11 @@ class _EditTransactionState extends State<EditTransaction> {
 
                                             if (_selectedButtonIndex == 1 && _amount > calculateTotalSavings()) {
                                                 setState(() {
-                                                    hint = lBase.hints.savingExpenseOverflow;
+                                                    _hint = lBase.hints.savingExpenseOverflow;
                                                 });
                                             } else {
                                                 setState(() {
-                                                    hint = "";
+                                                    _hint = "";
                                                 });
                                             }
 
@@ -287,7 +287,7 @@ class _EditTransactionState extends State<EditTransaction> {
                                 Container(
                                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
                                     child: Text(
-                                        hint,
+                                        _hint,
                                         style: tfHintStyle,
                                         textAlign: TextAlign.justify,
                                     ),

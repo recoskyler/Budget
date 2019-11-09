@@ -27,13 +27,13 @@ List<String> currencies = ['€', '\$', '£', '¥', '₩', '₺', ' '];
 
 // * STYLES
 
-double globalInsetPercent = SizeConfig.safeBlockHorizontal * 2.5;
-double buttonTextSize = SizeConfig.safeBlockHorizontal * 4.2;
-double regularTextSize = SizeConfig.safeBlockHorizontal * 4.3;
-double subTitleTextSize = SizeConfig.safeBlockHorizontal * 4.5;
+double globalInsetPercent;
+double buttonTextSize;
+double regularTextSize;
+double subTitleTextSize;
 double amountPercentSize = 8;
-double amountTextSize = SizeConfig.safeBlockHorizontal * 7;
-double smolTextSize = SizeConfig.safeBlockHorizontal * 3;
+double amountTextSize;
+double smolTextSize;
 EdgeInsets globalInset = new EdgeInsets.fromLTRB(globalInsetPercent, 0, globalInsetPercent, 0);
 
 List<Color> themeColors = [
@@ -80,6 +80,12 @@ TextStyle subTitle = new TextStyle(
 
 TextStyle regular = new TextStyle(
     color: textColors[theme],
+    fontSize: regularTextSize,
+    fontFamily: "Montserrat",
+);
+
+TextStyle dim = new TextStyle(
+    color: dimTextColors[theme],
     fontSize: regularTextSize,
     fontFamily: "Montserrat",
 );

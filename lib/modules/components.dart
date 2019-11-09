@@ -476,7 +476,11 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
         } else {
             _tr.add(transactionItemFromPayment(_p, op, dp, fp));
         }
+
+        _tr.add(transactionItemDivider());
     });
+
+    _tr.add(SizedBox(height:100));
 
     return _tr;
 }
@@ -499,6 +503,8 @@ List<Widget> getMonthSubscriptions(Function op, Function dp) {
         _tr.add(transactionItemDivider());
     });
 
+    _tr.add(SizedBox(height:100));
+
     return _tr;
 }
 
@@ -516,7 +522,7 @@ ListView subscriptionsBlock(String _currency, Function op, Function dp) {
     );
 }
 
-Divider transactionItemDivider() {
+Widget transactionItemDivider() {
     return Divider(indent: 10, endIndent: 10, color: dimTextColors[theme], thickness: 1);
 }
 
@@ -614,14 +620,18 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
                             SizedBox(height: 10),
-                            Text(
-                                DateFormat("MM/yyyy").format(_p.getDate()),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.grey[700],
-                                    fontFamily: "Montserrat",
-                                    fontSize: 5 * SizeConfig.safeBlockHorizontal
-                                ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                    Icon(i == 1 ? null : Icons.keyboard_arrow_left, color: dimTextColors[theme]),
+                                    Text(
+                                        DateFormat('MM/yyyy').format(_p.getDate()),
+                                        textAlign: TextAlign.center,
+                                        style: subTitle
+                                    ),
+                                    Icon(i == _t.length - 2 ? null : Icons.keyboard_arrow_right, color: dimTextColors[theme]),
+                                ],
                             ),
                             SizedBox(height: 100),
                             Row(
@@ -635,11 +645,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                             Text(
                                                 lBase.subTitles.rent,
                                                 textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    color: Colors.grey[700],
-                                                    fontFamily: "Montserrat",
-                                                    fontSize: 24
-                                                ),
+                                                style: subTitle
                                             ),
                                             SizedBox(height: 16),
                                             Text(
@@ -648,7 +654,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 style: TextStyle(
                                                     color: _p.getPaymentType() == PaymentType.Rent ? Colors.red : Colors.greenAccent[700],
                                                     fontFamily: "Montserrat",
-                                                    fontSize: 34
+                                                    fontSize: amountTextSize
                                                 ),
                                             ),
                                         ],
@@ -660,17 +666,12 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                             Text(
                                                 lBase.subTitles.utilities,
                                                 textAlign: TextAlign.right,
-                                                style: TextStyle(
-                                                    color: Colors.grey[700],
-                                                    fontFamily: "Montserrat",
-                                                    fontSize: 24
-                                                ),
+                                                style: subTitle
                                             ),
                                             Container(
                                                 alignment: Alignment.centerRight,
-                                                height: 70,
-                                                width: SizeConfig.blockSizeHorizontal * 40,
-                                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                                height: 60,
+                                                width: SizeConfig.blockSizeHorizontal * 35,
                                                 child: TextField(
                                                     textAlign: TextAlign.end,
                                                     expands: false,
@@ -682,7 +683,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                     ),
                                                     cursorColor: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700],
                                                     style: TextStyle(
-                                                        fontSize: 34,
+                                                        fontSize: amountTextSize,
                                                         fontFamily: "Montserrat",
                                                         color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700]
                                                     ),
@@ -704,7 +705,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                     Container(
-                                        width: 40 * SizeConfig.blockSizeHorizontal,
+                                        width: 35 * SizeConfig.safeBlockHorizontal,
                                         child: customButton(
                                             buttonTextSize,
                                             _p.isPaid() ? Colors.indigoAccent[700] : Colors.blue[100],
@@ -718,7 +719,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                         )
                                     ),
                                     Container(
-                                        width: 40 * SizeConfig.blockSizeHorizontal,
+                                        width: 35 * SizeConfig.safeBlockHorizontal,
                                         child: customButton(
                                             buttonTextSize,
                                             _u.isPaid() ? Colors.deepOrangeAccent[400] : Colors.deepOrange[100],

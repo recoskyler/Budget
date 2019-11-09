@@ -178,7 +178,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: DropdownButton(
                         icon: Icon(Icons.monetization_on),
                         value: _currencyVal,
-                        elevation: 0,
                         underline: Container(
                             height: 2,
                             color: Colors.deepPurpleAccent[400],
@@ -198,7 +197,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 value: value,
                                 child: Text(
                                     value,
-                                    style: regular,
+                                    style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontFamily: "Montserrat",
+                                        fontSize: regularTextSize
+                                    ),
                                     textAlign: TextAlign.center,
                                 ),
                             );
@@ -217,7 +220,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: DropdownButton(
                         icon: Icon(Icons.translate),
                         value: languages[settingsStorage.getInt("lang")],
-                        elevation: 0,
                         underline: Container(
                             height: 2,
                             color: Colors.deepPurpleAccent[400],
@@ -237,7 +239,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 value: value,
                                 child: Text(
                                     value,
-                                    style: regular,
+                                    style: TextStyle(
+                                        color: Colors.grey[600],
+                                        fontFamily: "Montserrat",
+                                        fontSize: regularTextSize
+                                    ),
                                     textAlign: TextAlign.center,
                                 ),
                             );

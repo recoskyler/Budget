@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:budget/main.dart';
 import 'package:budget/screens/stats_screen/stats_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'settings.dart';
@@ -447,6 +448,25 @@ void refreshStats() {
     subexpense = calculateExpenses(true);
     currency = settings["currency"];
     theme = settings["theme"];
+
+    subTitle = new TextStyle(
+        color: textColors[theme],
+        fontFamily: "Montserrat",
+        fontSize: subTitleTextSize,
+        fontWeight: FontWeight.w300
+    );
+
+    regular = new TextStyle(
+        color: textColors[theme],
+        fontSize: regularTextSize,
+        fontFamily: "Montserrat",
+    );
+
+    tfHintStyle = new TextStyle(
+        color: Colors.red,
+        fontSize: smolTextSize,
+        fontFamily: "FiraCode",
+    );
 }
 
 int next(int min, int max) => min + _random.nextInt(max - min);
@@ -478,7 +498,11 @@ void launchURL(String url) async {
     }
 }
 
+// budgetpaymentexpenseasstring.6
+
 void initTransactionDescriptions() {
+    refreshStats();
+
     transactionDescriptions = [
         lBase.descriptions.food,
         lBase.descriptions.drink,
@@ -497,6 +521,21 @@ void initTransactionDescriptions() {
         lBase.descriptions.furniture,
         lBase.descriptions.household,
         lBase.descriptions.other
+    ];
+
+    asString = [
+        lBase.paymentDesc.deposit,
+        lBase.paymentDesc.expense,
+        lBase.paymentDesc.fixedSaving,
+        lBase.paymentDesc.rentPayment,
+        lBase.paymentDesc.finRentPayment,
+        lBase.paymentDesc.utilityPayment,
+        lBase.paymentDesc.finUtilityPayment,
+        lBase.paymentDesc.subscription,
+        lBase.paymentDesc.savingDeposit,
+        lBase.paymentDesc.savingExpense,
+        lBase.paymentDesc.savingToBudget,
+        lBase.paymentDesc.existingSaving
     ];
 }
 

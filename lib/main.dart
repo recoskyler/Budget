@@ -8,7 +8,6 @@ import 'modules/settings.dart';
 import 'package:flutter/widgets.dart';
 
 class SizeConfig {
-    
     // For different size displays
     // If not used, UI may vary from device to device.
     // Can't say I understand this concept clearly, nor I'm able to use it properly :/
@@ -37,6 +36,14 @@ class SizeConfig {
         _safeAreaHorizontal) / 100;
         safeBlockVertical = (screenHeight -
         _safeAreaVertical) / 100;
+
+        globalInsetPercent = SizeConfig.safeBlockHorizontal * 2.5;
+        buttonTextSize = SizeConfig.safeBlockHorizontal * 4.2;
+        regularTextSize = SizeConfig.safeBlockHorizontal * 4.3;
+        subTitleTextSize = SizeConfig.safeBlockHorizontal * 4.5;
+        amountPercentSize = 8;
+        amountTextSize = SizeConfig.safeBlockHorizontal * 7;
+        smolTextSize = SizeConfig.safeBlockHorizontal * 3;
     }
 }
 

@@ -130,125 +130,128 @@ class _EditRentState extends State<EditRent> {
         return Scaffold(
             backgroundColor: themeColors[theme],
             appBar: rentHead(),
-            body: ListView(
-                children: [
-                    Divider(),
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                            //
-                            // Disabled until notifications are added (not guaranteed)
-                            /*
-                            Text(
-                                " RENT DAY",
-                                style: subTitle
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                height: 50,
-                                child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: getButtons(onRentDayClick, _selectedRentDay, 30, 0),
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                )
-                            ),
-                            SizedBox(height:30),
-                            */
-                            //
-                            Text(
-                                lBase.subTitles.rentAmount,
-                                style: subTitle
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                alignment: Alignment.center,
-                                height: 80,
-                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                                child: TextField(
-                                    controller: controller,
-                                    keyboardType: TextInputType.number,
-                                    decoration: new InputDecoration(
-                                        focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.indigoAccent[700])),
-                                        enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.indigoAccent[100]))
-                                    ),
-                                    cursorColor: Colors.indigoAccent[700],
-                                    style: TextStyle(
-                                        fontSize: amountTextSize,
-                                        fontFamily: "Montserrat",
-                                        color: Colors.indigoAccent[700]
-                                    ),
-                                    onSubmitted: (_t) {
-                                        setState(() {
-                                            _amount = controller.numberValue;
-                                        });
-                                    },
-                                    onChanged: (_t) {
-                                        setState(() {
-                                            _amount = controller.numberValue;
-                                        });
-                                    },
-                                )
-                            ),
-                            //
-                            // Disabled until notifications are added (not guaranteed)
-                            /*
-                            SizedBox(height:30),
-                            Text(
-                                " UTILITIES DAY",
-                                style: subTitle
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                height: 50,
-                                child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: getButtons(onutilityDayClick, _selectedutilityDay, 30, 32),
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                )
-                            ),
-                            */
-                            //
-                            SizedBox(height:30),
-                            Text(
-                                lBase.subTitles.startingDate,
-                                style: subTitle
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                margin: EdgeInsets.fromLTRB(30, 20, 30, 10),
-                                child: FloatingActionButton.extended(
-                                    elevation: 0.0,
-                                    highlightElevation: 1.0,
-                                    heroTag: "rentdate",
-                                    onPressed: _selectDate,
-                                    backgroundColor: Colors.blueAccent[400],
-                                    label: Text(
-                                        DateFormat("MM/yyyy").format(_date),
+            body: Container(
+                padding: globalInset,
+                child: ListView(
+                    children: [
+                        Divider(),
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                                //
+                                // Disabled until notifications are added (not guaranteed)
+                                /*
+                                Text(
+                                    " RENT DAY",
+                                    style: subTitle
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    height: 50,
+                                    child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: getButtons(onRentDayClick, _selectedRentDay, 30, 0),
+                                        physics: AlwaysScrollableScrollPhysics(),
+                                    )
+                                ),
+                                SizedBox(height:30),
+                                */
+                                //
+                                Text(
+                                    lBase.subTitles.rentAmount,
+                                    style: subTitle
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    alignment: Alignment.center,
+                                    height: 80,
+                                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                    child: TextField(
+                                        controller: controller,
+                                        keyboardType: TextInputType.number,
+                                        decoration: new InputDecoration(
+                                            focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.indigoAccent[700])),
+                                            enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.indigoAccent[100]))
+                                        ),
+                                        cursorColor: Colors.indigoAccent[700],
                                         style: TextStyle(
-                                            fontSize: buttonTextSize,
-                                            fontFamily: "Montserrat"
-                                        )
-                                    ),
-                                )
-                            ),
-                            SizedBox(height:30),
-                            Text(
-                                lBase.subTitles.duration,
-                                style: subTitle
-                            ),
-                            SizedBox(height:10),
-                            Container(
-                                height: 50,
-                                child: ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: getButtons(onDurationClick, _selectedDuration, 5, 65),
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                )
-                            ),
-                        ]                    
-                    )
-                ]
+                                            fontSize: amountTextSize,
+                                            fontFamily: "Montserrat",
+                                            color: Colors.indigoAccent[700]
+                                        ),
+                                        onSubmitted: (_t) {
+                                            setState(() {
+                                                _amount = controller.numberValue;
+                                            });
+                                        },
+                                        onChanged: (_t) {
+                                            setState(() {
+                                                _amount = controller.numberValue;
+                                            });
+                                        },
+                                    )
+                                ),
+                                //
+                                // Disabled until notifications are added (not guaranteed)
+                                /*
+                                SizedBox(height:30),
+                                Text(
+                                    " UTILITIES DAY",
+                                    style: subTitle
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    height: 50,
+                                    child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: getButtons(onutilityDayClick, _selectedutilityDay, 30, 32),
+                                        physics: AlwaysScrollableScrollPhysics(),
+                                    )
+                                ),
+                                */
+                                //
+                                SizedBox(height:30),
+                                Text(
+                                    lBase.subTitles.startingDate,
+                                    style: subTitle
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    margin: EdgeInsets.fromLTRB(30, 20, 30, 10),
+                                    child: FloatingActionButton.extended(
+                                        elevation: 0.0,
+                                        highlightElevation: 1.0,
+                                        heroTag: "rentdate",
+                                        onPressed: _selectDate,
+                                        backgroundColor: Colors.blueAccent[400],
+                                        label: Text(
+                                            DateFormat("MM/yyyy").format(_date),
+                                            style: TextStyle(
+                                                fontSize: buttonTextSize,
+                                                fontFamily: "Montserrat"
+                                            )
+                                        ),
+                                    )
+                                ),
+                                SizedBox(height:30),
+                                Text(
+                                    lBase.subTitles.duration,
+                                    style: subTitle
+                                ),
+                                SizedBox(height:10),
+                                Container(
+                                    height: 50,
+                                    child: ListView(
+                                        scrollDirection: Axis.horizontal,
+                                        children: getButtons(onDurationClick, _selectedDuration, 5, 65),
+                                        physics: AlwaysScrollableScrollPhysics(),
+                                    )
+                                ),
+                            ]                    
+                        )
+                    ]
+                ),
             ),
             floatingActionButton: GestureDetector(
                 child: Padding(

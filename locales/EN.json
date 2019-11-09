@@ -47,6 +47,20 @@
     "tapRent": "Tap the button below to set up rent and utilities.",
     "broken": "This part of the app is currently broken, and being fixed!!!"
   },
+  "paymentDesc": {
+    "deposit": "Deposit",
+    "expense": "Expense",
+    "fixedSaving": "Fixed Saving Deposit",
+    "rentPayment": "Rent Payment",
+    "finRentPayment": "Finished Rent Payment",
+    "utilityPayment": "Utility Payment",
+    "finUtilityPayment": "Finished Utility Payment",
+    "subscription": "Subscription",
+    "savingDeposit": "Saving",
+    "savingExpense": "Saving Expense",
+    "savingToBudget": "Saving To Budget",
+    "existingSaving": "Existing Saving"
+  },
   "subTitles": {
     "transactions": " TRANSACTIONS",
     "transactionHistory": " TRANSACTION HISTORY",
