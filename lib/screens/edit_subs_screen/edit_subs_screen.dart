@@ -1,3 +1,4 @@
+import 'package:budget/main.dart';
 /// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
 /// Please check the GitHub Page for usage rights.
 /// https://github.com/recoskyler/Budget
@@ -45,21 +46,21 @@ class _EditSubsState extends State<EditSubs> {
             return [
                 customButton(buttonTextSize, Colors.purpleAccent[400], Colors.white, Icons.subject, lBase.buttons.contract, () {setState(() {
                     _selectedButtonIndex = 0;
-                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
+                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), SizeConfig.blockSizeHorizontal * 35, 50.0),
                 SizedBox(width:5),
                 customButton(buttonTextSize, Colors.orange[50], Colors.amber[800], Icons.archive, lBase.buttons.saving, () {setState(() {
                     _selectedButtonIndex = 1;
-                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
+                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), SizeConfig.blockSizeHorizontal * 35, 50.0)
             ];
         } else if (s == 1) {
             return [
                 customButton(buttonTextSize, Colors.purple[50], Colors.purpleAccent[400], Icons.subject, lBase.buttons.contract, () {setState(() {
                     _selectedButtonIndex = 0;
-                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0),
+                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), SizeConfig.blockSizeHorizontal * 35, 50.0),
                 SizedBox(width:5),
                 customButton(buttonTextSize, Colors.amber[800], Colors.white, Icons.archive, lBase.buttons.saving, () {setState(() {
                     _selectedButtonIndex = 1;
-                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), 180.0, 50.0)
+                });}, EdgeInsets.fromLTRB(0, 20, 0, 40), SizeConfig.blockSizeHorizontal * 35, 50.0)
             ];
         }
 

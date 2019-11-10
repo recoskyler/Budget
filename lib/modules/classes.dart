@@ -70,10 +70,10 @@ class Payment {
     }
 
     DateTime getFPRenewalDate(DateTime _date) {
-        DateTime _res = new DateTime(_date.year, _date.month, _renewalDay);
+        DateTime _res = new DateTime(_date.year, _date.month, this._renewalDay);
 
-        if (getRenewalDate(_date, settings["budgetRenewalDay"]) != getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) {
-            _res = getNextRenewalDate(_date, _renewalDay);
+        if (getRenewalDate(_date, settings["budgetRenewalDay"]).compareTo(getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) >= 0) {
+            //_res = getNextRenewalDate(_res, this._renewalDay);
         }
 
         return _res;

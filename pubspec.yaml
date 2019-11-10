@@ -14,7 +14,7 @@ description: A simple budget and rent management app.
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
 
-version: 1.0.0+6
+version: 1.0.0+7
 
 
 environment:

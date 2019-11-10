@@ -5,7 +5,6 @@
 
 import 'dart:io';
 import 'dart:math';
-import 'package:budget/main.dart';
 import 'package:budget/screens/stats_screen/stats_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'settings.dart';
@@ -126,7 +125,7 @@ DateTime getNextRenewalDate(DateTime _date, int _renewalDay) {
 
 /// Checks if a Date is between this and next renewal date.
 bool thisMonths(DateTime _date, int _renewalDay, DateTime _compDate) {
-    if (getRenewalDate(_date, _renewalDay).compareTo(getRenewalDate(_compDate, _renewalDay)) == 0 || (_date.isBefore(getNextRenewalDate(_compDate, _renewalDay)) && _date.isAfter(getRenewalDate(_compDate, _renewalDay)))) {
+    if (_date.compareTo(getRenewalDate(_compDate, _renewalDay)) >= 0 && _date.compareTo(getNextRenewalDate(_compDate, _renewalDay)) < 0) {
         return true;
     }
 
@@ -142,7 +141,7 @@ List<DateTime> getAllDates([List _l1, int _day]) {
 
     if (_l1 == null) {
         _ls = List<Payment>.from(settings["transactions"]);
-        _ls.addAll(List<Payment>.from(settings["fixedPayments"]));
+        //_ls.addAll(List<Payment>.from(settings["fixedPayments"]));
 
         if (_ls.length == 0) {
             _res.add(getRenewalDate(DateTime.now(), _day));
@@ -180,7 +179,7 @@ int getMonthCount([List _l1, int _day]) {
 
     if (_l1 == null) {
         _ls = List<Payment>.from(settings["transactions"]);
-        _ls.addAll(List<Payment>.from(settings["fixedPayments"]));
+        //_ls.addAll(List<Payment>.from(settings["fixedPayments"]));
     } else {
         _ls = List<Payment>.from(_l1);
     }
@@ -262,7 +261,7 @@ double calculateExpenses([bool _onlySubs = false, DateTime _date]) {
         } else if (_p.getPaymentType() == PaymentType.Subscription && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day && _pushBreak) {
             _res += _p.getAmount();
         } else if (_p.getPaymentType() == PaymentType.Subscription && _p.getDate().compareTo(_date) <= 0 && !_pushBreak) {
-            _res += _p.getAmount();
+            //_res += _p.getAmount();
         }
     }
 
@@ -300,7 +299,7 @@ double calculateSavings([DateTime _date]) {
         }
 
         if (_p.getPaymentType() == PaymentType.FixedSavingDeposit && _p.getDate().compareTo(_date) <= 0 && !_pushBreak) {
-            _res += _p.getAmount();
+            //_res += _p.getAmount();
         }
     }
 
@@ -340,7 +339,7 @@ double calculateAllowence([DateTime _date]) {
         if (_p.getPaymentType() == PaymentType.FixedSavingDeposit && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day && _pushBreak) {
             _res -= _p.getAmount();
         } else if (_p.getPaymentType() == PaymentType.FixedSavingDeposit && _p.getDate().compareTo(_date) <= 0 && !_pushBreak) {
-            _res -= _p.getAmount();
+            //_res -= _p.getAmount();
         }
     }
 
@@ -502,8 +501,6 @@ void launchURL(String url) async {
         throw 'Could not launch $url';
     }
 }
-
-// budgetpaymentexpenseasstring.6
 
 void initTransactionDescriptions() {
     refreshStats();

@@ -443,11 +443,11 @@ Widget transactionItemBlock(String txt, String _currency, DateTime date, Payment
 List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTime _date]) {
     List<Widget> _tr = new List<Widget>();
     List<Payment> _pt = new List<Payment>();
-    List _t = orderByDateDescending(List<Payment>.from(settings["transactions"]));
+    List _t = List<Payment>.from(settings["fixedPayments"]);
     int _renewalDay = settings["budgetRenewalDay"];
     bool _pushBreak = false;
 
-    _t.addAll(List<Payment>.from(settings["fixedPayments"]));
+    _t.addAll(orderByDateDescending(List<Payment>.from(settings["transactions"])));
 
     if (_date == null) _pushBreak = true;
 
@@ -456,28 +456,31 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
 
-        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak && !fixedPaymentTypes.contains(_p.getPaymentType())) {
-            //break;
+        if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak && !_p.isFixed()) {
+            break;
         }
 
-        if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) > 0) continue;
+        if (!_p.isFixed() && thisMonths(_p.getDate(), _renewalDay, _date)) {
+            _pt.add(_p);
+        } else if (_p.isFixed()) {
+            if (_pushBreak && thisMonths(_p.getFPRenewalDate(_date), _renewalDay, _date)) {
+                _pt.add(_p);
+            }
+            // TODO Work this part out
 
-        if (!fixedPaymentTypes.contains(_p.getPaymentType()) && thisMonths(_p.getDate(), _renewalDay, _date)) {
-            _pt.add(_p);
-        } else if (fixedPaymentTypes.contains(_p.getPaymentType()) && thisMonths(_p.getFPRenewalDate(_date), _renewalDay, _date) && _p.getDate().compareTo(_date) <= 0) {
-            _pt.add(_p);
-        } else if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() <= _date.day) {
-            //_pt.add(_p);
-        } else if (fixedPaymentTypes.contains(_p.getPaymentType()) && _p.getDate().compareTo(_date) <= 0 && !_pushBreak) {
-            //_pt.add(_p);
+            if (_p.getDate().compareTo(_date) <= 0 && thisMonths(_p.getFPRenewalDate(_date), _renewalDay, _date) && _p.getDate().compareTo(getNextRenewalDate(_date, _renewalDay)) <= 0) {
+                //_pt.add(_p);
+            } else if (_p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() == _renewalDay) {
+                //_pt.add(_p);
+            }
         }
     }
 
     _pt = orderByDateDescending(_pt);
 
     _pt.forEach((_p) {
-        if (fixedPaymentTypes.contains(_p.getPaymentType())) {
-            _tr.add(transactionItemFromPayment(_p, op, dp, fp, new DateTime(_date.year, _date.month, _p.getRenewalDay())));
+        if (_p.isFixed()) {
+            _tr.add(transactionItemFromPayment(_p, op, dp, fp, _p.getFPRenewalDate(_date)));
         } else {
             _tr.add(transactionItemFromPayment(_p, op, dp, fp));
         }
@@ -763,7 +766,7 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
     _dates.forEach((DateTime _date) {
         Color _color = getRenewalDate(_date, settings["budgetRenewalDay"]) == getRenewalDate(DateTime.now(), settings["budgetRenewalDay"]) ? Colors.cyanAccent[700] : dimTextColors[theme];
         DateTime _paramDate = _date;
-        String _nextDateString = "${settings["budgetRenewalDay"]}/${DateFormat("MM/yyyy").format(getNextRenewalDate(_date, settings["budgetRenewalDay"])).toString()}";
+        String _nextDateString = "${settings["budgetRenewalDay"] - 1}/${DateFormat("MM/yyyy").format(getNextRenewalDate(_date, settings["budgetRenewalDay"])).toString()}";
 
         if (getRenewalDate(_date, settings["budgetRenewalDay"]) == getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) {
             _nextDateString = lBase.subTitles.today;

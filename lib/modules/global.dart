@@ -4,7 +4,6 @@
 ///
 
 import 'package:budget/generated/locale_base.dart';
-import 'package:budget/main.dart';
 import 'package:flutter/material.dart';
 import 'functions.dart';
 

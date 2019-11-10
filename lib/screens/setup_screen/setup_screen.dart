@@ -75,15 +75,15 @@ class _SetupScreenState extends State<SetupScreen> {
     List<Widget> getButtons(int s, Function _top) {
         if (s == 0) {
             return [
-                customButton(buttonTextSize, Colors.red, Colors.white, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
+                customButton(buttonTextSize, Colors.red, Colors.white, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), SizeConfig.blockSizeHorizontal * 35, 50.0),
                 SizedBox(width:5),
-                customButton(buttonTextSize, Colors.grey[300], Colors.grey[900], CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
+                customButton(buttonTextSize, Colors.grey[300], Colors.grey[900], CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), SizeConfig.blockSizeHorizontal * 35, 50.0)
             ];
         } else if (s == 1) {
             return [
-                customButton(buttonTextSize, Colors.red[50], Colors.red, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0),
+                customButton(buttonTextSize, Colors.red[50], Colors.red, CustomIcons.rebel, lBase.buttons.rebel, () {_top(0);}, EdgeInsets.fromLTRB(0, 0, 0, 0), SizeConfig.blockSizeHorizontal * 35, 50.0),
                 SizedBox(width:5),
-                customButton(buttonTextSize, Colors.grey[900], Colors.white, CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), 180.0, 50.0)
+                customButton(buttonTextSize, Colors.grey[900], Colors.white, CustomIcons.empire, lBase.buttons.empire, () {_top(1);}, EdgeInsets.fromLTRB(0, 0, 0, 0), SizeConfig.blockSizeHorizontal * 35, 50.0)
             ];
         }
 
