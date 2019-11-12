@@ -108,24 +108,29 @@ DateTime getRenewalDate(DateTime _date, int _renewalDay) {
 /// If _date is 15/03/2019, and _renewalDay is 10, the renewal date will be 10/04/2019.
 /// If _date is 7/03/2019, and _renewalDay is 10, the renewal date will be 10/03/2019.
 DateTime getNextRenewalDate(DateTime _date, int _renewalDay) {
-    DateTime _pastDate = _date;
+    DateTime _nextDate = _date;
 
     if (_date.day < _renewalDay) {
-        _pastDate = new DateTime(_date.year, _date.month - 1, _renewalDay);
+        _nextDate = new DateTime(_date.year, _date.month + 1, _renewalDay);
     } else if (_date.day < _renewalDay && _date.month == 1) {
-        _pastDate = new DateTime(_date.year - 1, 12, _renewalDay);
+        //_nextDate = new DateTime(_date.year - 1, 12, _renewalDay);
     } else if (_date.day >= _renewalDay && _date.month == 12) {
-        _pastDate = new DateTime(_date.year + 1, 1, _renewalDay);
+        _nextDate = new DateTime(_date.year + 1, 1, _renewalDay);
     } else if (_date.day >= _renewalDay) {
-        _pastDate = new DateTime(_date.year, _date.month + 1, _renewalDay);
+        _nextDate = new DateTime(_date.year, _date.month + 1, _renewalDay);
     }
 
-    return _pastDate;
+    return _nextDate;
 }
 
 /// Checks if a Date is between this and next renewal date.
 bool thisMonths(DateTime _date, int _renewalDay, DateTime _compDate) {
+    print("${_date.toString()} ${_compDate.toString()}");
+    print(_date.compareTo(getRenewalDate(_compDate, _renewalDay)));
+    print(getNextRenewalDate(_compDate, _renewalDay).toString());
+
     if (_date.compareTo(getRenewalDate(_compDate, _renewalDay)) >= 0 && _date.compareTo(getNextRenewalDate(_compDate, _renewalDay)) < 0) {
+        print("OK");
         return true;
     }
 

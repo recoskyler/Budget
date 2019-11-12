@@ -456,9 +456,13 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
 
+        print(_p.getDescription());
+
         if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak && !_p.isFixed()) {
-            break;
+            //break;
         }
+
+        print(_p.getDescription());
 
         if (!_p.isFixed() && thisMonths(_p.getDate(), _renewalDay, _date)) {
             _pt.add(_p);
