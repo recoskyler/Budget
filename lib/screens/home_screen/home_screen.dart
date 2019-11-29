@@ -210,13 +210,13 @@ class _MyApp extends State<MySApp> {
 
         if (bodiesInWater.length == 0) {
             bodiesInWater.add(BudgetScreen(renewFixedPayments: renewFixedPayments, onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
-            bodiesInWater.add(RentScreen(controller: controller));
             bodiesInWater.add(SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewTransactions));
+            bodiesInWater.add(RentScreen(controller: controller));
             bodiesInWater.add(SettingsScreen(themeButtonFunction: themeButtonPressed));
         } else {
             bodiesInWater[0] = (BudgetScreen(renewFixedPayments: renewFixedPayments, onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
-            bodiesInWater[1] = (RentScreen(controller: controller));
-            bodiesInWater[2] = (SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewFixedPayments));
+            bodiesInWater[1] = (SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewFixedPayments));
+            bodiesInWater[2] = (RentScreen(controller: controller));
             bodiesInWater[3] = (SettingsScreen(themeButtonFunction: themeButtonPressed, resetSettingsAction: resetSettingsAction));
         }
         
@@ -224,13 +224,13 @@ class _MyApp extends State<MySApp> {
 
         if (headsInWater.length == 0) {
             headsInWater.add(budgetHead(context));
-            headsInWater.add(rentHead(context));
             headsInWater.add(subsHead());
+            headsInWater.add(rentHead(context));
             headsInWater.add(settingsHead());
         } else {
             headsInWater[0] = (budgetHead(context));
-            headsInWater[1] = (rentHead(context));
-            headsInWater[2] = (subsHead());
+            headsInWater[1] = (subsHead());
+            headsInWater[2] = (rentHead(context));
             headsInWater[3] = (settingsHead());
         }
 
@@ -238,13 +238,13 @@ class _MyApp extends State<MySApp> {
 
         if (buttonsInWater.length == 0) {
             buttonsInWater.add(BudgetButton(onActionPressed: onActionPressed));
-            buttonsInWater.add(RentButton(onActionPressed: onRentActionPressed));
             buttonsInWater.add(SubsButton(onActionPressed: onSubsActionPressed));
+            buttonsInWater.add(RentButton(onActionPressed: onRentActionPressed));
             buttonsInWater.add(Container());
         } else {
             buttonsInWater[0] = (BudgetButton(onActionPressed: onActionPressed));
-            buttonsInWater[1] = (RentButton(onActionPressed: onRentActionPressed));
-            buttonsInWater[2] = (SubsButton(onActionPressed: onSubsActionPressed));
+            buttonsInWater[1] = (SubsButton(onActionPressed: onSubsActionPressed));
+            buttonsInWater[2] = (RentButton(onActionPressed: onRentActionPressed));
             buttonsInWater[3] = (Container());
         }
 
@@ -264,11 +264,11 @@ class _MyApp extends State<MySApp> {
                         title: Text("", style: TextStyle(fontSize: 0))
                     ),
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.home),
+                        icon: Icon(Icons.attach_money),
                         title: Text("", style: TextStyle(fontSize: 0))
                     ),
                     BottomNavigationBarItem(
-                        icon: Icon(Icons.calendar_today),
+                        icon: Icon(Icons.home),
                         title: Text("", style: TextStyle(fontSize: 0))
                     ),
                     BottomNavigationBarItem(

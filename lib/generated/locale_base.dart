@@ -25,6 +25,8 @@ class LocaleBase {
   Localehints get hints => _hints;
   Localemisc _misc;
   Localemisc get misc => _misc;
+  Localemonths _months;
+  Localemonths get months => _months;
   LocalepaymentDesc _paymentDesc;
   LocalepaymentDesc get paymentDesc => _paymentDesc;
   LocalesubTitles _subTitles;
@@ -37,6 +39,7 @@ class LocaleBase {
     _descriptions = Localedescriptions(Map<String, String>.from(_data['descriptions']));
     _hints = Localehints(Map<String, String>.from(_data['hints']));
     _misc = Localemisc(Map<String, String>.from(_data['misc']));
+    _months = Localemonths(Map<String, String>.from(_data['months']));
     _paymentDesc = LocalepaymentDesc(Map<String, String>.from(_data['paymentDesc']));
     _subTitles = LocalesubTitles(Map<String, String>.from(_data['subTitles']));
     _titles = Localetitles(Map<String, String>.from(_data['titles']));
@@ -102,6 +105,23 @@ class Localemisc {
 
   String get tapRent => _data["tapRent"];
   String get broken => _data["broken"];
+}
+class Localemonths {
+  final Map<String, String> _data;
+  Localemonths(this._data);
+
+  String get january => _data["january"];
+  String get february => _data["february"];
+  String get march => _data["march"];
+  String get april => _data["april"];
+  String get may => _data["may"];
+  String get june => _data["june"];
+  String get july => _data["july"];
+  String get august => _data["august"];
+  String get september => _data["september"];
+  String get october => _data["october"];
+  String get november => _data["november"];
+  String get december => _data["december"];
 }
 class LocalepaymentDesc {
   final Map<String, String> _data;

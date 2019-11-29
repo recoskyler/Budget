@@ -88,7 +88,7 @@ Future<bool> saveSettings() async {
 }
 
 void loadSettings() {
-    initTransactionDescriptions();
+    initDescriptions();
 
     try {
         String _s = settingsStorage.getString("settings");

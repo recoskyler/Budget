@@ -47,6 +47,20 @@
     "tapRent": "Tap the button below to set up rent and utilities.",
     "broken": "This part of the app is currently broken, and being fixed!!!"
   },
+  "months": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  },
   "paymentDesc": {
     "deposit": "Deposit",
     "expense": "Expense",

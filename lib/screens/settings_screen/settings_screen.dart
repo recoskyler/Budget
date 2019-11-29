@@ -234,7 +234,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             setState(() {
                                 settingsStorage.setInt("lang", languages.indexOf(_newVal)).then((_) {
                                     lBase.load(languageLocales[settingsStorage.getInt("lang")]).then((_) {
-                                        initTransactionDescriptions();
+                                        initDescriptions();
                                     });
                                 });
                             });

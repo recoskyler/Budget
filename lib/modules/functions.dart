@@ -507,7 +507,7 @@ void launchURL(String url) async {
     }
 }
 
-void initTransactionDescriptions() {
+void initDescriptions() {
     refreshStats();
 
     transactionDescriptions = [
@@ -543,6 +543,21 @@ void initTransactionDescriptions() {
         lBase.paymentDesc.savingExpense,
         lBase.paymentDesc.savingToBudget,
         lBase.paymentDesc.existingSaving
+    ];
+
+    monthNames = [
+        lBase.months.january,
+        lBase.months.february,
+        lBase.months.march,
+        lBase.months.april,
+        lBase.months.may,
+        lBase.months.june,
+        lBase.months.july,
+        lBase.months.august,
+        lBase.months.september,
+        lBase.months.october,
+        lBase.months.november,
+        lBase.months.december
     ];
 }
 

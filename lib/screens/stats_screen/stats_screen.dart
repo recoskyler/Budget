@@ -18,6 +18,21 @@ class StatsScreen extends StatefulWidget {
 }
 
 class _StatsScreenState extends State<StatsScreen> {
+    GlobalKey _statTopKey = GlobalKey();
+    Size _size = new Size(0, 0);
+
+    @override
+    void initState() {
+        WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+        super.initState();
+    }
+
+    _afterLayout(_) {
+        setState(() {
+            _size = getSize();
+        });       
+    }
+
     void onTransactionItemClick(int id) {
         if (selectedID == id) {
             setState(() {
@@ -49,6 +64,15 @@ class _StatsScreenState extends State<StatsScreen> {
         saveSettings();
     }
 
+    Size getSize() {
+        final RenderBox renderBoxRed = _statTopKey.currentContext.findRenderObject();
+        final Size _ressize = renderBoxRed.size;
+
+        print(_ressize);
+        
+        return _ressize;
+    }
+
     @override
     Widget build(BuildContext context) {
         List<Widget> _transactionCards = getTransactionCards(onTransactionItemClick, renewTransactions, renewFixedPayments);
@@ -57,13 +81,14 @@ class _StatsScreenState extends State<StatsScreen> {
             appBar: appBarWithGradientTitle(lBase.titles.stats, 25, Colors.cyanAccent[400], Colors.cyan[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             backgroundColor: themeColors[theme],
             body: ListView(
-                physics: AlwaysScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
                 children: <Widget>[
+                    brokenWidget(),
                     Column(
+                        key: _statTopKey,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                            brokenWidget(),
                             Container(
                                 padding: EdgeInsets.all(5),
                                 child: Row(
@@ -88,16 +113,16 @@ class _StatsScreenState extends State<StatsScreen> {
                             ),
                             SizedBox(height: 10),
                             Divider(color: Colors.grey),
-                            CarouselSlider(
-                                height: 450,
-                                autoPlay: false,
-                                enableInfiniteScroll: false,
-                                enlargeCenterPage: true,
-                                scrollDirection: Axis.horizontal,
-                                initialPage: _transactionCards.length - 1,
-                                items: _transactionCards
-                            ),
                         ],
+                    ),
+                    CarouselSlider(
+                        height: 400,
+                        autoPlay: false,
+                        enableInfiniteScroll: false,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                        initialPage: _transactionCards.length - 1,
+                        items: _transactionCards
                     ),
                 ],
             ),
