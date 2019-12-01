@@ -95,7 +95,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                 AnimatedContainer(
                     curve: Curves.easeInOut,
                     duration: Duration(milliseconds: 200),
-                    height: (buttonStateIndex * 130).toDouble(),
+                    height: (buttonStateIndex * 15 * SizeConfig.safeBlockVertical).toDouble(),
                     decoration: BoxDecoration(
                         shape: BoxShape.rectangle,
                         color: navBarColors[theme],
@@ -118,7 +118,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                                 SizeConfig.safeBlockHorizontal * 30, 
                                 50.0
                             ),
-                            SizedBox(width: 5),
+                            SizedBox(width: 1 * SizeConfig.safeBlockHorizontal),
                             customButton(
                                 buttonTextSize, 
                                 Colors.red, 
@@ -132,7 +132,7 @@ class BudgetScreenState extends State<BudgetScreen> {
                                 SizeConfig.safeBlockHorizontal * 30, 
                                 50.0
                             ),
-                            SizedBox(width: 5),
+                            SizedBox(width: 1 * SizeConfig.safeBlockHorizontal),
                             customButton(
                                 buttonTextSize, 
                                 Colors.greenAccent[400], 

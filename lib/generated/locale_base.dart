@@ -174,6 +174,7 @@ class LocalesubTitles {
   String get fixedPayments => _data["fixedPayments"];
   String get monthlySavings => _data["monthlySavings"];
   String get today => _data["today"];
+  String get average => _data["average"];
 }
 class Localetitles {
   final Map<String, String> _data;

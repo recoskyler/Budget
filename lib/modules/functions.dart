@@ -13,6 +13,7 @@ import 'components.dart';
 import 'classes.dart';
 import 'enums.dart';
 import 'global.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 final _random = new Random();
 
@@ -125,12 +126,12 @@ DateTime getNextRenewalDate(DateTime _date, int _renewalDay) {
 
 /// Checks if a Date is between this and next renewal date.
 bool thisMonths(DateTime _date, int _renewalDay, DateTime _compDate) {
-    print("${_date.toString()} ${_compDate.toString()}");
-    print(_date.compareTo(getRenewalDate(_compDate, _renewalDay)));
-    print(getNextRenewalDate(_compDate, _renewalDay).toString());
+    //print("${_date.toString()} ${_compDate.toString()}");
+    //print(_date.compareTo(getRenewalDate(_compDate, _renewalDay)));
+    //print(getNextRenewalDate(_compDate, _renewalDay).toString());
 
     if (_date.compareTo(getRenewalDate(_compDate, _renewalDay)) >= 0 && _date.compareTo(getNextRenewalDate(_compDate, _renewalDay)) < 0) {
-        print("OK");
+        //print("OK");
         return true;
     }
 
@@ -566,4 +567,30 @@ bool isNumeric(String str) {
         return false;
     }
     return double.tryParse(str) != null;
+}
+
+List<charts.Series<ChartEntry, DateTime>> generateList([bool _onlyRent = false]) {
+    final _data = new List<ChartEntry>();
+
+    if (!_onlyRent) {
+        getAllDates().forEach((DateTime _date) {
+            _data.add(new ChartEntry(calculateExpenses(false, _date).toInt(), new DateTime(_date.year, _date.month)));
+        });
+    } else {
+        List<Payment>.from(settings["rents"]).forEach((Payment _p) {
+            if ((_p.getPaymentType() == PaymentType.PaidUtility || _p.getPaymentType() == PaymentType.Utility) && _p.getAmount() > 0) {
+                _data.add(new ChartEntry(_p.getAmount().toInt(), new DateTime(_p.getDate().year, _p.getDate().month)));
+            }
+        });
+    }
+
+    return [
+        new charts.Series<ChartEntry, DateTime>(
+            id: _onlyRent ? lBase.subTitles.utilities : lBase.subTitles.expenses,
+            colorFn: (_, __) => _onlyRent ? charts.ColorUtil.fromDartColor(Colors.indigoAccent[700]) : charts.MaterialPalette.red.shadeDefault,
+            domainFn: (ChartEntry expenses, _) => expenses.date,
+            measureFn: (ChartEntry expenses, _) => expenses.value,
+            data: _data,
+        ),
+    ];
 }

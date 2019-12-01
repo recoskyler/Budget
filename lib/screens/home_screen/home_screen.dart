@@ -43,6 +43,7 @@ class _MyApp extends State<MySApp> {
     List<PreferredSizeWidget> headsInWater = new List<PreferredSizeWidget>();
     List<Widget> buttonsInWater = new List<Widget>();
     PageController controller = PageController(keepPage: true, initialPage: settings["rentPage"]);
+    double _resetRentState = 0.0;
 
     void openEditPage(int _i) {
         switch (_i) {
@@ -134,10 +135,26 @@ class _MyApp extends State<MySApp> {
         saveSettings();
     }
 
+    void onRentButtonPressed() {
+        if (_resetRentState == 0.0) {
+            setState(() {
+                _resetRentState = 1.0;
+            });
+        } else {
+            setState(() {
+                _resetRentState = 0.0;
+            });
+        }
+    }
+
     void onRentActionPressed() {
         if (settings["rentAmount"] == 0.0) {
             Navigator.push(context,MaterialPageRoute(builder: (context) => EditRent())).then((_tmp) {
                 refreshStats();
+
+                setState(() {
+                    _resetRentState = 0.0;
+                });
             });
         } else {
             setState(() {
@@ -147,6 +164,7 @@ class _MyApp extends State<MySApp> {
                 settings["rentStartDate"] = DateTime.now().toString();
                 settings["rentPage"] = 0;
                 settings["rents"] = new List<Payment>();
+                _resetRentState = 0.0;
 
                 saveSettings(); 
             });
@@ -196,7 +214,6 @@ class _MyApp extends State<MySApp> {
 
     @override
     void initState() {
-        
         super.initState();
     }
 
@@ -211,12 +228,12 @@ class _MyApp extends State<MySApp> {
         if (bodiesInWater.length == 0) {
             bodiesInWater.add(BudgetScreen(renewFixedPayments: renewFixedPayments, onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
             bodiesInWater.add(SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewTransactions));
-            bodiesInWater.add(RentScreen(controller: controller));
+            bodiesInWater.add(RentScreen(controller: controller, onActionPressed: onRentActionPressed, dialogState: _resetRentState));
             bodiesInWater.add(SettingsScreen(themeButtonFunction: themeButtonPressed));
         } else {
             bodiesInWater[0] = (BudgetScreen(renewFixedPayments: renewFixedPayments, onTransactionItemClick: onTransactionItemClick, renewTransactions: renewTransactions, openEditPage: openEditPage));
             bodiesInWater[1] = (SubsScreen(onTransactionItemClick: onSubsItemClick, renewTransactions: renewFixedPayments));
-            bodiesInWater[2] = (RentScreen(controller: controller));
+            bodiesInWater[2] = (RentScreen(controller: controller, onActionPressed: onRentActionPressed, dialogState: _resetRentState));
             bodiesInWater[3] = (SettingsScreen(themeButtonFunction: themeButtonPressed, resetSettingsAction: resetSettingsAction));
         }
         
@@ -239,12 +256,12 @@ class _MyApp extends State<MySApp> {
         if (buttonsInWater.length == 0) {
             buttonsInWater.add(BudgetButton(onActionPressed: onActionPressed));
             buttonsInWater.add(SubsButton(onActionPressed: onSubsActionPressed));
-            buttonsInWater.add(RentButton(onActionPressed: onRentActionPressed));
+            buttonsInWater.add(RentButton(onActionPressed: settings["rentAmount"] == 0.0 ? onRentActionPressed : onRentButtonPressed));
             buttonsInWater.add(Container());
         } else {
             buttonsInWater[0] = (BudgetButton(onActionPressed: onActionPressed));
             buttonsInWater[1] = (SubsButton(onActionPressed: onSubsActionPressed));
-            buttonsInWater[2] = (RentButton(onActionPressed: onRentActionPressed));
+            buttonsInWater[2] = (RentButton(onActionPressed: settings["rentAmount"] == 0.0 ? onRentActionPressed : onRentButtonPressed));
             buttonsInWater[3] = (Container());
         }
 
@@ -254,6 +271,8 @@ class _MyApp extends State<MySApp> {
         // bool _first = false;
         
         return Scaffold(
+            resizeToAvoidBottomInset: false,
+            resizeToAvoidBottomPadding: false,
             backgroundColor: themeColors[theme],
             appBar: _first ? setupHead() : headsInWater[selectedNavMenu],
             body: _first ? Container(margin: globalInset, child: SetupScreen(themeButtonFunction: themeButtonPressed)) : Container(margin: globalInset, child: bodiesInWater[selectedNavMenu]),

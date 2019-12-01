@@ -1,3 +1,4 @@
+import 'package:budget/main.dart';
 /// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
 /// Please check the GitHub Page for usage rights.
 /// https://github.com/recoskyler/Budget
@@ -28,8 +29,10 @@ PreferredSizeWidget rentHead([BuildContext context]) {
 
 class RentScreen extends StatefulWidget {
     final PageController controller;
+    final Function onActionPressed;
+    final double dialogState;
 
-    RentScreen({Key key, this.controller}) : super(key: key);
+    RentScreen({Key key, this.controller, this.onActionPressed, this.dialogState}) : super(key: key);
 
     @override
     RentScreenState createState() => RentScreenState();
@@ -98,11 +101,52 @@ class RentScreenState extends State<RentScreen> {
 	Widget build(BuildContext context) {
         List<Widget> _rentCards = getRentCards(setPaid, setUtilityAmount);
 
-        return PageView(
-            scrollDirection: Axis.horizontal,
-            children: _rentCards,
-            physics: AlwaysScrollableScrollPhysics(),
-            controller: widget.controller,
+        return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+                Container(
+                    height: SizeConfig.blockSizeVertical * 65,
+
+                    child: PageView(
+                        scrollDirection: Axis.horizontal,
+                        children: _rentCards,
+                        physics: AlwaysScrollableScrollPhysics(),
+                        controller: widget.controller,
+                    ),
+                ),
+                AnimatedContainer(
+                    margin: EdgeInsets.fromLTRB(20, 10, 20, 40),
+                    height: widget.dialogState * 10 * SizeConfig.safeBlockVertical,
+                    duration: Duration(milliseconds: 120),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: dimTextColors[theme],
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                            RawMaterialButton(
+                                onPressed: widget.onActionPressed,
+                                child: Text(
+                                    lBase.buttons.resetSure,
+                                    style: TextStyle(
+                                        fontSize: 5 * SizeConfig.safeBlockHorizontal,
+                                        fontFamily: "Montserrat",
+                                        letterSpacing: 3,
+                                        color: Colors.redAccent[400],
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                ),      
+                                elevation: 0.0,
+                                highlightElevation: 1.0,
+                                padding: EdgeInsets.all(10),
+                            )
+                        ],
+                    ),
+                )
+            ],
         );
     }
 }

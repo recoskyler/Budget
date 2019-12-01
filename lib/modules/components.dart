@@ -126,7 +126,7 @@ Container customButton(double s, Color backColor, Color c, IconData i, String tx
                             style: TextStyle(
                                 fontSize: s, 
                                 color: c,
-                                fontFamily: "FiraCode"
+                                fontFamily: "Montserrat"
                             ),
                             textAlign: TextAlign.center
                         )
@@ -456,13 +456,13 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
 
-        print(_p.getDescription());
+        //print(_p.getDescription());
 
         if (!thisMonths(_p.getDate(), _renewalDay, _date) && _pushBreak && !_p.isFixed()) {
             //break;
         }
 
-        print(_p.getDescription());
+        //print(_p.getDescription());
 
         if (!_p.isFixed() && thisMonths(_p.getDate(), _renewalDay, _date)) {
             _pt.add(_p);
@@ -616,6 +616,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
 
         if (rentalPaymentTypes.contains(_p.getPaymentType()) && _p.getPaymentType() != PaymentType.PaidUtility && _p.getPaymentType() != PaymentType.Utility) {
             _page++;
+            MoneyMaskedTextController _controller = new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', initialValue: _u.getAmount());
 
             _tr.add(
                 Container(
@@ -625,7 +626,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                         border: Border.all(color: dimTextColors[theme], width: 2),
                         borderRadius: BorderRadius.all(Radius.circular(30))
                     ),
-                    margin: EdgeInsets.fromLTRB(25, 5, 25, 50),
+                    margin: EdgeInsets.fromLTRB(25, 5, 25, 30),
                     padding: EdgeInsets.all(20),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -645,7 +646,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                     Icon(i == _t.length - 2 ? null : Icons.keyboard_arrow_right, color: dimTextColors[theme]),
                                 ],
                             ),
-                            SizedBox(height: 100),
+                            SizedBox(height: 50),
                             Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -664,7 +665,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 settings["currency"] + _p.getAmount().toStringAsFixed(0),
                                                 textAlign: TextAlign.left,
                                                 style: TextStyle(
-                                                    color: _p.getPaymentType() == PaymentType.Rent ? Colors.red : Colors.greenAccent[700],
+                                                    color: _p.getPaymentType() == PaymentType.Rent ? Colors.red : Colors.indigoAccent[700],
                                                     fontFamily: "Montserrat",
                                                     fontSize: amountTextSize
                                                 ),
@@ -687,23 +688,23 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
                                                 child: TextField(
                                                     textAlign: TextAlign.end,
                                                     expands: false,
-                                                    controller: new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ',', initialValue: _u.getAmount(), ),
+                                                    controller: _controller,
                                                     keyboardType: TextInputType.number,
                                                     decoration: new InputDecoration(
-                                                        focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700])),
-                                                        enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700]))
+                                                        focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.indigoAccent[700])),
+                                                        enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.indigoAccent[700]))
                                                     ),
-                                                    cursorColor: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700],
+                                                    cursorColor: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.indigoAccent[700],
                                                     style: TextStyle(
                                                         fontSize: amountTextSize,
                                                         fontFamily: "Montserrat",
-                                                        color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.greenAccent[700]
+                                                        color: _u.getPaymentType() == PaymentType.Utility ? Colors.red : Colors.indigoAccent[700]
                                                     ),
                                                     onSubmitted: (_t) {
-                                                        setUtilityAmount(_u.getID(), double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], "")));
+                                                        setUtilityAmount(_u.getID(), _controller.numberValue);
                                                     },
                                                     onChanged: (_t) {
-                                                        setUtilityAmount(_u.getID(), double.parse(_t.replaceAll(',', '').replaceAll(settings["currency"], "")), false);
+                                                        setUtilityAmount(_u.getID(), _controller.numberValue);
                                                     },
                                                 )
                                             ),

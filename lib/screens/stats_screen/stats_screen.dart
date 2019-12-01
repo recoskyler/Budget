@@ -8,8 +8,10 @@ import 'package:budget/modules/enums.dart';
 import 'package:budget/modules/functions.dart';
 import 'package:budget/modules/global.dart';
 import 'package:budget/modules/settings.dart';
+import 'package:budget/screens/stats_screen/line_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
 class StatsScreen extends StatefulWidget {
     StatsScreen({Key key}) : super(key: key);
@@ -84,39 +86,72 @@ class _StatsScreenState extends State<StatsScreen> {
                 scrollDirection: Axis.vertical,
                 children: <Widget>[
                     brokenWidget(),
-                    Column(
-                        key: _statTopKey,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                            Container(
-                                padding: EdgeInsets.all(5),
-                                child: Row(
-                                    children: [
-                                        infoBlock(calculateTotalFromPayments([PaymentType.Withdraw, PaymentType.Subscription]) / getMonthCount(), currency, lBase.subTitles.avgExpenses, Colors.red, CrossAxisAlignment.start),
-                                        infoBlock(calculateTotalFromPayment(PaymentType.PaidUtility, settings["rents"]) / getMonthCount(settings["rents"], settings["utilitiesDay"]), currency, lBase.subTitles.avgUtilities, Colors.indigoAccent[700], CrossAxisAlignment.end),
-                                    ],
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Container(
+                        margin: globalInset,
+                        child: Column(
+                            key: _statTopKey,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                                SizedBox(height: 20),
+                                Divider(color: Colors.grey),
+                                SizedBox(height: 20),
+                                Text(
+                                    lBase.subTitles.expenses,
+                                    style: subTitle,
+                                    textAlign: TextAlign.center
                                 ),
-                            ),
-                            SizedBox(height: 20),
-                            Divider(color: Colors.grey),
-                            SizedBox(height: 20),
-                            Text(
-                                lBase.subTitles.transactionHistory,
-                                style: TextStyle(
-                                    color: textColors[theme],
-                                    fontFamily: "Montserrat",
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.w300
-                                )
-                            ),
-                            SizedBox(height: 10),
-                            Divider(color: Colors.grey),
-                        ],
+                                Container(
+                                    height: 150,
+                                    child: SimpleTimeSeriesChart(generateList())
+                                ),
+                                SizedBox(height: 20),
+                                Divider(color: Colors.grey),
+                                SizedBox(height: 20),
+                                Text(
+                                    lBase.subTitles.utilities,
+                                    style: subTitle,
+                                    textAlign: TextAlign.center
+                                ),
+                                Container(
+                                    height: 150,
+                                    child: SimpleTimeSeriesChart(generateList(true))
+                                ),
+                                SizedBox(height: 20),
+                                Divider(color: Colors.grey),
+                                SizedBox(height: 20),
+                                Text(
+                                    lBase.subTitles.average,
+                                    style: subTitle,
+                                    textAlign: TextAlign.center
+                                ),
+                                SizedBox(height: 10),
+                                Divider(color: Colors.grey),
+                                SizedBox(height: 10),
+                                Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                        children: [
+                                            infoBlock(calculateTotalFromPayments([PaymentType.Withdraw, PaymentType.Subscription]) / getMonthCount(), currency, lBase.subTitles.avgExpenses, Colors.red, CrossAxisAlignment.start),
+                                            infoBlock(calculateTotalFromPayment(PaymentType.PaidUtility, settings["rents"]) / getMonthCount(settings["rents"], settings["utilitiesDay"]), currency, lBase.subTitles.avgUtilities, Colors.indigoAccent[700], CrossAxisAlignment.end),
+                                        ],
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    ),
+                                ),
+                                SizedBox(height: 10),
+                                Divider(color: Colors.grey),
+                                SizedBox(height: 20),
+                                Text(
+                                    lBase.subTitles.transactionHistory,
+                                    style: subTitle
+                                ),
+                                SizedBox(height: 10),
+                                Divider(color: Colors.grey),
+                            ],
+                        ),
                     ),
                     CarouselSlider(
-                        height: 400,
+                        height: 500,
                         autoPlay: false,
                         enableInfiniteScroll: false,
                         enlargeCenterPage: true,

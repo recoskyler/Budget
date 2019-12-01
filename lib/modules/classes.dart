@@ -120,3 +120,10 @@ class Payment {
         'renewalDay' : _renewalDay
 	};
 }
+
+class ChartEntry {
+    final int value;
+    final DateTime date;
+
+    ChartEntry(this.value, this.date);
+}

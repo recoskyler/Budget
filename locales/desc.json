@@ -77,7 +77,7 @@
   },
   "subTitles": {
     "transactions": " TRANSACTIONS",
-    "transactionHistory": " TRANSACTION HISTORY",
+    "transactionHistory": "TRANSACTION HISTORY",
     "expenses": "EXPENSES ",
     "savings": " SAVINGS",
     "remaining": "REMAINING ",
@@ -105,7 +105,8 @@
     "fixedExpenses": "fixed",
     "fixedPayments": "fixed",
     "monthlySavings": "monthlysavings",
-    "today": "today"
+    "today": "today",
+    "average": "avg"
   },
   "titles": {
     "budget": "BUDGET",
