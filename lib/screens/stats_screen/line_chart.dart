@@ -24,7 +24,7 @@ class SimpleTimeSeriesChart extends StatelessWidget {
         return new charts.TimeSeriesChart(
             seriesList,
             animate: animate,
-            defaultRenderer: new charts.LineRendererConfig(includeArea: true, stacked: true, includePoints: true, roundEndCaps: true, includeLine: false),
+            defaultRenderer: new charts.LineRendererConfig(includeArea: true, stacked: true, includePoints: true, roundEndCaps: true, includeLine: true),
             dateTimeFactory: const charts.LocalDateTimeFactory()
         );
     }
