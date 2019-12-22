@@ -447,7 +447,9 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
     int _renewalDay = settings["budgetRenewalDay"];
     bool _pushBreak = false;
 
-    _t.addAll(orderByDateDescending(List<Payment>.from(settings["transactions"])));
+    _t.addAll(List<Payment>.from(settings["transactions"]));
+
+    _t = orderByDateDescending(_t);
 
     if (_date == null) _pushBreak = true;
 
@@ -467,12 +469,12 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
         if (!_p.isFixed() && thisMonths(_p.getDate(), _renewalDay, _date)) {
             _pt.add(_p);
         } else if (_p.isFixed()) {
-            if (_pushBreak && thisMonths(_p.getFPRenewalDate(_date), _renewalDay, _date)) {
+            if (_pushBreak && thisMonths(_p.getDate(_date), _renewalDay, _date)) {
                 _pt.add(_p);
             }
             // TODO Work this part out
 
-            if (_p.getDate().compareTo(_date) <= 0 && thisMonths(_p.getFPRenewalDate(_date), _renewalDay, _date) && _p.getDate().compareTo(getNextRenewalDate(_date, _renewalDay)) <= 0) {
+            if (_p.getDate().compareTo(_date) <= 0 && thisMonths(_p.getDate(_date), _renewalDay, _date) && _p.getDate().compareTo(getNextRenewalDate(_date, _renewalDay)) <= 0) {
                 //_pt.add(_p);
             } else if (_p.getDate().compareTo(_date) <= 0 && _p.getRenewalDay() == _renewalDay) {
                 //_pt.add(_p);
@@ -484,7 +486,7 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
 
     _pt.forEach((_p) {
         if (_p.isFixed()) {
-            _tr.add(transactionItemFromPayment(_p, op, dp, fp, _p.getFPRenewalDate(_date)));
+            _tr.add(transactionItemFromPayment(_p, op, dp, fp, _p.getDate(_date)));
         } else {
             _tr.add(transactionItemFromPayment(_p, op, dp, fp));
         }

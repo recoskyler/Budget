@@ -12,7 +12,7 @@ import 'functions.dart';
 // import 'dart:io';
 // import 'package:path_provider/path_provider.dart';
 
-int selectedNavMenu = 0;
+int selectedNavMenu = 0;  // Navigation menu/page
 int buttonStateIndex = 0; // For the BUDGET screen floating action button.
 int selectedID = -1;      // Budget screen selected transaction item ID
 int selectedIDStats = -1; // Stats screen selected transaction item ID
@@ -26,6 +26,7 @@ String currency = "";
 int rentPage = -1;        // Rent screen selected card index
 int theme = 0;            // 0 - Light : 1 - Dark
 LocaleBase lBase = LocaleBase();
+int foobar = 0; // just a variable to update state when asyn functions used
 
 List<String> currencies = ['€', '\$', '£', '¥', '₩', '₺', ' '];
 

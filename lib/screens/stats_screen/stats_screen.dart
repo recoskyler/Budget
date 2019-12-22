@@ -11,7 +11,6 @@ import 'package:budget/modules/settings.dart';
 import 'package:budget/screens/stats_screen/line_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
 
 class StatsScreen extends StatefulWidget {
     StatsScreen({Key key}) : super(key: key);

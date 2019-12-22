@@ -31,13 +31,13 @@ class Payment {
     }
 
     int getID() {
-        return _id;
+        return this._id;
     }
 
     int getRenewalDay() {
         if (_renewalDay == null) return 1;
         
-        return _renewalDay;
+        return this._renewalDay;
     }
 
 	double getAmount() {
@@ -47,7 +47,7 @@ class Payment {
     String getAmountAsString([bool decimals = true]) {
         if (decimals) return _amount.toStringAsFixed(2);
 
-        return _amount.toStringAsFixed(0);
+        return this._amount.toStringAsFixed(0);
     }
 
     String getDescription() {
@@ -62,11 +62,23 @@ class Payment {
             return asString[_ind];
         }
 
-        return _description;
+        return this._description;
     }
 
-    DateTime getDate() {
-        return _date;
+    DateTime getDate([DateTime _date2]) {
+        DateTime _res = this._date;
+
+        if (this.isFixed() && _date2 != null) {
+            _res = new DateTime(_date2.year, _date2.month, this._renewalDay);
+
+            if (getRenewalDate(_date, settings["budgetRenewalDay"]).compareTo(getRenewalDate(DateTime.now(), settings["budgetRenewalDay"])) >= 0) {
+                //_res = getNextRenewalDate(_res, this._renewalDay);
+            }
+        } else if (this.isFixed()) {
+            _res = new DateTime(DateTime.now().year, DateTime.now().month, this._renewalDay);
+        }
+
+        return _res;
     }
 
     DateTime getFPRenewalDate(DateTime _date) {

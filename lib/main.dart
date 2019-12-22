@@ -42,7 +42,7 @@ class SizeConfig {
         safeBlockVertical = (screenHeight -
         _safeAreaVertical) / 100;
 
-        globalInsetPercent = SizeConfig.safeBlockHorizontal * 2.5;
+        globalInsetPercent = 20;
         buttonTextSize = SizeConfig.safeBlockHorizontal * 4.2;
         regularTextSize = SizeConfig.safeBlockHorizontal * 4.3;
         subTitleTextSize = SizeConfig.safeBlockHorizontal * 4.5;
@@ -52,18 +52,23 @@ class SizeConfig {
     }
 }
 
-void main() async {    
-    settingsStorage = await SharedPreferences.getInstance();
+void main() {
+    WidgetsFlutterBinding.ensureInitialized();
+    //TestWidgetsFlutterBinding.ensureInitialized();
 
-    if (!settingsStorage.containsKey("lang")) {
-        settingsStorage.setInt("lang", 0);
-    }
+    SharedPreferences.getInstance().then((SharedPreferences _sp) {
+        settingsStorage = _sp;
 
-    await lBase.load(languageLocales[settingsStorage.getInt("lang")]);
-    
-    loadSettings();
+        if (!settingsStorage.containsKey("lang")) {
+            settingsStorage.setInt("lang", 0);
+        }
 
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) { // Force Portrait orientation
-        return runApp(new App());
+        lBase.load(languageLocales[settingsStorage.getInt("lang")]).then((_) {
+            loadSettings();
+
+            SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) { // Force Portrait orientation
+                return runApp(new App());
+            });
+        });
     });
 }

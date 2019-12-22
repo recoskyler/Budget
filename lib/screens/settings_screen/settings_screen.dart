@@ -1,3 +1,5 @@
+import 'dart:math';
+
 /// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
 /// Please check the GitHub Page for usage rights.
 /// https://github.com/recoskyler/Budget
@@ -235,6 +237,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 settingsStorage.setInt("lang", languages.indexOf(_newVal)).then((_) {
                                     lBase.load(languageLocales[settingsStorage.getInt("lang")]).then((_) {
                                         initDescriptions();
+
+                                        setState(() {
+                                            foobar = next(0, 100);
+                                        });
                                     });
                                 });
                             });
