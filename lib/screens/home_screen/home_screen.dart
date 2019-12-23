@@ -275,7 +275,7 @@ class _MyApp extends State<MySApp> {
             resizeToAvoidBottomPadding: false,
             backgroundColor: themeColors[theme],
             appBar: _first ? setupHead() : headsInWater[selectedNavMenu],
-            body: _first ? Container(margin: globalInset, child: SetupScreen(themeButtonFunction: themeButtonPressed)) : Container(margin: globalInset, child: bodiesInWater[selectedNavMenu]),
+            body: _first ? Container(child: SetupScreen(themeButtonFunction: themeButtonPressed)) : Container(child: bodiesInWater[selectedNavMenu]),
             bottomNavigationBar: _first ? Container(height: SizeConfig.blockSizeVertical * 5,) : BottomNavigationBar(
                 items: const <BottomNavigationBarItem>[
                     BottomNavigationBarItem(

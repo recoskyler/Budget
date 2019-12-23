@@ -99,7 +99,7 @@ class _EditDepositState extends State<EditDeposit> {
             backgroundColor: themeColors[theme],
             appBar: appBarWithGradientTitle(lBase.titles.deposit, 25, Colors.greenAccent[700], Colors.green[800], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             body: Container(
-                padding: globalInset,
+                margin: globalInset,
                 child: ListView(
                     children: [
                         Divider(),

@@ -42,7 +42,7 @@ class SizeConfig {
         safeBlockVertical = (screenHeight -
         _safeAreaVertical) / 100;
 
-        globalInsetPercent = 30;
+        globalInsetPercent = 25;
         buttonTextSize = SizeConfig.safeBlockHorizontal * 4.2;
         regularTextSize = SizeConfig.safeBlockHorizontal * 4.3;
         subTitleTextSize = SizeConfig.safeBlockHorizontal * 4.5;

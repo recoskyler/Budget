@@ -100,89 +100,92 @@ class _SetupScreenState extends State<SetupScreen> {
     Widget build(BuildContext context) {
         SizeConfig().init(context);
 
-        return ListView(
-            children: [
-                Divider(),
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                        SizedBox(height:10),
-                        Text(
-                            lBase.subTitles.allowanceAmount,
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w300,
-                                color: textColors[theme],
-                                letterSpacing: 2
-                            )
-                        ),
-                        Container(
-                            alignment: Alignment.center,
-                            height: 80,
-                            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                            child: TextField(
-                                controller: controller,
-                                keyboardType: TextInputType.number,
-                                decoration: new InputDecoration(
-                                    focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.greenAccent[700])),
-                                    enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.greenAccent[100]))
-                                ),
-                                cursorColor: Colors.greenAccent[700],
+        return Container(
+            margin: globalInset,
+            child: ListView(
+                children: [
+                    Divider(),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                            SizedBox(height:10),
+                            Text(
+                                lBase.subTitles.allowanceAmount,
                                 style: TextStyle(
-                                    fontSize: amountTextSize,
+                                    fontSize: 24,
                                     fontFamily: "Montserrat",
-                                    color: Colors.greenAccent[700]
-                                ),
-                                onSubmitted: (_t) {
-                                    _amount = controller.numberValue;
-                                },
-                                onChanged: (_t) {
-                                    _amount = controller.numberValue;
-                                },
-                            )
-                        ),
-                        SizedBox(height:30),
-                        Text(
-                            lBase.subTitles.renewalDay,
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w300,
-                                color: textColors[theme],
-                                letterSpacing: 2
-                            )
-                        ),
-                        SizedBox(height:10),
-                        Container(
-                            height: 50,
-                            child: ListView(
-                                scrollDirection: Axis.horizontal,
-                                children: getMonthButtons(onSubDayClick, _date, 30, 100),
-                                physics: AlwaysScrollableScrollPhysics(),
-                            )
-                        ),
-                        SizedBox(height:30),
-                        Text(
-                            lBase.subTitles.side,
-                            style: TextStyle(
-                                fontSize: 24,
-                                fontFamily: "Montserrat",
-                                fontWeight: FontWeight.w300,
-                                color: textColors[theme],
-                                letterSpacing: 2
-                            )
-                        ),
-                        SizedBox(height:10),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: getButtons(theme, widget.themeButtonFunction),
-                        ),
-                    ]                    
-                )
-            ]
+                                    fontWeight: FontWeight.w300,
+                                    color: textColors[theme],
+                                    letterSpacing: 2
+                                )
+                            ),
+                            Container(
+                                alignment: Alignment.center,
+                                height: 80,
+                                padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                child: TextField(
+                                    controller: controller,
+                                    keyboardType: TextInputType.number,
+                                    decoration: new InputDecoration(
+                                        focusedBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.greenAccent[700])),
+                                        enabledBorder: new UnderlineInputBorder(borderSide: BorderSide(color: Colors.greenAccent[100]))
+                                    ),
+                                    cursorColor: Colors.greenAccent[700],
+                                    style: TextStyle(
+                                        fontSize: amountTextSize,
+                                        fontFamily: "Montserrat",
+                                        color: Colors.greenAccent[700]
+                                    ),
+                                    onSubmitted: (_t) {
+                                        _amount = controller.numberValue;
+                                    },
+                                    onChanged: (_t) {
+                                        _amount = controller.numberValue;
+                                    },
+                                )
+                            ),
+                            SizedBox(height:30),
+                            Text(
+                                lBase.subTitles.renewalDay,
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w300,
+                                    color: textColors[theme],
+                                    letterSpacing: 2
+                                )
+                            ),
+                            SizedBox(height:10),
+                            Container(
+                                height: 50,
+                                child: ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: getMonthButtons(onSubDayClick, _date, 30, 100),
+                                    physics: AlwaysScrollableScrollPhysics(),
+                                )
+                            ),
+                            SizedBox(height:30),
+                            Text(
+                                lBase.subTitles.side,
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontFamily: "Montserrat",
+                                    fontWeight: FontWeight.w300,
+                                    color: textColors[theme],
+                                    letterSpacing: 2
+                                )
+                            ),
+                            SizedBox(height:10),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: getButtons(theme, widget.themeButtonFunction),
+                            ),
+                        ]                    
+                    )
+                ]
+            )
         );
     }
 }

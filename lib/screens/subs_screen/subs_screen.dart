@@ -39,38 +39,41 @@ class SubsScreen extends StatefulWidget {
 class SubsScreenState extends State<SubsScreen> {
     @override
 	Widget build(BuildContext context) {
-        return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-                Divider(),
-                SizedBox(height: 20),
-                Row(
-                    children: [
-                        Expanded(child: infoBlock(budget, currency, lBase.subTitles.budget, Colors.greenAccent[700], CrossAxisAlignment.start, 0)),
-                        Expanded(child: infoBlock(subexpense, currency, lBase.subTitles.fixedExpenses, Colors.red, CrossAxisAlignment.end)),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                ),
-                SizedBox(height: 30),
-                Row(
-                    children: [
-                        Expanded(child: infoBlock(calculateTotalFromPayment(PaymentType.FixedSavingDeposit, settings["fixedPayments"]), currency, lBase.subTitles.monthlySavings, Colors.amber[800], CrossAxisAlignment.start, 0)),
-                        Expanded(child: infoBlock(budget - subexpense, currency, lBase.subTitles.remaining, budget - subexpense >= 0 ? Colors.blueAccent[700] : Colors.redAccent[700], CrossAxisAlignment.end)),
-                    ],
-                    mainAxisAlignment: MainAxisAlignment.center,
-                ),
-                SizedBox(height: 20),
-                Divider(color: Colors.grey),
-                SizedBox(height: 20),
-                Text(
-                    lBase.subTitles.fixedPayments,
-                    style: subTitle
-                ),
-                SizedBox(height: 10),
-                Divider(color: Colors.grey),
-                Expanded(child: subscriptionsBlock(currency, widget.onTransactionItemClick, widget.renewTransactions))
-            ]
+        return Container(
+            margin: globalInset,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                    Divider(),
+                    SizedBox(height: 20),
+                    Row(
+                        children: [
+                            Expanded(child: infoBlock(budget, currency, lBase.subTitles.budget, Colors.greenAccent[700], CrossAxisAlignment.start, 0)),
+                            Expanded(child: infoBlock(subexpense, currency, lBase.subTitles.fixedExpenses, Colors.red, CrossAxisAlignment.end)),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    SizedBox(height: 30),
+                    Row(
+                        children: [
+                            Expanded(child: infoBlock(calculateTotalFromPayment(PaymentType.FixedSavingDeposit, settings["fixedPayments"]), currency, lBase.subTitles.monthlySavings, Colors.amber[800], CrossAxisAlignment.start, 0)),
+                            Expanded(child: infoBlock(budget - subexpense, currency, lBase.subTitles.remaining, budget - subexpense >= 0 ? Colors.blueAccent[700] : Colors.redAccent[700], CrossAxisAlignment.end)),
+                        ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                    ),
+                    SizedBox(height: 20),
+                    Divider(color: Colors.grey),
+                    SizedBox(height: 20),
+                    Text(
+                        lBase.subTitles.fixedPayments,
+                        style: subTitle
+                    ),
+                    SizedBox(height: 10),
+                    Divider(color: Colors.grey),
+                    Expanded(child: subscriptionsBlock(currency, widget.onTransactionItemClick, widget.renewTransactions))
+                ]
+            ),
         );
     }
 }

@@ -518,6 +518,8 @@ void initDescriptions() {
         lBase.descriptions.clothes,
         lBase.descriptions.makeup,
         lBase.descriptions.topUp,
+        lBase.descriptions.gift,
+        lBase.descriptions.meds,
         lBase.descriptions.cinema,
         lBase.descriptions.tech,
         lBase.descriptions.hobby,

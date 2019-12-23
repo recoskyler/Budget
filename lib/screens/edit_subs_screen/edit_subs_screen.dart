@@ -139,7 +139,7 @@ class _EditSubsState extends State<EditSubs> {
             backgroundColor: themeColors[theme],
             appBar: appBarWithGradientTitle(lBase.titles.addFixed, 25, Colors.redAccent[400], Colors.red[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             body: Container(
-                padding: globalInset,
+                margin: globalInset,
                 child: ListView(
                     children: [
                         Divider(),

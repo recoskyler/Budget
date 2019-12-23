@@ -107,7 +107,6 @@ class RentScreenState extends State<RentScreen> {
             children: <Widget>[
                 Container(
                     height: SizeConfig.blockSizeVertical * 65,
-
                     child: PageView(
                         scrollDirection: Axis.horizontal,
                         children: _rentCards,

@@ -91,6 +91,8 @@ class Localedescriptions {
   String get household => _data["household"];
   String get other => _data["other"];
   String get furniture => _data["furniture"];
+  String get meds => _data["meds"];
+  String get gift => _data["gift"];
 }
 class Localehints {
   final Map<String, String> _data;

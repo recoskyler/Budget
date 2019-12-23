@@ -110,7 +110,7 @@ class _EditSavingState extends State<EditSaving> {
             backgroundColor: themeColors[theme],
             appBar: appBarWithGradientTitle(lBase.titles.save, 25, Colors.amberAccent[700], Colors.amber[900], themeColors[theme], 0.0, true, 'FiraCode', FontWeight.w400, 1.5),
             body: Container(
-                padding: globalInset,
+                margin: globalInset,
                 child: ListView(
                     children: [
                         Divider(),

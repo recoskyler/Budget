@@ -46,110 +46,113 @@ class BudgetScreenState extends State<BudgetScreen> {
     Widget build(BuildContext context) {
         refreshStats();
         
-        return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-                Divider(),
-                SizedBox(height: 20),
-                Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                        Row(
-                            children: [
-                                Expanded(child: infoBlock(budget, currency, lBase.subTitles.budget, Colors.greenAccent[700], CrossAxisAlignment.start, 0)),
-                                Expanded(child: infoBlock(expense, currency, lBase.subTitles.expenses, Colors.red, CrossAxisAlignment.end)),
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.center,
-                        ),
-                        SizedBox(height: 30),
-                        Row(
-                            children: [
-                                Expanded( child: infoBlock(savings, currency, lBase.subTitles.totalSavings, Colors.amber[800], CrossAxisAlignment.start, 0)),
-                                Expanded(
-                                    child: infoBlock(
-                                        budget - expense,
-                                        currency,
-                                        lBase.subTitles.remaining,
-                                        budget - expense >= 0
-                                            ? Colors.blueAccent[700]
-                                            : Colors.redAccent[700],
-                                        CrossAxisAlignment.end
-                                    ),
-                                ),
-                            ],
-                            mainAxisAlignment: MainAxisAlignment.center,
-                        ),
-                    ],
-                ),
-                SizedBox(height: 20),
-                Divider(color: Colors.grey),
-                SizedBox(height: 20),
-                Text(lBase.subTitles.transactions,
-                    style: subTitle
-                ),
-                SizedBox(height: 10),
-                Divider(color: Colors.grey),
-                Expanded( child: transactionsBlock(currency, widget.onTransactionItemClick, widget.renewTransactions, widget.renewFixedPayments)),
-                AnimatedContainer(
-                    curve: Curves.easeInOut,
-                    duration: Duration(milliseconds: 200),
-                    height: (buttonStateIndex * 15 * SizeConfig.safeBlockVertical).toDouble(),
-                    decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: navBarColors[theme],
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))
-                    ),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+        return Container(
+            margin: globalInset,
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                    Divider(),
+                    SizedBox(height: 20),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                            customButton(
-                                buttonTextSize, 
-                                Colors.amber[800], 
-                                Colors.white, 
-                                Icons.archive, 
-                                lBase.buttons.save, 
-                                () {
-                                    widget.openEditPage(0);
-                                }, 
-                                EdgeInsets.fromLTRB(0, 20, 0, 40), 
-                                SizeConfig.safeBlockHorizontal * 30, 
-                                50.0
+                            Row(
+                                children: [
+                                    Expanded(child: infoBlock(budget, currency, lBase.subTitles.budget, Colors.greenAccent[700], CrossAxisAlignment.start, 0)),
+                                    Expanded(child: infoBlock(expense, currency, lBase.subTitles.expenses, Colors.red, CrossAxisAlignment.end)),
+                                ],
+                                mainAxisAlignment: MainAxisAlignment.center,
                             ),
-                            SizedBox(width: 1 * SizeConfig.safeBlockHorizontal),
-                            customButton(
-                                buttonTextSize, 
-                                Colors.red, 
-                                Colors.white, 
-                                Icons.remove, 
-                                lBase.buttons.spend,
-                                () {
-                                    widget.openEditPage(1);
-                                }, 
-                                EdgeInsets.fromLTRB(0, 20, 0, 40), 
-                                SizeConfig.safeBlockHorizontal * 30, 
-                                50.0
-                            ),
-                            SizedBox(width: 1 * SizeConfig.safeBlockHorizontal),
-                            customButton(
-                                buttonTextSize, 
-                                Colors.greenAccent[400], 
-                                Colors.white,
-                                Icons.add, 
-                                lBase.buttons.deposit, 
-                                () {
-                                    widget.openEditPage(2);
-                                }, 
-                                EdgeInsets.fromLTRB(0, 20, 0, 40), 
-                                SizeConfig.safeBlockHorizontal * 30, 
-                                50.0
+                            SizedBox(height: 30),
+                            Row(
+                                children: [
+                                    Expanded( child: infoBlock(savings, currency, lBase.subTitles.totalSavings, Colors.amber[800], CrossAxisAlignment.start, 0)),
+                                    Expanded(
+                                        child: infoBlock(
+                                            budget - expense,
+                                            currency,
+                                            lBase.subTitles.remaining,
+                                            budget - expense >= 0
+                                                ? Colors.blueAccent[700]
+                                                : Colors.redAccent[700],
+                                            CrossAxisAlignment.end
+                                        ),
+                                    ),
+                                ],
+                                mainAxisAlignment: MainAxisAlignment.center,
                             ),
                         ],
                     ),
-                ),
-            ],
+                    SizedBox(height: 20),
+                    Divider(color: Colors.grey),
+                    SizedBox(height: 20),
+                    Text(lBase.subTitles.transactions,
+                        style: subTitle
+                    ),
+                    SizedBox(height: 10),
+                    Divider(color: Colors.grey),
+                    Expanded( child: transactionsBlock(currency, widget.onTransactionItemClick, widget.renewTransactions, widget.renewFixedPayments)),
+                    AnimatedContainer(
+                        curve: Curves.easeInOut,
+                        duration: Duration(milliseconds: 200),
+                        height: (buttonStateIndex * 15 * SizeConfig.safeBlockVertical).toDouble(),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: navBarColors[theme],
+                            borderRadius: BorderRadius.only(topRight: Radius.circular(10), topLeft: Radius.circular(10))
+                        ),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                                customButton(
+                                    buttonTextSize, 
+                                    Colors.amber[800], 
+                                    Colors.white, 
+                                    Icons.archive, 
+                                    lBase.buttons.save, 
+                                    () {
+                                        widget.openEditPage(0);
+                                    }, 
+                                    EdgeInsets.fromLTRB(0, 20, 0, 40), 
+                                    SizeConfig.safeBlockHorizontal * 28, 
+                                    50.0
+                                ),
+                                SizedBox(width: 1 * SizeConfig.safeBlockHorizontal),
+                                customButton(
+                                    buttonTextSize, 
+                                    Colors.red, 
+                                    Colors.white, 
+                                    Icons.remove, 
+                                    lBase.buttons.spend,
+                                    () {
+                                        widget.openEditPage(1);
+                                    }, 
+                                    EdgeInsets.fromLTRB(0, 20, 0, 40), 
+                                    SizeConfig.safeBlockHorizontal * 28, 
+                                    50.0
+                                ),
+                                SizedBox(width: 1 * SizeConfig.safeBlockHorizontal),
+                                customButton(
+                                    buttonTextSize, 
+                                    Colors.greenAccent[400], 
+                                    Colors.white,
+                                    Icons.add, 
+                                    lBase.buttons.deposit, 
+                                    () {
+                                        widget.openEditPage(2);
+                                    }, 
+                                    EdgeInsets.fromLTRB(0, 20, 0, 40), 
+                                    SizeConfig.safeBlockHorizontal * 28, 
+                                    50.0
+                                ),
+                            ],
+                        ),
+                    ),
+                ],
+            )
         );
     }
 }

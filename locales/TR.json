@@ -37,7 +37,9 @@
     "hardware": "Hırdavat",
     "household": "Beyaz Eşya",
     "other": "Diğer",
-    "furniture": "Mobilya"
+    "furniture": "Mobilya",
+    "meds": "İlaç",
+    "gift": "Hediye"
   },
   "hints": {
     "savingExpenseOverflow": "Eğer girilen miktr toplam birikimlerden fazla ise, Bütçe otomatik olarak miktar farkı kadar bir harcama yaratacaktır.",

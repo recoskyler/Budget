@@ -136,7 +136,7 @@ class _EditRentState extends State<EditRent> {
             backgroundColor: themeColors[theme],
             appBar: rentHead(),
             body: Container(
-                padding: globalInset,
+                margin: globalInset,
                 child: ListView(
                     children: [
                         Divider(),

@@ -37,7 +37,9 @@
     "hardware": "Hardware",
     "household": "Household Appliences",
     "other": "Other",
-    "furniture": "Furniture"
+    "furniture": "Furniture",
+    "meds": "Medicine",
+    "gift": "Gift"
   },
   "hints": {
     "savingExpenseOverflow": "If the amount entered is more than the total savings, Budget will automatically add a second transaction spending the difference from the budget.",

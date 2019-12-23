@@ -112,11 +112,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         return ListView(
             children: <Widget>[
                 SizedBox(height:10),
-                Text(
-                    lBase.subTitles.allowanceAmount,
-                    style: subTitle
+                Container(
+                    margin: globalInset,
+                    child: Text(
+                        lBase.subTitles.allowanceAmount,
+                        style: subTitle
+                    ),
                 ),
                 Container(
+                    margin: globalInset,
                     alignment: Alignment.center,
                     height: 80,
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -150,9 +154,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     )
                 ),
                 SizedBox(height:30),
-                Text(
-                    lBase.subTitles.renewalDay,
-                    style: subTitle
+                Container(
+                    margin: globalInset,
+                    child: Text(
+                        lBase.subTitles.renewalDay,
+                        style: subTitle
+                    ),
                 ),
                 SizedBox(height:10),
                 Container(
@@ -164,9 +171,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     )
                 ),
                 SizedBox(height:30),
-                Text(
-                    lBase.subTitles.side,
-                    style: subTitle
+                Container(
+                    margin: globalInset,
+                    child: Text(
+                        lBase.subTitles.side,
+                        style: subTitle
+                    ),
                 ),
                 SizedBox(height:10),
                 Row(
@@ -175,9 +185,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: getButtons(theme, widget.themeButtonFunction),
                 ),
                 SizedBox(height:30),
-                Text(
-                    lBase.subTitles.currency,
-                    style: subTitle
+                Container(
+                    margin: globalInset,
+                    child: Text(
+                        lBase.subTitles.currency,
+                        style: subTitle
+                    ),
                 ),
                 SizedBox(height:10),
                 Container(
@@ -217,9 +230,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                 ),
                 SizedBox(height:30),
-                Text(
-                    lBase.subTitles.language,
-                    style: subTitle
+                Container(
+                    margin: globalInset,
+                    child: Text(
+                        lBase.subTitles.language,
+                        style: subTitle
+                    ),
                 ),
                 SizedBox(height:10),
                 Container(

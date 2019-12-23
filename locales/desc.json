@@ -37,7 +37,9 @@
     "hardware": "Hardware",
     "household": "Household Appliences",
     "other": "Other",
-    "furniture": "Furniture"
+    "furniture": "Furniture",
+    "meds": "meds",
+    "gift": "gift"
   },
   "hints": {
     "savingExpenseOverflow": "saving overflow",
