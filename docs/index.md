@@ -10,7 +10,7 @@ When I started university, I also started living alone. I needed a way of keepin
 
 ## Status
 
-Currently being developed/tested, and in "Internal Test Track" on Google Play Store.
+Currently being developed/tested, and in "Internal Test Track" on Google Play Store. This page is temporary, until I develop the web app of Budget.
 
 ## EULA, LICENSE, PRIVACY POLICY
 
