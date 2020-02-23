@@ -19,6 +19,7 @@ import 'package:budget/screens/budget_screen/budget_screen.dart';
 import 'package:budget/screens/edit_rent_screen/edit_rent_screen.dart';
 import 'package:budget/modules/classes.dart';
 import 'package:budget/screens/edit_subs_screen/edit_subs_screen.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 
 class App extends StatelessWidget {
     @override
@@ -44,6 +45,8 @@ class _MyApp extends State<MySApp> {
     List<Widget> buttonsInWater = new List<Widget>();
     PageController controller = PageController(keepPage: true, initialPage: settings["rentPage"]);
     double _resetRentState = 0.0;
+
+    /////
 
     void openEditPage(int _i) {
         switch (_i) {

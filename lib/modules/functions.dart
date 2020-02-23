@@ -6,6 +6,7 @@
 import 'dart:io';
 import 'dart:math';
 import 'package:budget/screens/stats_screen/stats_screen.dart';
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'settings.dart';
 import 'package:flutter/material.dart';
@@ -595,4 +596,46 @@ List<charts.Series<ChartEntry, DateTime>> generateList([bool _onlyRent = false])
             data: _data,
         ),
     ];
+}
+
+// ADS
+
+AdmobBanner createBannerAd() {
+    return AdmobBanner(
+        adUnitId: adUID, //"ca-app-pub-3940256099942544/6300978111"
+        adSize: AdmobBannerSize.BANNER,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {}
+    );
+}
+
+AdmobBanner createLargeBannerAd() {
+    return AdmobBanner(
+        adUnitId: adUID, //"ca-app-pub-3940256099942544/6300978111"
+        adSize: AdmobBannerSize.LARGE_BANNER,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {}
+    );
+}
+
+AdmobBanner createFullBannerAd() {
+    return AdmobBanner(
+        adUnitId: adUID, //"ca-app-pub-3940256099942544/6300978111"
+        adSize: AdmobBannerSize.FULL_BANNER,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {}
+    );
+}
+
+AdmobBanner createMediumRectangleAd() {
+    return AdmobBanner(
+        adUnitId: adUID, //"ca-app-pub-3940256099942544/6300978111"
+        adSize: AdmobBannerSize.MEDIUM_RECTANGLE,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {}
+    );
+}
+
+AdmobBanner createLeaderboardAd() {
+    return AdmobBanner(
+        adUnitId: adUID, //"ca-app-pub-3940256099942544/6300978111"
+        adSize: AdmobBannerSize.LEADERBOARD,
+        listener: (AdmobAdEvent event, Map<String, dynamic> args) {}
+    );
 }

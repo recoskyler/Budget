@@ -1,3 +1,4 @@
+import 'package:admob_flutter/admob_flutter.dart';
 /// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
 /// Please check the GitHub Page for usage rights.
 /// https://github.com/recoskyler/Budget
@@ -483,8 +484,23 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
     }
 
     _pt = orderByDateDescending(_pt);
+    int _count = 1;
+
+    AdmobBanner _bad = createBannerAd();
+
+    _tr.add(
+        _bad
+    );
 
     _pt.forEach((_p) {
+        if (_count % 8 == 0) {
+            _bad = createBannerAd();
+
+            _tr.add(
+                _bad
+            );
+        }
+
         if (_p.isFixed()) {
             _tr.add(transactionItemFromPayment(_p, op, dp, fp, _p.getDate(_date)));
         } else {
@@ -492,6 +508,7 @@ List<Widget> getMonthTransactions(Function op, Function dp, Function fp, [DateTi
         }
 
         _tr.add(transactionItemDivider());
+        _count++;
     });
 
     _tr.add(SizedBox(height:100));
@@ -503,6 +520,10 @@ List<Widget> getMonthSubscriptions(Function op, Function dp) {
     List<Widget> _tr = new List<Widget>();
     List<Payment> _pt = new List<Payment>();
     List _t = List.from(settings["fixedPayments"]);
+
+    _tr.add(
+        createBannerAd()
+    );
 
     for (int i = 0; i < _t.length; i++) {
         Payment _p = _t[i];
@@ -594,6 +615,7 @@ List<Widget> getRentCards(Function setPaid, Function setUtilityAmount) {
         saveSettings();
 
         return [
+            createMediumRectangleAd(),
             Container(
                 alignment: Alignment.center,
                 child: Text(
@@ -785,7 +807,6 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
 
         _tr.add(
             Container(
-                margin: EdgeInsets.all(5),
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     border: Border.all(color: _color, width: 1.5),
@@ -849,14 +870,17 @@ List<Widget> getTransactionCards(Function op, Function dp, Function fp) {
     return _tr;
 }
 
-Widget brokenWidget() {
-    return Text(
-        lBase.misc.broken,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            color: Colors.red,
-            fontFamily: "FiraCode",
-            fontSize: SizeConfig.safeBlockHorizontal * 4,
-        ),
+Widget brokenWidget(String txt) {
+    return Container(
+        margin: globalInset,
+        child: Text(
+            txt,
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+                color: Colors.red,
+                fontFamily: "FiraCode",
+                fontSize: SizeConfig.safeBlockHorizontal * 4,
+            ),
+        )
     );
 }

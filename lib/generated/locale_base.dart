@@ -107,6 +107,7 @@ class Localemisc {
 
   String get tapRent => _data["tapRent"];
   String get broken => _data["broken"];
+  String get mightBreak => _data["mightBreak"];
 }
 class Localemonths {
   final Map<String, String> _data;

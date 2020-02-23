@@ -171,6 +171,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     )
                 ),
                 SizedBox(height:30),
+                brokenWidget(lBase.misc.mightBreak),
+                SizedBox(height:30),
                 Container(
                     margin: globalInset,
                     child: Text(

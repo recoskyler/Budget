@@ -1,6 +1,7 @@
 theme: jekyll-theme-cayman
 title: Budget
 description: A simple app to manage your monthly budget, savings, subscriptions (or fixed payments), rent and utilities.
-show_downloads: false
+show_downloads: true
 github:
   repository_url: https://github.com/recoskyler/Budget
+  download_url: https://play.google.com/apps/testing/com.recoskyler.budget

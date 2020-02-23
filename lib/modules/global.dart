@@ -23,6 +23,7 @@ double subexpense = calculateExpenses(true);
 double budget = calculateAllowence();
 double savings = calculateTotalSavings();
 String currency = "";
+String adUID = "ca-app-pub-3535033684460003/4034474319";
 int rentPage = -1;        // Rent screen selected card index
 int theme = 0;            // 0 - Light : 1 - Dark
 LocaleBase lBase = LocaleBase();

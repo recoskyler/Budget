@@ -47,7 +47,8 @@
   },
   "misc": {
     "tapRent": "Kira ve hizmet harcamalarını yönetmek için aşağıdaki butona tıklayın.",
-    "broken": "Uygulamanin bu kısmı şuan hatalı, düzeltilmekte!!!"
+    "broken": "Uygulamanin bu kısmı şuan hatalı, düzeltilmekte!!!",
+    "mightBreak": "Aylık bütçe ve yenilenme gününü değiştirmek aylık işlem geçmişinde istenmeyen rakamlara sebep olabilir. Bu yüzden her hangi bir değişiklik yapmadan önce uygulama verilerini aşağıdaki butona basarak dışa aktarmak, ve tüm uygulama verilierini aşağıdaki kırmızı butona basarak sıfırlamak."
   },
   "months": {
     "january": "Ocak",

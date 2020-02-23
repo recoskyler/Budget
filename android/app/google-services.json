@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "238216639086",
+    "firebase_url": "https://budget-8ebb3.firebaseio.com",
+    "project_id": "budget-8ebb3",
+    "storage_bucket": "budget-8ebb3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238216639086:android:48649d7cefa53d60682c7f",
+        "android_client_info": {
+          "package_name": "com.recoskyler.budget"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "238216639086-nrfbnlf6e90rqljh3bekgu55e4highh9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.recoskyler.budget",
+            "certificate_hash": "0831e7882181067358a76a8da6574940380db951"
+          }
+        },
+        {
+          "client_id": "238216639086-4er9tl6dkltmspaeg23ip8u1fend6ddl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgY3btRFW8exL1tNKfdy3IBxNvO6sRlrg"
+        }
+      ],
+      "services": {
+        "admob_app_id": "ca-app-pub-3535033684460003~8165291019",
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "238216639086-4er9tl6dkltmspaeg23ip8u1fend6ddl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

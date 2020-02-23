@@ -47,7 +47,8 @@
   },
   "misc": {
     "tapRent": "Tap the button below to set up rent and utilities.",
-    "broken": "This part of the app is currently broken, and being fixed!!!"
+    "broken": "This part of the app is currently broken, and being fixed!!!",
+    "mightBreak": "Changing monthly budget and renewal day might cause unwanted numbers in months transaction summary. That's why exporting app data by tapping the button below, and resetting your app data, by tapping the red button below, before a change is recommended."
   },
   "months": {
     "january": "January",

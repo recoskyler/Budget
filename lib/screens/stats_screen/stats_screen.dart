@@ -84,7 +84,7 @@ class _StatsScreenState extends State<StatsScreen> {
             body: ListView(
                 scrollDirection: Axis.vertical,
                 children: <Widget>[
-                    brokenWidget(),
+                    brokenWidget(lBase.misc.broken),
                     Container(
                         margin: globalInset,
                         child: Column(

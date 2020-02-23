@@ -1,7 +1,9 @@
+import 'package:admob_flutter/admob_flutter.dart';
 /// Made by Adil Atalay Hamamcıoğlu (Recoskyler), 2019
 /// Please check the GitHub Page for usage rights.
 /// https://github.com/recoskyler/Budget
 ///
+///ca-app-pub-3535033684460003~8165291019
 
 import 'package:budget/modules/global.dart';
 import 'package:budget/modules/settings.dart';
@@ -54,6 +56,7 @@ class SizeConfig {
 
 void main() {
     WidgetsFlutterBinding.ensureInitialized();
+    Admob.initialize("ca-app-pub-3535033684460003~8165291019");
     //TestWidgetsFlutterBinding.ensureInitialized();
 
     SharedPreferences.getInstance().then((SharedPreferences _sp) {

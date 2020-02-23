@@ -47,7 +47,8 @@
   },
   "misc": {
     "tapRent": "Tap the button below to set up rent and utilities.",
-    "broken": "broken"
+    "broken": "broken",
+    "mightBreak": "might break"
   },
   "months": {
     "january": "jan",
