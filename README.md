@@ -1,24 +1,10 @@
 # Budget
 
+## THIS IS AN ABANDONED PROJECT, TRY AT YOUR OWN RISK
+
 A simple app to manage your monthly budget, savings, subscriptions (or fixed payments), rent and utilities. It's available for both IOS and Android.
 
 This is a simple app I decided to make because I needed an app to manage my budget and rent in university. But I couldn't find an app with the same functions and simplicity. So I decided to make one. That's why I won't add any other major functions later on, it will stay simple.
-
-[Trello Board Here](https://trello.com/b/OAOS7Kdp/budget)
-
-## IMPORTANT INFO
-
-### THIS IS STILL UNDER DEVELOPMENT, TRY AT YOUR OWN RISK
-
-**I am still working on this project. I am not responsible for anything, use this at your own risk!**
-
-## Plans
-
-- [ ] ~~Add tablet and landscape support~~ (CANCELLED)
-- [ ] Add user system
-- [ ] Add web app
-- [ ] Release App on Google Play Store (CURRENTLY IN INTERNAL TEST TRACK)
-- [ ] Release App on App Store
 
 ## Usage Rights
 
